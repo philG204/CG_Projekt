@@ -2,10 +2,10 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
 LDFLAGS = -lglfw -lGL -ldl -lm
 
-SRC = $(wildcard core/*.c) /
-	  $(wildcard renderer/*.c) /
-	  $(wildcard math/*.c)/
-	  $(wildcard *.c)
+SRC = $(wildcard src/*.c) \
+	  $(wildcard src/core/*.c) \
+	  $(wildcard src/renderer/*.c) \
+	  $(wildcard src/math/*.c)
 	  
 OBJ = $(SRC:.c=.o)
 

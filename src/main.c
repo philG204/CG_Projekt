@@ -12,13 +12,12 @@
 
 int main(void){
 
-    GLFWwindow* window;
-    window_create(window, 1920, 1080, "CG1");
+    
+    GLFWwindow* window = window_create(1920, 1080, "CG1");
 
     while(!glfwWindowShouldClose(window)){
         //get input
         //than draw with input;
-    
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

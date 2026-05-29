@@ -1,24 +1,27 @@
-#include <glad/glad.h>
-#include <GL/glew.h>
+#include "../../include/glad/glad.h";
+//#include <glad/glad.h>
+//#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#include <stdio.h>
 
 static void framebuffer_size_callback(GLFWwindow *window, int width, int height){
     (void)window;
     glViewport(0, 0, width, height);
 }
 
-int window_create(GLFWwindow* window, int width, int height, const char* title){
+GLFWwindow* window_create(int width, int height, const char* title){ 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow *window = glfwCreateWindow(/*640, 850*/width, height, title, NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(/*640, 850*/width, height, title, NULL, NULL);
 
     if(!window){
         printf("Failed to create window\n");
         glfwTerminate();
-        return -1;
+        return NULL;
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -28,7 +31,7 @@ int window_create(GLFWwindow* window, int width, int height, const char* title){
     if(1 /*if WM is hyprland*/){
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         printf("Failed to initialize GLAD\n");
-        return -1;
+        return NULL;
         }
     } else{
         //GLenum err = glewInit();
@@ -47,5 +50,5 @@ int window_create(GLFWwindow* window, int width, int height, const char* title){
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
-    return 0;
+    return window;
 }
