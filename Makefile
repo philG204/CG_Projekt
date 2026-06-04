@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-LDFLAGS = -lglfw -lGL -ldl -lm
+LDFLAGS = -lglfw -lGLEW -lGL -ldl -lm
 
 SRC = $(wildcard src/*.c) \
 	  $(wildcard src/core/*.c) \

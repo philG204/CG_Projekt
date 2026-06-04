@@ -1,6 +1,4 @@
-#include "../../include/glad/glad.h";
-//#include <glad/glad.h>
-//#include <GL/glew.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -11,6 +9,7 @@ static void framebuffer_size_callback(GLFWwindow *window, int width, int height)
 }
 
 GLFWwindow* window_create(int width, int height, const char* title){ 
+    glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -28,21 +27,10 @@ GLFWwindow* window_create(int width, int height, const char* title){
     glfwMakeContextCurrent(window);
 
 
-    if(1 /*if WM is hyprland*/){
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        printf("Failed to initialize GLAD\n");
-        return NULL;
-        }
-    } else{
-        //GLenum err = glewInit();
-        //if (err != GLEW_OK) {
-        //    printf("GLEW error: %s\n", glewGetErrorString(err));
-        //    return -1;
-        //}
-        //if (err == GLEW_OK) {
-        //    printf("GLEW initialization failed!\n");
-        //    return -1;
-        //}
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        printf("GLEW error: %s\n", glewGetErrorString(err));
+        return 0;
     }
 
     printf("OpenGL Version: %s\n", glGetString(GL_VERSION));

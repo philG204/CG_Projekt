@@ -1,6 +1,6 @@
 
-#include <glad/glad.h>
-//#include <GL/glew.h>
+//#include <glad/glad.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
@@ -21,6 +21,8 @@ int main(void){
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    
 
     glfwTerminate();
     return 0;

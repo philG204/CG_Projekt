@@ -1,6 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
-#include <glad/glad.h>
+#include <GL/glew.h>
 
 #include "object.h"
 #include "camera.h"
