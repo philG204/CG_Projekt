@@ -95,3 +95,20 @@ Enthält 3D-Modelle, zum Beispiel im .obj-Format.
 ### assets/textures/
 
 Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
+
+#
+
+## Quellen von den Objekten und Texturen
+
+### Objekte
+- Television 01; https://polyhaven.com/a/Television_01
+- Rockingchair 01; https://polyhaven.com/a/Rockingchair_01
+- Sofa 01; https://polyhaven.com/a/Sofa_01
+- Boombox; https://polyhaven.com/a/boombox
+- Vintage Grandfather Clock 01; https://polyhaven.com/a/vintage_grandfather_clock_01
+- Potted Plant 02; https://polyhaven.com/a/potted_plant_02
+- Classic Nightstand 01; https://polyhaven.com/a/ClassicNightstand_01
+- Gothic Commode 01; https://polyhaven.com/a/GothicCommode_01
+### Texturen
+- Book Pattern; https://polyhaven.com/a/book_pattern
+- Crepe Satin; https://polyhaven.com/a/crepe_satin
