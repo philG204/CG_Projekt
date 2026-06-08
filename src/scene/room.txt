@@ -1,0 +1,9 @@
+# obj-file in src/assets/models; translation (x, y, z, w); rotation (x, y, z); scale;
+boombox_1k.blend/boombox_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+ClassicNightstand_01_1k.blend/boombox_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+GothicCommode_01_1k.blend/GothicCommode_01_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+potted_plant_02_1k.blend/potted_plant_02_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+Rockingchair_01_1k.blend/Rockingchair_01_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+Sofa_01_1k.blend/Sofa_01_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+Television_01_2k.blend/Television_01_2k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
+vintage_grandfather_clock_01_1k.blend/vintage_grandfather_clock_01_1k.obj; 0.0f, 0.0f, 0.0f, 1.0f; 0.0f, 0.0f, 0.0f; 0.0f;
