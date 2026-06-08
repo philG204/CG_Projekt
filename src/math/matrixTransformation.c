@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,6 +22,7 @@ static void cross(const GLfloat *a, GLfloat *b, GLfloat *out){
 static GLfloat dot(const GLfloat *a, const GLfloat *b){
     return a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
 }
+
 
 static void multiplyMatracies(GLfloat *out,const GLfloat *A, GLfloat *B){
     GLfloat temp[16];

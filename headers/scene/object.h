@@ -4,26 +4,29 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "../renderer/mesh.h"
 #include "light.h"
+#include "../renderer/mesh.h"
+#include "../renderer/texture.h"
 
 
 typedef struct Material {
-    GLuint* shader,
-    GLuint** textures,
-    GLfloat* rgb_values, 
-    GLfloat* transparancy
-    MaterialLight* light
+    GLuint shader;
+    Texture** textures;
+    int texture_count;
+    GLfloat rgb_values;
+    GLfloat transparancy;
+    MaterialLight* light;
 } Material;
 
 typedef struct Object {
-    Mesh* mesh,
-    Material* material,
-    GLfloat* modelMatrix
+    char* name;
+    Mesh* mesh;
+    Material* material;
+    GLfloat* modelMatrix;
 } Object;
 
-Object* object_init(char* vertObj, char** shader, char** textures, float* rgb_values = NULL, float* transparancy, float** light);
-void object_transformation(Object* object, GLfloat* translation = NULL, GLfloat* scale = NULL, float rotaion = NULL);
-void object_draw(Object* object);
+Object* object_init(char* objDir, float light[], int transparancy);
+void object_transformation(Object* object, GLfloat* translation, GLfloat* scale, float rotaion);
+void object_draw(Object* object, GLfloat* cameraMatrix);
 
 #endif

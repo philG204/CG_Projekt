@@ -4,18 +4,31 @@
 #include <GL/glew.h>
 
 typedef struct Pos {
-    GLfloat x,
-    GLfloat y,
-    GLfloat z,
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
 } Pos;
 
-typedef struct Camera{
-    GLuint* viewProjMatrix,
-    Pos position,
-    GLfloat viewDirection
+typedef struct CameraSettings {
+    GLfloat eye[3];
+    GLfloat center[3];
+    GLfloat up[3];
+} CameraSettings;
+
+typedef struct ProjectionSettings {
+    GLfloat fovy;
+    GLfloat aspect;
+    GLfloat near_plane;
+    GLfloat far_plane;
+} ProjectionSettings;
+
+typedef struct Camera {
+    GLfloat* viewProjMatrix;
+    Pos position;
+    GLfloat viewDirection;
 } Camera;
 
-Camera* camera_init(const GLfloat eye[3], const GLfloat* center, const GLfloat* up, const float* fovy, const float* aspect, const float* near, const float* far);
+Camera* camera_init(CameraSettings* cameraSettings, ProjectionSettings* projectionSettings);
 void camera_update(Camera* camera);
 
 #endif

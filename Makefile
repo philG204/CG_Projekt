@@ -5,7 +5,8 @@ LDFLAGS = -lglfw -lGLEW -lGL -ldl -lm
 SRC = $(wildcard src/*.c) \
 	  $(wildcard src/core/*.c) \
 	  $(wildcard src/renderer/*.c) \
-	  $(wildcard src/math/*.c)
+	  $(wildcard src/math/*.c) \
+	  $(wildcard src/scene/*.c)
 	  
 OBJ = $(SRC:.c=.o)
 
