@@ -24,4 +24,4 @@ Scene* scene_init(char* meshDir, int mesh_count, char* scene_name, CameraSetting
 void scene_add_object(Scene* scene, char* objDir, char* mesh, float* materialLight, int transparancy);
 void scene_update(Scene scene, float input);
 
-#endif
+#endif // SCENE_H

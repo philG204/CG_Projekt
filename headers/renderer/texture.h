@@ -13,4 +13,4 @@ typedef struct Texture{
 Texture* texture_init(char* filename, GLuint shaderProgram, char* shaderVariable);
 void activate_texture(Texture* textures[], int texture_count);
 
-#endif
+#endif // TEXTURE_H

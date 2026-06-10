@@ -1,53 +1,48 @@
-
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/core/window.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "../headers/stb_image.h"
+
 #include "../headers/core/input.h"
+#include "../headers/core/window.h"
 #include "../headers/scene/camera.h"
-#include "../headers/scene/scene.h"
 #include "../headers/scene/object.h"
+#include "../headers/scene/scene.h"
 
+int
+main (void)
+{
 
+  GLFWwindow *window = window_create (1920, 1080, "CG1");
 
-int main(void){
+  CameraSettings cameraSettings = { .eye = { 1.0f, 0.5f, 1.0f },
+                                    .center = { 0.0f, 0.0f, 0.0f },
+                                    .up = { 0.0f, 1.0f, 0.0f } };
 
-    
-    GLFWwindow* window = window_create(1920, 1080, "CG1");
+  ProjectionSettings projectionSettings = { .fovy = 10.0f * (3.14f / 270.0f),
+                                            .aspect = 1920.0f / 1080.0f,
+                                            .near_plane = 0.1f,
+                                            .far_plane = 45.0f };
 
-    CameraSettings cameraSettings = {
-        .eye = {1.0f, 0.5f, 1.0f},
-        .center = {0.0f, 0.0f, 0.0f},
-        .up = {0.0f, 1.0f, 0.0f}
-    };
+  Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings,
+                             &projectionSettings);
 
-    ProjectionSettings projectionSettings = {
-        .fovy = 10.0f * (3.14f / 270.0f),
-        .aspect = 1920.0f / 1080.0f,
-        .near_plane = 0.1f,
-        .far_plane = 45.0f
-    };
+  float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-    Scene* scene = scene_init("Meshes", 1, "scene1", &cameraSettings, &projectionSettings);
+  scene_add_object (scene, "Box", "cube.obj", light, 1);
 
-    float light[4];
-    light[0] = 0.0f;
-    light[1] = 0.0f;
-    light[2] = 0.0f;
-    light[3] = 0.0f;
-
-    scene_add_object(scene, "Box", "cube.obj", light, 1);
-
-    while(!glfwWindowShouldClose(window)){
-        //get input
-        //than draw with input;
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+  while (!glfwWindowShouldClose (window))
+    {
+      // get input
+      // than draw with input;
+      glfwSwapBuffers (window);
+      glfwPollEvents ();
     }
 
-    glfwTerminate();
-    return 0;
+  glfwTerminate ();
+  return 0;
 }

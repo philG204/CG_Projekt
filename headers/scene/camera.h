@@ -31,4 +31,4 @@ typedef struct Camera {
 Camera* camera_init(CameraSettings* cameraSettings, ProjectionSettings* projectionSettings);
 void camera_update(Camera* camera);
 
-#endif
+#endif // CAMERA_H
