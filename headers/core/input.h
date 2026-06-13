@@ -1,5 +1,5 @@
-#ifndef INPUTH
-#define INPUTH
+#ifndef INPUT_H
+#define INPUT_H
 
 #include <GLFW/glfw3.h>
 
@@ -32,4 +32,4 @@ void processKeyInput (GLFWwindow *window, int cameraCount,  int* activeCamera);
  */
 void handleButtons(GLFWwindow* window, Button button, int back, int cameraCount,  int *activeCamera);
 
-#endif
+#endif // INPUT_H
