@@ -18,6 +18,7 @@ SRC = \
 	src/scene/light.c \
 	src/scene/object.c \
 	src/scene/scene.c \
+	src/scene/loadObjectList.c \
 	src/main.c
 	  
 OBJ = $(SRC:.c=.o)
