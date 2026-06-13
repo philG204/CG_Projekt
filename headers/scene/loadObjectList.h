@@ -2,17 +2,19 @@
 #ifndef LOADOBJECTLIST_H
 #define LOADOBJECTLIST_H
 
+#define PATH_LENGTH 256
 
-// Objekt mit Objektdateinamen  und Positionsparametern in der Szene
+
+// Speichert den Pfad zur Objekt-Datei und die Position, Rotation, und Skalierung des Objekts.
 typedef struct sceneObject {
-    char filename[256];             
+    char filename[PATH_LENGTH];             
     GLfloat translation[4];   
     GLfloat rotation[3];        
     GLfloat scaling;          
 } sceneObject;
 
 /**
- * Lädt aus übergebenen Datei die Objekte und speichert diese in eine objectList mit zugehöriger Transpositions- Rotations- und Scalingvektoren.
+ * Lädt aus übergebenen Datei die Objekte und speichert diese in ein sceneObject-Array mit zugehörigen Translations- Rotations- und Scalingwerten.
  */
 sceneObject *load_object_list(const char * fileName, int *objectCount, int maxObjects);
 
