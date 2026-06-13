@@ -6,4 +6,4 @@
 GLuint shader_init(char* objDir);
 void use_shader(GLuint shaderProgram);
 
-#endif
+#endif // SHADER_H

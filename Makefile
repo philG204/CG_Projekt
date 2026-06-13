@@ -1,24 +1,54 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Iinclude
-LDFLAGS = -lglfw -lGLEW -lGL -ldl -lm
+LDFLAGS = -ldl -lm
 
-SRC = $(wildcard src/*.c) \
-	  $(wildcard src/core/*.c) \
-	  $(wildcard src/renderer/*.c) \
-	  $(wildcard src/math/*.c) \
-	  $(wildcard src/scene/*.c)
+LDFLAGS += $(shell pkg-config --libs glfw3)
+LDFLAGS += $(shell pkg-config --libs glew)
+
+SRC = \
+	src/core/input.c \
+	src/core/window.c \
+	src/math/matrixTransformation.c \
+	src/renderer/loadObj.c \
+	src/renderer/loadShader.c \
+	src/renderer/mesh.c \
+	src/renderer/shader.c \
+	src/renderer/texture.c \
+	src/scene/camera.c \
+	src/scene/light.c \
+	src/scene/object.c \
+	src/scene/scene.c \
+	src/main.c
 	  
 OBJ = $(SRC:.c=.o)
 
+TEST_SRC = \
+	test/main.c
+
+TEST_OBJ = $(TEST_SRC:.c=.o)
+
 TARGET = demo
+TEST_TARGET = run_tests
 
 all: $(TARGET)
 
+run: $(TARGET)
+	./$(TARGET)
+
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+format:
+	clang-format --style=GNU -i $(SRC) $(TEST_SRC)
+
 $(TARGET): $(OBJ)
 	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
+
+$(TEST_TARGET): $(TEST_OBJ)
+	$(CC) $(TEST_OBJ) -o $(TEST_TARGET) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(OBJ) $(TARGET) $(TEST_OBJ) $(TEST_TARGET)

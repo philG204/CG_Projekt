@@ -1,4 +1,4 @@
 *.o
 .vscode
 demo
-.gitignore
+run_tests
