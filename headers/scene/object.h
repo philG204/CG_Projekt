@@ -29,4 +29,4 @@ Object* object_init(char* objDir, float light[], int transparancy);
 void object_transformation(Object* object, GLfloat* translation, GLfloat* scale, float rotaion);
 void object_draw(Object* object, GLfloat* cameraMatrix);
 
-#endif
+#endif // OBJECT_H

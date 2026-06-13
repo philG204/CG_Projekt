@@ -11,4 +11,4 @@ typedef struct Mesh{
 Mesh* mesh_init(char* objDir);
 void mesh_draw(Mesh* mesh);
 
-#endif
+#endif // MESH_H

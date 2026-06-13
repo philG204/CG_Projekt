@@ -14,4 +14,4 @@ typedef struct MaterialLight {
     float specular;
 } MaterialLight;
 
-#endif
+#endif // LIGHT_H
