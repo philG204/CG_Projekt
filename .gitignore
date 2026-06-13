@@ -2,3 +2,4 @@
 .vscode
 demo
 .gitignore
+compile_commands.json

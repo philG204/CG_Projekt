@@ -43,6 +43,7 @@ int main(void){
 
     while(!glfwWindowShouldClose(window)){
         //get input
+        
         //than draw with input;
         glfwSwapBuffers(window);
         glfwPollEvents();
