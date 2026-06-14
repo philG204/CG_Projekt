@@ -12,6 +12,7 @@
 #include "../headers/scene/camera.h"
 #include "../headers/scene/object.h"
 #include "../headers/scene/scene.h"
+#include "../headers/scene/loadObjectList.h"
 
 int
 main (void)
@@ -30,6 +31,10 @@ main (void)
 
   Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings,
                              &projectionSettings);
+
+
+  int objectCnt= 0;
+  sceneObject *objectList = load_object_list("room.txt", &objectCnt, 7);    
 
   float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
