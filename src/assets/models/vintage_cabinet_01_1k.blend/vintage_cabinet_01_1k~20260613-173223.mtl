@@ -1,0 +1,36 @@
+# Blender 5.1.0 MTL File: 'vintage_cabinet_01_1k.blend'
+# www.blender.org
+
+newmtl vintage_cabinet_01_a
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/vintage_cabinet_01_a_diff_1k.png
+map_Ns textures/vintage_cabinet_01_a_rough_1k.png
+map_refl textures/vintage_cabinet_01_a_metal_1k.png
+map_Bump -bm 1.000000 textures/vintage_cabinet_01_a_nor_gl_1k.png
+
+newmtl vintage_cabinet_01_b
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd textures/vintage_cabinet_01_b_diff_1k.png
+map_Ns textures/vintage_cabinet_01_b_rough_1k.png
+map_Bump -bm 1.000000 textures/vintage_cabinet_01_b_nor_gl_1k.png
+
+newmtl vintage_cabinet_01_glass
+Ka 1.000000 1.000000 1.000000
+Kd 0.030000 0.030000 0.030000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.300000
+illum 9
+map_Ns textures/vintage_cabinet_01_a_rough_1k.png
+map_Bump -bm 1.000000 textures/vintage_cabinet_01_a_nor_gl_1k.png

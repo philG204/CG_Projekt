@@ -103,12 +103,13 @@ Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
 ### Objekte
 - Television 01; https://polyhaven.com/a/Television_01
 - Rockingchair 01; https://polyhaven.com/a/Rockingchair_01
-- Sofa 01; https://polyhaven.com/a/Sofa_01
+- Sofa 03; https://polyhaven.com/a/sofa_03
 - Boombox; https://polyhaven.com/a/boombox
-- Vintage Grandfather Clock 01; https://polyhaven.com/a/vintage_grandfather_clock_01
-- Potted Plant 02; https://polyhaven.com/a/potted_plant_02
-- Classic Nightstand 01; https://polyhaven.com/a/ClassicNightstand_01
+- Vintage Cabinet 01; https://polyhaven.com/a/vintage_cabinet_01
+- Potted Plant 01; https://polyhaven.com/a/potted_plant_01
+- Chess Set; https://polyhaven.com/a/chess_set
 - Gothic Commode 01; https://polyhaven.com/a/GothicCommode_01
+- Wooden Table 02; https://polyhaven.com/a/wooden_table_02
 ### Texturen
-- Book Pattern; https://polyhaven.com/a/book_pattern
-- Crepe Satin; https://polyhaven.com/a/crepe_satin
+- Bi Stretch; https://polyhaven.com/a/bi_stretch
+- Wood Floor; https://polyhaven.com/a/wood_floor
