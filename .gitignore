@@ -1,6 +1,5 @@
 *.o
 .vscode
 demo
-.gitignore
 compile_commands.json
 run_tests
