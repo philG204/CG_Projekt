@@ -53,18 +53,14 @@ void handleButtons(GLFWwindow* window, Button button, int back, int cameraCount,
 
     if (hovering &&
         state == GLFW_PRESS &&
-        !leftMouseWasPressed &&
-        back == 0)
+        !leftMouseWasPressed)
     {
-        *activeCamera = (*activeCamera + 1) % cameraCount;
-    }
-
-    if (hovering &&
-        state == GLFW_PRESS &&
-        !leftMouseWasPressed &&
-        back == 1)
-    {
-        *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
+        if (back == 0) {
+            *activeCamera = (*activeCamera + 1) % cameraCount;
+        } else {
+            *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
+        }
+        
     }
 
     leftMouseWasPressed = (state == GLFW_PRESS);
