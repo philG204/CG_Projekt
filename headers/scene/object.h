@@ -27,7 +27,7 @@ typedef struct Object {
 } Object;
 
 Object* object_init(char* objDir, float light[], int transparency);
-void object_transformation(Object* object, GLfloat* translation, GLfloat* scaling, float rotation);
+void object_transformation(Object* object, GLfloat* translation, GLfloat* scaling, GLfloat* rotation);
 void object_draw(Object* object, GLfloat* cameraMatrix);
 
 #endif // OBJECT_H

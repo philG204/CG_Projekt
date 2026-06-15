@@ -7,6 +7,7 @@ void identity(GLfloat *out);
 void translate(GLfloat *out, const GLfloat *in, GLfloat *v);
 void scale(GLfloat *out, const GLfloat *in, const GLfloat *v);
 
+void rotatex(GLfloat *out, const GLfloat *in, GLfloat angle);
 void rotatey(GLfloat *out, const GLfloat *in, GLfloat angle);
 void rotatez(GLfloat *out, const GLfloat *in, GLfloat angle);
 

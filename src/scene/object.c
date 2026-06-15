@@ -61,10 +61,10 @@ object_init (char *objDir, float light[], int transparency)
   closedir (dir);
 
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  // materialLight->emissive = light[0];
-  // materialLight->ambient = light[1];
-  // materialLight->diffuse = light[2];
-  // materialLight->specular = light[3];
+  materialLight->emissive = light[0];
+  materialLight->ambient = light[1];
+  materialLight->diffuse = light[2];
+  materialLight->specular = light[3];
 
   object->material->light = materialLight;
 
@@ -77,7 +77,7 @@ object_init (char *objDir, float light[], int transparency)
 // Translatiert, rotiert und skaliert ein Objekt.
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
-                       float rotation)
+                       GLfloat *rotation)
 {
   if(!(translation == NULL)){
     translate(object->modelMatrix, object->modelMatrix, translation);
@@ -87,7 +87,9 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
     scale(object->modelMatrix, object->modelMatrix, scaling);
   }
 
-  rotatez(object->modelMatrix, object->modelMatrix, rotation);
+  rotatex(object->modelMatrix, object->modelMatrix, rotation[0]);
+  rotatey(object->modelMatrix, object->modelMatrix, rotation[1]);
+  rotatez(object->modelMatrix, object->modelMatrix, rotation[2]);
 }
 
 void
