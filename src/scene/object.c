@@ -11,7 +11,7 @@
 #include "../../headers/scene/object.h"
 
 Object *
-object_init (char *objDir, float light[], int transparancy)
+object_init (char *objDir, float light[], int transparency)
 {
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
@@ -24,7 +24,7 @@ object_init (char *objDir, float light[], int transparancy)
   material->textures = textures;
   material->texture_count = 0;
   // material->rgb_values = rgb_values;
-  // material->transparancy = transparancy;
+  // material->transparency = transparency;
   material->light = NULL;
 
   object->material = material;
@@ -61,10 +61,10 @@ object_init (char *objDir, float light[], int transparancy)
   closedir (dir);
 
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  materialLight->emissive = light[0];
-  materialLight->ambient = light[1];
-  materialLight->diffuse = light[2];
-  materialLight->specular = light[3];
+  // materialLight->emissive = light[0];
+  // materialLight->ambient = light[1];
+  // materialLight->diffuse = light[2];
+  // materialLight->specular = light[3];
 
   object->material->light = materialLight;
 
@@ -74,10 +74,20 @@ object_init (char *objDir, float light[], int transparancy)
   return object;
 }
 
+// Translatiert, rotiert und skaliert ein Objekt.
 void
-object_transformation (Object *object, GLfloat *translation, GLfloat *scale,
+object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        float rotation)
 {
+  if(!(translation == NULL)){
+    translate(object->modelMatrix, object->modelMatrix, translation);
+  }
+
+  if(!(scaling == NULL)){
+    scale(object->modelMatrix, object->modelMatrix, scaling);
+  }
+
+  rotatez(object->modelMatrix, object->modelMatrix, rotation);
 }
 
 void
