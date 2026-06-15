@@ -38,7 +38,7 @@ sceneObject *load_object_list(const char *filename, int *objectCount, int maxObj
         int finishedLine = sscanf(
             readLine,
 
-            "%255[^;];%f,%f,%f,%f;%f,%f,%f;%f",
+            "%255[^;];%f,%f,%f,%f;%f,%f,%f;%f,%f,%f",
 
             tempFilename,
             &obj->translation[0],
@@ -48,7 +48,10 @@ sceneObject *load_object_list(const char *filename, int *objectCount, int maxObj
             &obj->rotation[0],
             &obj->rotation[1],
             &obj->rotation[2],
-            &obj->scaling
+            &obj->scaling[0],
+            &obj->scaling[1],
+            &obj->scaling[2]
+
         );
 
         strcpy(obj->filename, PATH);

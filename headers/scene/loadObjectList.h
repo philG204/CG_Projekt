@@ -10,7 +10,7 @@ typedef struct sceneObject {
     char filename[PATH_LENGTH];             
     GLfloat translation[4];   
     GLfloat rotation[3];        
-    GLfloat scaling;          
+    GLfloat scaling[3];          
 } sceneObject;
 
 /**

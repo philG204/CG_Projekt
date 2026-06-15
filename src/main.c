@@ -34,7 +34,7 @@ main (void)
 
 
   int objectCnt= 0;
-  sceneObject *objectList = load_object_list("room.txt", &objectCnt, 7);    
+  sceneObject *objectList = load_object_list("room.txt", &objectCnt, 12);    
 
   float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
