@@ -41,7 +41,7 @@ int leftMouseWasPressed = 0;
  *
  * @param *window        - GLFW window handle
  * @param button         - button
- * @param back           - back = 0 before camera | back = 1 after camera
+ * @param back           - 0 = advance to next camera | 1 = go to previous camera
  * @param cameraCount    - number of available cameras
  * @param *activeCamera  - pointer to current camera index
  */
@@ -53,14 +53,16 @@ void handleButtons(GLFWwindow* window, Button button, int back, int cameraCount,
 
     if (hovering &&
         state == GLFW_PRESS &&
-        !leftMouseWasPressed && back)
+        !leftMouseWasPressed &&
+        back == 0)
     {
         *activeCamera = (*activeCamera + 1) % cameraCount;
     }
 
     if (hovering &&
         state == GLFW_PRESS &&
-        !leftMouseWasPressed && back == 1)
+        !leftMouseWasPressed &&
+        back == 1)
     {
         *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
     }
