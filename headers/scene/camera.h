@@ -9,6 +9,11 @@ typedef struct Pos {
     GLfloat z;
 } Pos;
 
+/*
+    eye     - position
+    center  - ziel
+    up      - normalvektor
+*/
 typedef struct CameraSettings {
     GLfloat eye[3];
     GLfloat center[3];
@@ -52,6 +57,7 @@ Camera* camera_init(CameraSettings* cameraSettings, ProjectionSettings* projecti
 /*
     Updates the view, projection and viewProj Matrix
     when they have change
+    for the while loop
 */
 void camera_update(Camera* camera);
 
