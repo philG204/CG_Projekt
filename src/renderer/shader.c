@@ -79,5 +79,6 @@ shader_init (char *objDir)
 void
 use_shader (GLuint shaderProgram)
 {
+  printf("entering use_shader\n");
   glUseProgram (shaderProgram);
 }

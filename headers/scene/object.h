@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#define PATH_LENGTH 256
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -20,7 +22,7 @@ typedef struct Material {
 } Material;
 
 typedef struct Object {
-    char* name;
+    char name[PATH_LENGTH];
     Mesh* mesh;
     Material* material;
     GLfloat* modelMatrix;

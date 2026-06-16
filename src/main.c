@@ -20,11 +20,11 @@ main (void)
 
   GLFWwindow *window = window_create (1920, 1080, "CG1");
 
-  CameraSettings cameraSettings = { .eye = { 1.0f, 0.5f, 1.0f },
+  CameraSettings cameraSettings = { .eye = { 3.0f, 2.0f, 5.0f },
                                     .center = { 0.0f, 0.0f, 0.0f },
                                     .up = { 0.0f, 1.0f, 0.0f } };
-
-  ProjectionSettings projectionSettings = { .fovy = 10.0f * (3.14f / 270.0f),
+    
+  ProjectionSettings projectionSettings = { .fovy = 100.0f * (3.14f / 270.0f),
                                             .aspect = 1920.0f / 1080.0f,
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
@@ -46,6 +46,8 @@ main (void)
       // than draw with input;
       glfwSwapBuffers (window);
       glfwPollEvents ();
+
+      scene_update(scene, objectList, objectCnt, 0.0f);
     }
 
   glfwTerminate ();

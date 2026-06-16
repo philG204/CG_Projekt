@@ -34,6 +34,7 @@ sceneObject *load_object_list(const char *filename, int *objectCount, int maxObj
 
         sceneObject *obj = &sceneObjects[count];
         char tempFilename[PATH_LENGTH-sizeof(PATH)];
+        char objectName[PATH_LENGTH-sizeof(PATH)];
 
         int finishedLine = sscanf(
             readLine,
@@ -41,6 +42,7 @@ sceneObject *load_object_list(const char *filename, int *objectCount, int maxObj
             "%255[^;];%f,%f,%f,%f;%f,%f,%f;%f,%f,%f",
 
             tempFilename,
+            &obj->objectName,
             &obj->translation[0],
             &obj->translation[1],
             &obj->translation[2],
@@ -56,6 +58,8 @@ sceneObject *load_object_list(const char *filename, int *objectCount, int maxObj
 
         strcpy(obj->filename, PATH);
         strcat(obj->filename, tempFilename);
+        strcpy(obj->objectName, objectName);
+
 
         if(finishedLine == 9){
             ++count;

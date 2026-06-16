@@ -1,8 +1,10 @@
 #ifndef MESH_H
 #define MESH_H
+#define MAX 256
 #include <GL/glew.h>
 
 typedef struct Mesh{
+    char* name;
     GLuint vbo;
     GLuint vao;
     int vertexCount;

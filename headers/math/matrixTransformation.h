@@ -13,3 +13,5 @@ void rotatez(GLfloat *out, const GLfloat *in, GLfloat angle);
 
 void lookAt(GLfloat *out, const GLfloat *eye, const GLfloat *center, const GLfloat *up);
 void perspective(GLfloat *out, float fovy, float aspect, float near, float far);
+
+void multiplyMatracies (GLfloat *out, const GLfloat *A, GLfloat *B);

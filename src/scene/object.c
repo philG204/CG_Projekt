@@ -16,9 +16,13 @@ object_init (char *objDir, float light[], int transparency)
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
   MaterialLight *objectLight;
-  Texture *textures[MAX_TEXTURES];
+  Texture **textures = malloc(sizeof(Texture*) * MAX_TEXTURES);
 
   GLuint shaderProgram = shader_init (objDir);
+
+  if(shaderProgram == NULL){
+    printf("no shader program!!!\n");
+  }
 
   material->shader = shaderProgram;
   material->textures = textures;
@@ -56,6 +60,9 @@ object_init (char *objDir, float light[], int transparency)
           = texture_init (completeTexturePath, object->material->shader,
                           entry->d_name);
       object->material->texture_count++;
+      if(object->material->textures[object->material->texture_count] == NULL){
+        printf("object_init: texture is NULL!!!\n");
+      }
     }
 
   closedir (dir);
@@ -95,23 +102,44 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *cameraMatrix)
 {
+  printf("entering object draw call\n");
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  static float angleView = 0.0f;
+  angleView += 0.0001f;
+  float radius = 5.0f;
+  //printf("angleView: %f\n", angleView);
+
+  float time = (float)glfwGetTime();
+
+  if(object == NULL){
+    printf("object in draw call is NULL !!!!\n");
+  }
   use_shader (object->material->shader);
+  printf("after using shader\n");
+
+   GLfloat rotationYVec = angleView;
+    rotatey(object->modelMatrix, object->modelMatrix, rotationYVec);
+
+    GLfloat rotationZVec = angleView;
+    rotatez(object->modelMatrix, object->modelMatrix, rotationZVec);
 
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shader, "viewProj"), 1, GL_FALSE,
       cameraMatrix);
   glUniformMatrix4fv (glGetUniformLocation (object->material->shader, "model"),
                       1, GL_FALSE, object->modelMatrix);
-
+  printf("after setting model and camera matrecies\n");
   glBindVertexArray (object->mesh->vao);
-
+  printf("after setting vao\n");
+  printf("texture count: %d\n", object->material->texture_count);
   for (int i = 0; i < object->material->texture_count; i++)
     {
       activate_texture (object->material->textures,
                         object->material->texture_count);
+                        printf("after activate textures\n");
     }
-
+    printf("after activate all textures\n");
   glDrawArrays (GL_TRIANGLES, 0, (GLsizei)object->mesh->vertexCount);
+  printf("Draw call finished for object %s\n", object->name);
 }

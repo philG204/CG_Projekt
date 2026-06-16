@@ -30,7 +30,7 @@ dot (const GLfloat *a, const GLfloat *b)
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-static void
+void
 multiplyMatracies (GLfloat *out, const GLfloat *A, GLfloat *B)
 {
   GLfloat temp[16];

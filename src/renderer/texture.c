@@ -55,9 +55,18 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 void
 activate_texture (Texture *textures[], int texture_count)
 {
+  printf("entering active texture\n");
+  if(textures == NULL){
+    printf("textures are NULL!!!\n");
+  }
   for (int i = 0; i < texture_count; i++)
     {
+      if(textures[i]== NULL){
+        printf("texture is NULL!!!\n");
+      }
+      printf("before glActiveTexture\n");
       glActiveTexture (GL_TEXTURE0 + i);
+      printf("after glActiveTexture\n");
       glBindTexture (GL_TEXTURE_2D, textures[i]->textureId);
 
       GLint location = glGetUniformLocation (textures[i]->shaderProgramId,

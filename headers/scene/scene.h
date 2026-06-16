@@ -1,13 +1,16 @@
 #ifndef SCENE_H
 #define SCENE_H
+
 #define MAX_OBJECTS 100
 #define MAX_MESHES 100
+#define PATH_LENGTH 256
 #include <GL/glew.h>
 
 #include "camera.h"
 #include "light.h"
 #include "object.h"
 #include "../renderer/mesh.h"
+#include "../scene/loadObjectList.h"
 
 
 typedef struct Scene {
@@ -17,11 +20,11 @@ typedef struct Scene {
     int mesh_count;
     Camera* camera;
     LightDirection light;
-    char* name;
+    char name[PATH_LENGTH];
 } Scene;
 
 Scene* scene_init(char* meshDir, int mesh_count, char* scene_name, CameraSettings* cameraSettings, ProjectionSettings* projectionSettings);
 void scene_add_object(Scene* scene, char* objDir, char* mesh, float* materialLight, int transparancy);
-void scene_update(Scene scene, float input);
+void scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input);
 
 #endif // SCENE_H
