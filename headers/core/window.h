@@ -5,4 +5,4 @@
 
 GLFWwindow* window_create(int width, int height, const char* title);
 
-#endif
+#endif // WINDOW_H
