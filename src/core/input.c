@@ -60,7 +60,6 @@ void handleButtons(GLFWwindow* window, Button button, int back, int cameraCount,
         } else {
             *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
         }
-        
     }
 
     leftMouseWasPressed = (state == GLFW_PRESS);
