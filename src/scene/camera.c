@@ -17,6 +17,7 @@ camera_init (CameraSettings *cameraSettings,
                    .z = cameraSettings->eye[2]
   };
 
+  // Copy the camera and Projection settings into the camera
   memcpy(&camera->settings, cameraSettings, sizeof(CameraSettings));
   memcpy(&camera->projectSettings, projectionSettings, sizeof(ProjectionSettings));
 
@@ -30,8 +31,10 @@ camera_init (CameraSettings *cameraSettings,
                    camera->projection,
                    camera->view);
 
+  // Set the Position of the Camera
   camera->position = position;
 
+  // Recalculate Flag set to true
   camera->isDirty = 0;
 
   return camera;
@@ -40,7 +43,8 @@ camera_init (CameraSettings *cameraSettings,
 void
 camera_update (Camera *camera)
 {
-  if (camera->isDirty){
+  // nothing has change no recalculation needed
+  if (camera->isDirty == 0){
     return;
   }
 
