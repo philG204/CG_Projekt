@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include "test_entries.h"
 
 int
 main (void)
 {
-  printf ("Hello World!\n");
+  test_matrixTransormation ();
+
+  return 0;
 }

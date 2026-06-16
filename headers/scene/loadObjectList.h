@@ -1,4 +1,3 @@
-
 #ifndef LOADOBJECTLIST_H
 #define LOADOBJECTLIST_H
 
@@ -18,4 +17,4 @@ typedef struct sceneObject {
  */
 sceneObject *load_object_list(const char * fileName, int *objectCount, int maxObjects);
 
-#endif
+#endif // LOADOBJECTLIST_H
