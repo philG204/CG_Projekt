@@ -38,8 +38,16 @@ main (void)
 
   float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-  scene_add_object (scene, "Box", "cube.obj", light, 1);
-
+  scene_add_object (scene, "Box1");
+  scene_add_object (scene, "Box2");
+  scene_add_object (scene, "Box3");
+  scene_add_object (scene, "Box4");
+  scene_add_object (scene, "Box5");
+  //scene_add_object (scene, "Teapot");
+  //scene_add_object (scene, "Earth");
+  
+  
+  
   while (!glfwWindowShouldClose (window))
     {
       // get input

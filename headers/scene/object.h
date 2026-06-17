@@ -23,12 +23,13 @@ typedef struct Material {
 
 typedef struct Object {
     char name[PATH_LENGTH];
+    char meshName[PATH_LENGTH];
     Mesh* mesh;
     Material* material;
     GLfloat* modelMatrix;
 } Object;
 
-Object* object_init(char* objDir, float light[], int transparency);
+Object* object_init(char* objDir);
 void object_transformation(Object* object, GLfloat* translation, GLfloat* scaling, GLfloat* rotation);
 void object_draw(Object* object, GLfloat* cameraMatrix);
 

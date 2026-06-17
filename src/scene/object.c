@@ -9,74 +9,120 @@
 #include "../../headers/renderer/texture.h"
 #include "../../headers/scene/light.h"
 #include "../../headers/scene/object.h"
+#include "../../headers/core/config.h"
+
+static void
+object_load_config(Object *object, const char *configPath)
+{
+    if (object == NULL || configPath == NULL || object->material == NULL) {
+        return;
+    }
+
+    char line[512];
+
+    if (config_find_line_by_key(configPath, "name", line, sizeof(line))) {
+        config_parse_string_value(line,
+                                  object->name,
+                                  sizeof(object->name));
+    }
+    printf("set name\n");
+    if (config_find_line_by_key(configPath, "mesh", line, sizeof(line))) {
+        config_parse_string_value(line,
+                                  object->meshName,
+                                  sizeof(object->meshName));
+    }
+      printf("set mesh name\n");
+      if(object->material->light == NULL){
+          printf("material light is null!!!\n");
+      }
+    if (object->material->light != NULL) {
+        if (config_find_line_by_key(configPath, "emissive", line, sizeof(line))) {
+            config_parse_float_value(line,
+                                     &object->material->light->emissive);
+            printf("emissive: %f\n", object->material->light->emissive);
+        }
+
+        if (config_find_line_by_key(configPath, "ambient", line, sizeof(line))) {
+            config_parse_float_value(line,
+                                     &object->material->light->ambient);
+        }
+
+        if (config_find_line_by_key(configPath, "diffuse", line, sizeof(line))) {
+            config_parse_float_value(line,
+                                     &object->material->light->diffuse);
+        }
+
+        if (config_find_line_by_key(configPath, "specular", line, sizeof(line))) {
+            config_parse_float_value(line,
+                                     &object->material->light->specular);
+        }
+    }
+
+    if (config_find_line_by_key(configPath, "transparency", line, sizeof(line))) {
+        float transparencyValue = 0.0f;
+
+        if (config_parse_float_value(line, &transparencyValue)) {
+            object->material->transparency = (int)transparencyValue;
+        }
+    }
+}
 
 Object *
-object_init (char *objDir, float light[], int transparency)
+object_init (char *objDir)
 {
+
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
-  MaterialLight *objectLight;
+  MaterialLight *materialLight = malloc (sizeof (MaterialLight));;
   Texture **textures = malloc(sizeof(Texture*) * MAX_TEXTURES);
 
   GLuint shaderProgram = shader_init (objDir);
-
-  if(shaderProgram == NULL){
-    printf("no shader program!!!\n");
+ 
+  if(shaderProgram == 0){
+    printf("object_init: no shader program for %s\n", objDir);
   }
 
   material->shader = shaderProgram;
   material->textures = textures;
   material->texture_count = 0;
-  // material->rgb_values = rgb_values;
-  // material->transparency = transparency;
-  material->light = NULL;
+  material->light = materialLight;
 
   object->material = material;
 
-  char texturePath[512];
-  snprintf (texturePath, sizeof (texturePath), "assets/%s/Textures/", objDir);
-  DIR *dir = opendir (texturePath);
+  char configPath[512];
 
-  if (dir == NULL)
-    {
-      printf ("Ordner konnte nicht geöffnet werden.\n");
-      return NULL;
-    }
+  snprintf(configPath,
+            sizeof(configPath),
+            "assets/%s/object.cfg",
+            objDir);
 
-  struct dirent *entry;
+  object_load_config(object, configPath);
+ 
+  material->texture_count = texture_init_from_config(objDir,
+                                                       material->shader,
+                                                       material->textures,
+                                                       MAX_TEXTURES);
 
-  while ((entry = readdir (dir)) != NULL)
-    {
-      if (strcmp (entry->d_name, ".") == 0
-          || strcmp (entry->d_name, "..") == 0)
-        {
-          continue;
-        }
-      char completeTexturePath[512];
-      snprintf (completeTexturePath, sizeof (completeTexturePath),
-                "assets/%s/Textures/%s", objDir, entry->d_name);
-      // printf("%s\n", completeTexturePath);
-      object->material->textures[object->material->texture_count]
-          = texture_init (completeTexturePath, object->material->shader,
-                          entry->d_name);
-      object->material->texture_count++;
-      if(object->material->textures[object->material->texture_count] == NULL){
-        printf("object_init: texture is NULL!!!\n");
-      }
-    }
-
-  closedir (dir);
-
-  MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  materialLight->emissive = light[0];
-  materialLight->ambient = light[1];
-  materialLight->diffuse = light[2];
-  materialLight->specular = light[3];
+  //materialLight->emissive = 0.0f;
+  //materialLight->ambient  = 0.2f;
+  //materialLight->diffuse  = 0.8f;
+  //materialLight->specular = 1.0f;
 
   object->material->light = materialLight;
 
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
+
+  
+  printf("object_init loaded:\n");
+    printf("  name         = %s\n", object->name);
+    printf("  meshName     = %s\n", object->meshName);
+    printf("  textures     = %d\n", object->material->texture_count);
+    printf("  transparency = %d\n", object->material->transparency);
+    printf("  emissive     = %f\n", object->material->light->emissive);
+    printf("  ambient      = %f\n", object->material->light->ambient);
+    printf("  diffuse      = %f\n", object->material->light->diffuse);
+    printf("  specular     = %f\n", object->material->light->specular);
 
   return object;
 }
@@ -102,44 +148,37 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *cameraMatrix)
 {
-  printf("entering object draw call\n");
-  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //static float angleView = 0.0f;
+  //angleView += 0.0001f;
+    //float radius = 2.5f;
+    //printf("angleView: %f\n", angleView);
 
-  static float angleView = 0.0f;
-  angleView += 0.0001f;
-  float radius = 5.0f;
-  //printf("angleView: %f\n", angleView);
+    //float time = (float)glfwGetTime();
+    
+    //GLfloat translateOffset[3] = {1.0f, 1.0f, 1.0f};
+    //translate(object->modelMatrix, object->modelMatrix, translateOffset);
 
-  float time = (float)glfwGetTime();
 
-  if(object == NULL){
-    printf("object in draw call is NULL !!!!\n");
-  }
+    //GLfloat rotationYVec = angleView;
+    //rotatey(object->modelMatrix, object->modelMatrix, rotationYVec);
+
+    //GLfloat rotationZVec = angleView;
+    //rotatez(object->modelMatrix, object->modelMatrix, rotationZVec);
   use_shader (object->material->shader);
-  printf("after using shader\n");
-
-   GLfloat rotationYVec = angleView;
-    rotatey(object->modelMatrix, object->modelMatrix, rotationYVec);
-
-    GLfloat rotationZVec = angleView;
-    rotatez(object->modelMatrix, object->modelMatrix, rotationZVec);
 
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shader, "viewProj"), 1, GL_FALSE,
       cameraMatrix);
   glUniformMatrix4fv (glGetUniformLocation (object->material->shader, "model"),
                       1, GL_FALSE, object->modelMatrix);
-  printf("after setting model and camera matrecies\n");
+ 
   glBindVertexArray (object->mesh->vao);
-  printf("after setting vao\n");
-  printf("texture count: %d\n", object->material->texture_count);
+
   for (int i = 0; i < object->material->texture_count; i++)
     {
       activate_texture (object->material->textures,
                         object->material->texture_count);
-                        printf("after activate textures\n");
     }
-    printf("after activate all textures\n");
+
   glDrawArrays (GL_TRIANGLES, 0, (GLsizei)object->mesh->vertexCount);
-  printf("Draw call finished for object %s\n", object->name);
 }

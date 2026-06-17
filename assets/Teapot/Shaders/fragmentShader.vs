@@ -78,6 +78,6 @@ out vec4 FragColor;
 
 void main(){
 
-    FragColor = texture(crateTex, tex);
-    //FragColor = vec4(tex.x, tex.y, 0.0, 1.0);
+    //FragColor = texture(crateTex, tex);
+    FragColor = vec4(tex.x, tex.y, 0.0, 1.0);
 }

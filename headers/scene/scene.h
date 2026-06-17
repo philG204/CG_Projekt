@@ -24,7 +24,7 @@ typedef struct Scene {
 } Scene;
 
 Scene* scene_init(char* meshDir, int mesh_count, char* scene_name, CameraSettings* cameraSettings, ProjectionSettings* projectionSettings);
-void scene_add_object(Scene* scene, char* objDir, char* mesh, float* materialLight, int transparancy);
+void scene_add_object(Scene *scene, char* object);
 void scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input);
 
 #endif // SCENE_H
