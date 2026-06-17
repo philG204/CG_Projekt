@@ -34,7 +34,7 @@ camera_init (CameraSettings *cameraSettings,
   // Set the Position of the Camera
   camera->position = position;
 
-  // Recalculate Flag set to true
+  // Recalculate Flag set to false
   camera->isDirty = 0;
 
   return camera;
