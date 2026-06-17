@@ -10,6 +10,7 @@
 #include "../renderer/mesh.h"
 #include "../renderer/texture.h"
 #include "../../headers/math/matrixTransformation.h"
+#include "../../headers/scene/loadObjectList.h"
 
 
 typedef struct Material {
@@ -27,6 +28,7 @@ typedef struct Object {
     Mesh* mesh;
     Material* material;
     GLfloat* modelMatrix;
+    sceneObject *sceneObjectData;
 } Object;
 
 Object* object_init(char* objDir);

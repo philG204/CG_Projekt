@@ -5,8 +5,7 @@
 
 #include "../../headers/scene/loadObjectList.h"
 
-// Pfad zu den Objektdateien
-# define PATH "assets/models/"
+
 
 
 /**
