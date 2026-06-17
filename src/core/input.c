@@ -2,6 +2,8 @@
 #include "../../headers/core/input.h"
 
 
+int keyboardpressed_left = 0;
+int keyboardpressed_right = 0;
 /*
  * @brief Processes input from the Keyboards and updates the active camera.
  *
@@ -10,13 +12,20 @@
  * @param *activeCamera  - pointer to current camera index
  */
 void processKeyInput (GLFWwindow *window, int cameraCount,  int* activeCamera) {
-    if(glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+    int left = (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS);
+    int right = (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+
+    if(left && !keyboardpressed_left) {
         *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
     }
 
-    if(glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+    if(right && !keyboardpressed_right){
         *activeCamera = (*activeCamera + 1) % cameraCount;
     }
+
+    keyboardpressed_left = left;
+    keyboardpressed_right = right;
+    
 }
 
 /*
