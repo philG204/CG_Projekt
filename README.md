@@ -1,5 +1,14 @@
 # CG_Projekt
 
+## Bedienung
+Das Programm lässt sich durch einen einfachen Aufruf an `make` kompilieren.
+
+Die exportierte Binary heißt `demo`.
+
+Mit `make run` lässt sich das Programm auch direkt kompilieren und neu ausführen.
+
+Eine Testsuite lässt sich mit `make test` ausführen.
+
 ## src/
 
 Enthält den gesamten C-Quellcode des Programms.
