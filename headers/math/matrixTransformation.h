@@ -1,7 +1,16 @@
+#ifndef MATRIX_TRANSFORMATION_H
+#define MATRIX_TRANSFORMATION_H
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+void normalize (GLfloat *v);
+void cross (const GLfloat *a, const GLfloat *b, GLfloat *out);
+GLfloat dot (const GLfloat *a, const GLfloat *b);
+
+void multiplyMatrices (GLfloat *out, const GLfloat *a, const GLfloat *b);
 
 void identity(GLfloat *out);
 void translate(GLfloat *out, const GLfloat *in, GLfloat *v);
@@ -14,4 +23,4 @@ void rotatez(GLfloat *out, const GLfloat *in, GLfloat angle);
 void lookAt(GLfloat *out, const GLfloat *eye, const GLfloat *center, const GLfloat *up);
 void perspective(GLfloat *out, float fovy, float aspect, float near, float far);
 
-void multiplyMatracies (GLfloat *out, const GLfloat *A, GLfloat *B);
+#endif // MATRIX_TRANSFORMATION_H
