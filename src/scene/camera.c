@@ -5,6 +5,7 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
 
+
 Camera *
 camera_init(CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
@@ -13,7 +14,8 @@ camera_init(CameraSettings *cameraSettings,
     if (camera == NULL)
     {
         return NULL;
-    }
+    } 
+
 
     camera->viewProjMatrix = malloc(16 * sizeof(GLfloat));
     if (camera->viewProjMatrix == NULL)
