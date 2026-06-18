@@ -12,6 +12,11 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/loadObjectList.h"
 
+typedef struct Transformation{
+    float translation[3];
+    float scaling[3];
+    float rotation[3];
+} Transformation;
 
 typedef struct Material {
     GLuint shader;
@@ -28,7 +33,7 @@ typedef struct Object {
     Mesh* mesh;
     Material* material;
     GLfloat* modelMatrix;
-    sceneObject *sceneObjectData;
+    Transformation* transformation;
 } Object;
 
 Object* object_init(char* objDir);

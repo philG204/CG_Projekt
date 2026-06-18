@@ -25,16 +25,13 @@ object_load_config(Object *object, const char *configPath)
                                   object->name,
                                   sizeof(object->name));
     }
-    printf("set name\n");
+
     if (config_find_line_by_key(configPath, "mesh", line, sizeof(line))) {
         config_parse_string_value(line,
                                   object->meshName,
                                   sizeof(object->meshName));
     }
-      printf("set mesh name\n");
-      if(object->material->light == NULL){
-          printf("material light is null!!!\n");
-      }
+      
     if (object->material->light != NULL) {
         if (config_find_line_by_key(configPath, "emissive", line, sizeof(line))) {
             config_parse_float_value(line,
@@ -65,6 +62,23 @@ object_load_config(Object *object, const char *configPath)
             object->material->transparency = (int)transparencyValue;
         }
     }
+
+    if (object->transformation != NULL) {
+        if (config_find_line_by_key(configPath, "translation", line, sizeof(line))) {
+            config_parse_vec3_value(line,
+                                     object->transformation->translation);
+        }
+
+        if (config_find_line_by_key(configPath, "scaling", line, sizeof(line))) {
+            config_parse_vec3_value(line,
+                                     object->transformation->scaling);
+        }
+
+        if (config_find_line_by_key(configPath, "rotaion", line, sizeof(line))) {
+            config_parse_vec3_value(line,
+                                     object->transformation->rotation);
+        }
+    }
 }
 
 Object *
@@ -75,6 +89,7 @@ object_init (char *objDir)
   Material *material = malloc (sizeof (Material));
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));;
   Texture **textures = malloc(sizeof(Texture*) * MAX_TEXTURES);
+  Transformation *transformation = malloc(sizeof(Transformation*));
 
   GLuint shaderProgram = shader_init (objDir);
  
@@ -88,6 +103,7 @@ object_init (char *objDir)
   material->light = materialLight;
 
   object->material = material;
+  object->transformation = transformation;
 
   char configPath[512];
 
@@ -123,6 +139,9 @@ object_init (char *objDir)
     printf("  ambient      = %f\n", object->material->light->ambient);
     printf("  diffuse      = %f\n", object->material->light->diffuse);
     printf("  specular     = %f\n", object->material->light->specular);
+    printf("  translation  = %f\n", object->transformation->translation[0]);
+    printf("  scaling      = %f\n", object->transformation->scaling[0]);
+    printf("  rotation     = %f\n", object->transformation->rotation[0]);
 
   return object;
 }

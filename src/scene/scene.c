@@ -91,41 +91,7 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
 
   scene->meshes = meshes;
   closedir (dirMesh);
-/*
-  char texturePath[512];
-  snprintf (texturePath, sizeof (texturePath), "assets/%s", textureDir);
-  printf ("%s\n", texturePath);
-  DIR *dirTexture = opendir (texturePath);
 
-  if (dirTexture == NULL)
-    {
-      printf ("Ordner konnte nicht geöffnet werden.\n");
-      return NULL;
-    }
-
-  struct dirent *entryTexture;
-
-  while ((entryTexture = readdir (dir)) != NULL)
-    {
-      if (strcmp (entryTexture->d_name, ".") == 0
-          || strcmp (entryTexture->d_name, "..") == 0)
-        {
-          continue;
-        }
-      char completeTexturePath[512];
-      snprintf (completeTexturePath, sizeof (completeTexturePath), "assets/%s/%s",
-                meshDir, entryTexture->d_name);
-      printf ("%s\n", completeTexturePath);
-
-      printf ("before texture_init\n");
-      meshes[scene->texture_count] = texture_init (completeTexturePath);
-      printf ("after texture_init\n");
-      scene->texture_count++;
-    }
-
-  scene->textures = textures;
-  closedir (dirTexture);
-*/
   return scene;
 }
 
@@ -200,37 +166,6 @@ scene_add_object(Scene *scene, char* objDir)
     scene->object_count++;
 }
 
-/*
-void
-scene_add_object (Scene *scene, char* objDir, char *mesh, float *materialLight,
-                  int transparancy)
-{
-  Object *object = malloc (sizeof (Object));
-
-  object = object_init (objDir, materialLight, transparancy);
-  
-  char meshName[256];
-  getNameWithoutExtension(mesh, meshName, sizeof(meshName));
-  strncpy(object->name, objDir, sizeof(object->name) - 1);
-  object->name[sizeof(object->name) - 1] = '\0';
-  printf("object name: %s\n", object->name);
-
-  for (int i = 0; i < scene->mesh_count; i++)
-    {
-      if(strcmp(scene->meshes[i]->name, meshName) != 0){
-        printf("strcmp: %s, %s\n", scene->meshes[i]->name, meshName);
-        perror("strcmp");
-      }
-      if (strcmp(scene->meshes[i]->name, meshName) == 0)
-        {
-          printf("setting mesh to object\n");
-          object->mesh = scene->meshes[i];
-        }
-    }
-  scene->objects[scene->object_count] = object;
-  scene->object_count++;
-}
-*/
 void
 scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input)
 {
@@ -258,10 +193,11 @@ scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input
             continue;
         }
 
+        
         identity(scene->objects[j]->modelMatrix);
-
+        /*
         if (strcmp(scene->objects[j]->name, "Box1") == 0) {
-            GLfloat translateOffset[3] = {-3.5f, 0.0f, 2.0f};
+            //GLfloat translateOffset[3] = {-3.5f, 0.0f, 2.0f};
             object_transformation(scene->objects[j], translateOffset, NULL, boxAngle);
         }
 
@@ -280,56 +216,9 @@ scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input
             GLfloat translateOffset[3] = {2.0f, 0.0f, 0.0f};
             object_transformation(scene->objects[j], translateOffset, NULL, teapotAngle);
         }
-
+        */
+        object_transformation(scene->objects[j], scene->objects[j]->transformation->translation, scene->objects[j]->transformation->scaling, scene->objects[j]->transformation->rotation);
         object_draw(scene->objects[j], scene->camera->viewProjMatrix);
     }
 }
 
-/*
-void
-scene_update (Scene* scene, sceneObject* objectList, int objectCount, float input)
-{
-  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  
-  for(int i = 0;i < scene->object_count; i++){
-    for(int j = 0;j < objectCount; j++){
-      printf("Object names are matching object in scene: %s, object in sceneList: %s \n", scene->objects[i]->name, objectList[j].objectName);
-        
-      if(scene->objects[i]->name == objectList[j].objectName){
-        //object_transformation(scene->objects[i], objectList->translation, objectList->scaling, objectList->rotation);
-        //object_draw(scene->objects[i], scene->camera->viewProjMatrix);
-      }
-    }
-  }
-  
-  
-  //for(int i=0;i<scene->object_count;i++){
-    //object_transformation();
-  //}
-
-  for(int j = 0;j < scene->object_count; j++){
-    if(strcmp(scene->objects[j]->name, "Box") == 0){
-      static GLfloat angleView[3] = {0.02f, 0.05f, 0.03f};
-      angleView[0] += 0.02f;
-      angleView[1] += 0.02f;
-      angleView[2] += 0.02f;
-      //float radius = 5.0f;
-      //printf("angleView: %f\n", angleView);
-      GLfloat translateOffset[3] = {1.0f, 0.0f, 2.0f};
-      object_transformation(scene->objects[j], translateOffset, NULL, angleView);
-    }
-    if(strcmp(scene->objects[j]->name, "Teapot") == 0){
-      GLfloat translateOffset[3] = {4.0f, 0.0f, 0.0f};
-      static GLfloat angleView[3] = {0.001f, 0.002f, 0.003f};
-      angleView[0] += 0.02f;
-      angleView[1] += 0.02f;
-      angleView[2] += 0.02f;
-      //float radius = 5.0f;
-      //printf("angleView: %f\n", angleView);
-
-      object_transformation(scene->objects[j], translateOffset, NULL, angleView);
-    }
-    object_draw(scene->objects[j], scene->camera->viewProjMatrix);
-  }
-}
-*/
