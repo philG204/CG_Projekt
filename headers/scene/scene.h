@@ -10,7 +10,7 @@
 #include "light.h"
 #include "object.h"
 #include "../renderer/mesh.h"
-#include "../scene/loadObjectList.h"
+#include "loadObjectList.h"
 
 
 typedef struct Scene {

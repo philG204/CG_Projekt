@@ -10,7 +10,7 @@
 #include "../renderer/mesh.h"
 #include "../renderer/texture.h"
 #include "../../headers/math/matrixTransformation.h"
-#include "../../headers/scene/loadObjectList.h"
+#include "loadObjectList.h"
 
 typedef struct Transformation{
     float translation[3];
