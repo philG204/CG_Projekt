@@ -24,9 +24,6 @@ load_object_list (const char *filename, sceneObject objectList[])
       return -1;
     }
 
-  //sceneObject *objectList = NULL;
-  //objectList = malloc (sizeof (sceneObject) * maxObjects);
-
   int count = 0;
   char buffer[512];
 
