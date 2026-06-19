@@ -4,7 +4,7 @@
 #define OBJECTNAME_LENGTH 256
 
 // Pfad zu den Objektdateien
-# define PATH "assets/test/"
+# define PATH "assets/"
 
 
 // Speichert den Pfad zur Objekt-Datei und die Position, Rotation, und Skalierung des Objekts.
