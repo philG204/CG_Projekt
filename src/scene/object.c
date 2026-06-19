@@ -98,7 +98,7 @@ object_init (char *objDir)
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
   ;
   Texture **textures = malloc (sizeof (Texture *) * MAX_TEXTURES);
-  Transformation *transformation = malloc (sizeof (Transformation *));
+  Transformation *transformation = malloc (sizeof (Transformation));
 
   GLuint shaderProgram = shader_init (objDir);
 
@@ -138,7 +138,7 @@ object_init (char *objDir)
   printf ("  name         = %s\n", object->name);
   printf ("  meshName     = %s\n", object->meshName);
   printf ("  textures     = %d\n", object->material->texture_count);
-  printf ("  transparency = %d\n", object->material->transparency);
+  printf ("  transparency = %f\n", object->material->transparency);
   printf ("  emissive     = %f\n", object->material->light->emissive);
   printf ("  ambient      = %f\n", object->material->light->ambient);
   printf ("  diffuse      = %f\n", object->material->light->diffuse);
