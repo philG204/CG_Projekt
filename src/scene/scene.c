@@ -6,33 +6,7 @@
 
 #include "../../headers/scene/scene.h"
 #include "../../headers/scene/loadObjectList.h"
-
-static void 
-getNameWithoutExtension(const char *path, char *out, size_t outSize)
-{
-    // letzten Slash suchen
-    const char *filename = strrchr(path, '/');
-
-    if (filename)
-        filename++;   // Slash überspringen
-    else
-        filename = path;
-
-    // letzte Dateiendung suchen
-    const char *dot = strrchr(filename, '.');
-
-    size_t len;
-    if (dot)
-        len = dot - filename;
-    else
-        len = strlen(filename);
-
-    if (len >= outSize)
-        len = outSize - 1;
-
-    strncpy(out, filename, len);
-    out[len] = '\0';
-}
+#include "../../headers/utilities/fileOperations.h"
 
 Scene *
 scene_init (char *meshDir, int mesh_count, char *scene_name,
@@ -195,28 +169,7 @@ scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input
 
         
         identity(scene->objects[j]->modelMatrix);
-        /*
-        if (strcmp(scene->objects[j]->name, "Box1") == 0) {
-            //GLfloat translateOffset[3] = {-3.5f, 0.0f, 2.0f};
-            object_transformation(scene->objects[j], translateOffset, NULL, boxAngle);
-        }
-
-        if (strcmp(scene->objects[j]->name, "Box2") == 0) {
-            GLfloat translateOffset[3] = {-2.0f, 0.0f, -4.0f};
-            object_transformation(scene->objects[j], translateOffset, NULL, boxAngle);
-        }
-
-
-        if (strcmp(scene->objects[j]->name, "Box3") == 0) {
-            GLfloat translateOffset[3] = {0.0f, 0.0f, -1.0f};
-            object_transformation(scene->objects[j], translateOffset, NULL, boxAngle);
-        }
-
-        if (strcmp(scene->objects[j]->name, "Teapot") == 0) {
-            GLfloat translateOffset[3] = {2.0f, 0.0f, 0.0f};
-            object_transformation(scene->objects[j], translateOffset, NULL, teapotAngle);
-        }
-        */
+        
         object_transformation(scene->objects[j], scene->objects[j]->transformation->translation, scene->objects[j]->transformation->scaling, scene->objects[j]->transformation->rotation);
         object_draw(scene->objects[j], scene->camera->viewProjMatrix);
     }

@@ -167,22 +167,6 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *cameraMatrix)
 {
-  //static float angleView = 0.0f;
-  //angleView += 0.0001f;
-    //float radius = 2.5f;
-    //printf("angleView: %f\n", angleView);
-
-    //float time = (float)glfwGetTime();
-    
-    //GLfloat translateOffset[3] = {1.0f, 1.0f, 1.0f};
-    //translate(object->modelMatrix, object->modelMatrix, translateOffset);
-
-
-    //GLfloat rotationYVec = angleView;
-    //rotatey(object->modelMatrix, object->modelMatrix, rotationYVec);
-
-    //GLfloat rotationZVec = angleView;
-    //rotatez(object->modelMatrix, object->modelMatrix, rotationZVec);
   use_shader (object->material->shader);
 
   glUniformMatrix4fv (

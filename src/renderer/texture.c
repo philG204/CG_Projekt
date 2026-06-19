@@ -7,7 +7,7 @@
 
 #include "../../headers/renderer/texture.h"
 #include "../../headers/stb_image.h"
-#include "../../headers/core/config.h"
+#include "../../headers/utilities/config.h"
 
 #define MAX_CACHED_TEXTURES 128
 
@@ -142,94 +142,6 @@ texture_init_from_config(const char *configPath,
 
     return loadedCount;
 }
-/*
-int
-texture_init_from_config(const char *configPath,
-                         GLuint shader,
-                         Texture **textures,
-                         int maxTextures)
-{
-    char completeConfigPath[512];
-    snprintf (completeConfigPath, sizeof (completeConfigPath), "assets/%s/object.cfg", configPath);
-    printf("open file: %s\n",completeConfigPath);
-    FILE *file = fopen(completeConfigPath, "r");
-
-    if (file == NULL) {
-        printf("texture_init_from_config: config konnte nicht geöffnet werden: %s\n",
-               configPath);
-        return 0;
-    }
-
-    char line[512];
-    char textureLine[512];
-    int foundTextureLine = 0;
-
-    textureLine[0] = '\0';
-
-    while (fgets(line, sizeof(line), file) != NULL) {
-        char *dataLine = trim(line);
-
-        if (dataLine[0] == '\0') {
-            continue;
-        }
-
-        if (dataLine[0] == '/' && dataLine[1] == '/') {
-            continue;
-        }
-
-        if (line_has_key(dataLine, "textures")) {
-            strncpy(textureLine, dataLine, sizeof(textureLine) - 1);
-            textureLine[sizeof(textureLine) - 1] = '\0';
-            foundTextureLine = 1;
-            break;
-        }
-    }
-
-    fclose(file);
-
-    if (!foundTextureLine) {
-        printf("texture_init_from_config: keine textures-Zeile gefunden in %s\n",
-               configPath);
-        return 0;
-    }
-
-    char textureNames[128][256];
-
-    if (maxTextures > 128) {
-        maxTextures = 128;
-    }
-
-    int textureCount = parse_texture_list(textureLine,
-                                          textureNames,
-                                          maxTextures);
-
-    int loadedCount = 0;
-
-    for (int i = 0; i < textureCount; i++) {
-        char completeTexturePath[512];
-
-        snprintf(completeTexturePath,
-                 sizeof(completeTexturePath),
-                 "assets/Textures/%s",
-                 textureNames[i]);
-
-        Texture *texture = texture_get_or_load(completeTexturePath,
-                                               shader,
-                                               textureNames[i]);
-
-        if (texture == NULL) {
-            printf("texture_init_from_config: texture konnte nicht geladen werden: %s\n",
-                   completeTexturePath);
-            continue;
-        }
-
-        textures[loadedCount] = texture;
-        loadedCount++;
-    }
-
-    return loadedCount;
-}
-*/
 
 Texture *
 texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
