@@ -136,7 +136,7 @@ rotatex(GLfloat *out, const GLfloat *in, GLfloat angle)
     R[10] = in[6] * (-s) + in[10] * c;
     R[11] = in[7] * (-s) + in[11] * c;
 
-    multiplyMatracies(out, in, R);
+    multiplyMatrices(out, in, R);
 }
 
 void
