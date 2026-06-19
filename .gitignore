@@ -1,4 +1,5 @@
 *.o
 .vscode
 demo
+compile_commands.json
 run_tests

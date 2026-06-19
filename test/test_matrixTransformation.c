@@ -1,0 +1,236 @@
+#include <GL/glew.h>
+#include <math.h>
+
+#include "../headers/math/matrixTransformation.h"
+#include "framework.h"
+#include "test_entries.h"
+
+int
+test_normalize_vector (void)
+{
+  GLfloat v[3] = { 3.0f, 4.0f, 0.0f };
+
+  normalize (v);
+
+  return float_equal (v[0], 0.6f) && float_equal (v[1], 0.8f)
+         && float_equal (v[2], 0.0f);
+}
+
+int
+test_normalize_zero_vector (void)
+{
+  GLfloat v[3] = { 0.0f, 0.0f, 0.0f };
+
+  normalize (v);
+
+  return float_equal (v[0], 0.0f) && float_equal (v[1], 0.0f)
+         && float_equal (v[2], 0.0f);
+}
+
+int
+test_cross_product (void)
+{
+  GLfloat a[3] = { 1.0f, 0.0f, 0.0f };
+  GLfloat b[3] = { 0.0f, 1.0f, 0.0f };
+  GLfloat out[3];
+
+  cross (a, b, out);
+
+  return float_equal (out[0], 0.0f) && float_equal (out[1], 0.0f)
+         && float_equal (out[2], 1.0f);
+}
+
+int
+test_dot_product (void)
+{
+  GLfloat a[3] = { 1, 2, 3 };
+  GLfloat b[3] = { 4, 5, 6 };
+
+  return float_equal (dot (a, b), 32.0f);
+}
+
+int
+test_identity (void)
+{
+  GLfloat m[16];
+
+  identity (m);
+
+  GLfloat expected[16] = { 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };
+
+  return matrix_equal (m, expected);
+}
+
+int
+test_multiply_identity (void)
+{
+  GLfloat a[16];
+  GLfloat b[16];
+  GLfloat out[16];
+
+  identity (a);
+  identity (b);
+
+  multiplyMatrices (out, a, b);
+
+  return matrix_equal (out, a);
+}
+
+int
+test_multiply_alias_output_left_operand (void)
+{
+  GLfloat a[16];
+  GLfloat b[16];
+
+  identity (a);
+  identity (b);
+
+  b[12] = 3.0f;
+
+  multiplyMatrices (a, a, b);
+
+  return float_equal (a[12], 3.0f);
+}
+
+int
+test_multiply_alias_output_right_operand (void)
+{
+  GLfloat a[16];
+  GLfloat b[16];
+
+  identity (a);
+  identity (b);
+
+  b[12] = 7.0f;
+
+  multiplyMatrices (b, a, b);
+
+  return float_equal (b[12], 7.0f);
+}
+
+int
+test_translate_identity (void)
+{
+  GLfloat in[16];
+  GLfloat out[16];
+  GLfloat v[3] = { 1.0f, 2.0f, 3.0f };
+
+  identity (in);
+
+  translate (out, in, v);
+
+  return float_equal (out[12], 1.0f) && float_equal (out[13], 2.0f)
+         && float_equal (out[14], 3.0f) && float_equal (out[15], 1.0f);
+}
+
+int
+test_translate_in_place (void)
+{
+  GLfloat m[16];
+  GLfloat v[3] = { 5.0f, 6.0f, 7.0f };
+
+  identity (m);
+
+  translate (m, m, v);
+
+  return float_equal (m[12], 5.0f) && float_equal (m[13], 6.0f)
+         && float_equal (m[14], 7.0f);
+}
+
+int
+test_rotatez_90deg (void)
+{
+  GLfloat m[16];
+
+  identity (m);
+
+  rotatez (m, m, (GLfloat)(M_PI / 2.0));
+
+  return float_equal (m[0], 0.0f) && float_equal (m[1], 1.0f)
+         && float_equal (m[4], -1.0f) && float_equal (m[5], 0.0f);
+}
+
+int
+test_rotatey_90deg (void)
+{
+  GLfloat m[16];
+
+  identity (m);
+
+  rotatey (m, m, (GLfloat)(M_PI / 2.0));
+
+  return float_equal (m[0], 0.0f) && float_equal (m[2], -1.0f)
+         && float_equal (m[8], 1.0f) && float_equal (m[10], 0.0f);
+}
+
+int
+test_scale (void)
+{
+  GLfloat m[16];
+  GLfloat v[3] = { 2.0f, 3.0f, 4.0f };
+
+  identity (m);
+
+  scale (m, m, v);
+
+  return float_equal (m[0], 2.0f) && float_equal (m[5], 3.0f)
+         && float_equal (m[10], 4.0f) && float_equal (m[15], 1.0f);
+}
+
+int
+test_lookat_origin (void)
+{
+  GLfloat out[16];
+
+  GLfloat eye[3] = { 0.0f, 0.0f, 0.0f };
+  GLfloat center[3] = { 0.0f, 0.0f, -1.0f };
+  GLfloat up[3] = { 0.0f, 1.0f, 0.0f };
+
+  lookAt (out, eye, center, up);
+
+  GLfloat expected[16];
+
+  identity (expected);
+
+  return matrix_equal (out, expected);
+}
+
+int
+test_perspective_basic (void)
+{
+  GLfloat m[16];
+
+  perspective (m, (GLfloat)(M_PI / 2.0f), 1.0f, 1.0f, 100.0f);
+
+  return float_equal (m[0], 1.0f) && float_equal (m[5], 1.0f)
+         && float_equal (m[11], -1.0f) && float_equal (m[10], -101.0f / 99.0f)
+         && float_equal (m[14], -200.0f / 99.0f);
+}
+
+void
+test_matrixTransormation (void)
+{
+  run_test ("normalize vector", test_normalize_vector);
+  run_test ("normalize zero vector", test_normalize_zero_vector);
+
+  run_test ("cross product", test_cross_product);
+  run_test ("dot product", test_dot_product);
+
+  run_test ("identity", test_identity);
+
+  run_test ("multiply identity", test_multiply_identity);
+  run_test ("multiply alias left", test_multiply_alias_output_left_operand);
+  run_test ("multiply alias right", test_multiply_alias_output_right_operand);
+
+  run_test ("translate", test_translate_identity);
+  run_test ("translate in place", test_translate_in_place);
+
+  run_test ("rotatez 90deg", test_rotatez_90deg);
+  run_test ("rotatey 90deg", test_rotatey_90deg);
+
+  run_test ("scale", test_scale);
+
+  run_test ("lookAt canonical", test_lookat_origin);
+
+  run_test ("perspective", test_perspective_basic);
+}

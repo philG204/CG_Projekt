@@ -25,7 +25,10 @@ SRC = \
 OBJ = $(SRC:.c=.o)
 
 TEST_SRC = \
-	test/main.c
+	src/math/matrixTransformation.c \
+	test/framework.c \
+	test/main.c \
+	test/test_matrixTransformation.c
 
 TEST_OBJ = $(TEST_SRC:.c=.o)
 

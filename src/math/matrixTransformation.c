@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void
+void
 normalize (GLfloat *v)
 {
   GLfloat len = sqrtf (v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
@@ -16,7 +16,7 @@ normalize (GLfloat *v)
     }
 }
 
-static void
+void
 cross (const GLfloat *a, const GLfloat *b, GLfloat *out)
 {
   out[0] = a[1] * b[2] - a[2] * b[1];
@@ -24,14 +24,14 @@ cross (const GLfloat *a, const GLfloat *b, GLfloat *out)
   out[2] = a[0] * b[1] - a[1] * b[0];
 }
 
-static GLfloat
+GLfloat
 dot (const GLfloat *a, const GLfloat *b)
 {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
 void
-multiplyMatracies (GLfloat *out, const GLfloat *A, GLfloat *B)
+multiplyMatrices (GLfloat *out, const GLfloat *A, GLfloat *B)
 {
   GLfloat temp[16];
 
@@ -77,7 +77,7 @@ translate (GLfloat *out, const GLfloat *in, GLfloat *v)
   T[13] = v[1];
   T[14] = v[2];
 
-  multiplyMatracies (out, in, T);
+  multiplyMatrices (out, in, T);
 }
 
 void
@@ -94,7 +94,7 @@ rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
   R[1] = s;
   R[5] = c;
 
-  multiplyMatracies (out, in, R);
+  multiplyMatrices (out, in, R);
 }
 
 void
@@ -111,7 +111,7 @@ rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
   R[8] = s;
   R[10] = c;
 
-  multiplyMatracies (out, in, R);
+  multiplyMatrices (out, in, R);
 }
 
 void 
@@ -149,7 +149,7 @@ scale (GLfloat *out, GLfloat *in, const GLfloat *v)
   S[5] = v[1];
   S[10] = v[2];
 
-  multiplyMatracies (out, in, S);
+  multiplyMatrices (out, in, S);
 }
 
 void
@@ -197,7 +197,7 @@ perspective (GLfloat *out, float fovy, float aspect, float near, float far)
 
   out[0] = 1.0f / (aspect * tanHalfFovy);
   out[5] = 1.0f / tanHalfFovy;
-  out[10] = (-far + near) / (far - near);
+  out[10] = -(far + near) / (far - near);
   out[11] = -1.0f;
   out[14] = -(2.0f * far * near) / (far - near);
 }
