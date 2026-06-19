@@ -12,8 +12,9 @@ test_normalize_vector (void)
 
   normalize (v);
 
-  return float_equal (v[0], 0.6f) && float_equal (v[1], 0.8f)
-         && float_equal (v[2], 0.0f);
+  GLfloat expected[3] = { 0.6f, 0.8f, 0.0f };
+
+  return vector_equal (v, expected);
 }
 
 int
@@ -23,8 +24,9 @@ test_normalize_zero_vector (void)
 
   normalize (v);
 
-  return float_equal (v[0], 0.0f) && float_equal (v[1], 0.0f)
-         && float_equal (v[2], 0.0f);
+  GLfloat expected[3] = { 0.0f, 0.0f, 0.0f };
+
+  return vector_equal (v, expected);
 }
 
 int
@@ -36,8 +38,9 @@ test_cross_product (void)
 
   cross (a, b, out);
 
-  return float_equal (out[0], 0.0f) && float_equal (out[1], 0.0f)
-         && float_equal (out[2], 1.0f);
+  GLfloat expected[3] = { 0.0f, 0.0f, 1.0f };
+
+  return vector_equal (out, expected);
 }
 
 int
