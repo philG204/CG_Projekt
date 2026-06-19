@@ -6,6 +6,7 @@
 GLuint
 shader_init (char *objDir)
 {
+  printf ("entering shader_init\n");
   GLuint shaderProgramId;
 
   char vertexShaderPath[512] = { 0 };
