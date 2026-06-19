@@ -35,4 +35,4 @@ config_find_line_by_key(const char *configPath,
                         char *outLine,
                         size_t outLineSize);
 
-#endif
+#endif // CONFIG_H
