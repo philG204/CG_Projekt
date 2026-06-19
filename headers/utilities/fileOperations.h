@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void 
+void 
 getNameWithoutExtension(const char *path, char *out, size_t outSize);
 
 #endif // FILE_OPERATIONS_H

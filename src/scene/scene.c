@@ -171,7 +171,7 @@ scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input
         identity(scene->objects[j]->modelMatrix);
         
         object_transformation(scene->objects[j], scene->objects[j]->transformation->translation, scene->objects[j]->transformation->scaling, scene->objects[j]->transformation->rotation);
-        object_draw(scene->objects[j], scene->camera->viewProjMatrix);
+        object_draw(scene->objects[j], scene->camera->viewProj);
     }
 }
 

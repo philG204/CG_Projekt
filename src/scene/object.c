@@ -9,7 +9,7 @@
 #include "../../headers/renderer/texture.h"
 #include "../../headers/scene/light.h"
 #include "../../headers/scene/object.h"
-#include "../../headers/core/config.h"
+#include "../../headers/utilities/config.h"
 
 static void
 object_load_config(Object *object, const char *configPath)

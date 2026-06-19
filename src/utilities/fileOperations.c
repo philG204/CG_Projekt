@@ -3,7 +3,7 @@
 
 #include "../../headers/utilities/fileOperations.h"
 
-static void 
+void 
 getNameWithoutExtension(const char *path, char *out, size_t outSize)
 {
     // letzten Slash suchen

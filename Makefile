@@ -8,7 +8,8 @@ LDFLAGS += $(shell pkg-config --libs glew)
 SRC = \
 	src/core/input.c \
 	src/core/window.c \
-	src/core/config.c \
+	src/utilities/config.c \
+	src/utilities/fileOperations.c \
 	src/math/matrixTransformation.c \
 	src/renderer/loadObj.c \
 	src/renderer/loadShader.c \

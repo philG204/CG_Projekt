@@ -1,4 +1,4 @@
-#include "../../headers/core/config.h"
+#include "../../headers/utilities/config.h"
 
 #include <ctype.h>
 #include <stdio.h>
