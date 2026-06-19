@@ -3,13 +3,17 @@
 
 #define PATH_LENGTH 256
 
+// Pfad zu den Objektdateien
+# define PATH "assets/models/"
+
 
 // Speichert den Pfad zur Objekt-Datei und die Position, Rotation, und Skalierung des Objekts.
 typedef struct sceneObject {
-    char filename[PATH_LENGTH];             
+    char filename[PATH_LENGTH];    
+    char objectName[PATH_LENGTH];         
     GLfloat translation[4];   
     GLfloat rotation[3];        
-    GLfloat scaling;          
+    GLfloat scaling[3];          
 } sceneObject;
 
 /**

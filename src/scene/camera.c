@@ -7,9 +7,10 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
 
+
 Camera *
-camera_init (CameraSettings *cameraSettings,
-             ProjectionSettings *projectionSettings)
+camera_init(CameraSettings *cameraSettings,
+            ProjectionSettings *projectionSettings)
 {
   Camera *camera = malloc (sizeof (Camera));
   Pos position = { .x = cameraSettings->eye[0],
@@ -37,7 +38,7 @@ camera_init (CameraSettings *cameraSettings,
   // Recalculate Flag set to false
   camera->isDirty = 0;
 
-  return camera;
+    return camera;
 }
 
 void

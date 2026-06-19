@@ -2,9 +2,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <string.h>
 
 #include "../../headers/renderer/loadObj.h"
 #include "../../headers/renderer/mesh.h"
+
+static void 
+getNameWithoutExtension(const char *path, char *out, size_t outSize)
+{
+    // letzten Slash suchen
+    const char *filename = strrchr(path, '/');
+
+    if (filename)
+        filename++;   // Slash überspringen
+    else
+        filename = path;
+
+    // letzte Dateiendung suchen
+    const char *dot = strrchr(filename, '.');
+
+    size_t len;
+    if (dot)
+        len = dot - filename;
+    else
+        len = strlen(filename);
+
+    if (len >= outSize)
+        len = outSize - 1;
+
+    strncpy(out, filename, len);
+    out[len] = '\0';
+}
+ 
 
 Mesh *
 mesh_init (char *meshFile)
@@ -15,6 +44,8 @@ mesh_init (char *meshFile)
   size_t vertexCount = 0;
 
   Mesh *mesh = malloc (sizeof (Mesh));
+  mesh->name = malloc(strlen(meshFile) + 1);
+
 
   float *vertices = loadObj (meshFile, &vertexCount);
   printf ("loaded vertecies\n");
@@ -24,6 +55,7 @@ mesh_init (char *meshFile)
       vertexCount = 0;
       vao = 0;
       vbo = 0;
+
       return NULL;
     }
 
@@ -54,7 +86,10 @@ mesh_init (char *meshFile)
   mesh->vbo = vbo;
   mesh->vao = vao;
   mesh->vertexCount = vertexCount;
-
+  char name[256];
+  getNameWithoutExtension(meshFile, name, sizeof(name));
+  strcpy(mesh->name, name);
+  
   free (vertices);
 
   printf ("OBJ geladen: %s, VAO=%u, VBO=%u, Vertices=%zu\n", meshFile, vao,
