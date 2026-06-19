@@ -6,7 +6,7 @@
 GLuint
 shader_init (char *objDir)
 {
-  printf("entering shader_init\n");
+  printf ("entering shader_init\n");
   GLuint shaderProgramId;
 
   char vertexShaderPath[512] = { 0 };
@@ -73,7 +73,7 @@ shader_init (char *objDir)
     }
   glValidateProgram (shaderProgramId);
   glGetProgramiv (shaderProgramId, GL_VALIDATE_STATUS, &status);
-  
+
   return shaderProgramId;
 }
 

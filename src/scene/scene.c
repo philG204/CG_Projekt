@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../headers/scene/scene.h"
 #include "../../headers/scene/loadObjectList.h"
+#include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
 Scene *
@@ -13,16 +13,16 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
             CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
-  printf("entering scene_init\n");
+  printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
   LightDirection light;
-  Mesh **meshes = malloc(sizeof(Mesh *) * MAX_MESHES);
-  Object **objects = malloc(sizeof(Object*) * MAX_OBJECTS);
+  Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
+  Object **objects = malloc (sizeof (Object *) * MAX_OBJECTS);
   scene->mesh_count = 0;
   scene->object_count = 0;
   scene->objects = objects;
-  scene->camera = malloc(sizeof (Camera));
+  scene->camera = malloc (sizeof (Camera));
 
   light.x = 0.0f;
   light.y = 4.0f;
@@ -70,108 +70,119 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
 }
 
 void
-scene_add_object(Scene *scene, char* objDir)
+scene_add_object (Scene *scene, char *objDir)
 {
-  printf("entering scene_add_object\n");
+  printf ("entering scene_add_object\n");
   Object *object = object_init (objDir);
 
-    if (scene == NULL) {
-        printf("scene_add_object: scene is NULL\n");
-        return;
+  if (scene == NULL)
+    {
+      printf ("scene_add_object: scene is NULL\n");
+      return;
     }
 
-    if (object == NULL) {
-        printf("scene_add_object: object is NULL\n");
-        return;
+  if (object == NULL)
+    {
+      printf ("scene_add_object: object is NULL\n");
+      return;
     }
 
-    if (scene->object_count >= MAX_OBJECTS) {
-        printf("scene_add_object: MAX_OBJECTS erreicht\n");
-        return;
+  if (scene->object_count >= MAX_OBJECTS)
+    {
+      printf ("scene_add_object: MAX_OBJECTS erreicht\n");
+      return;
     }
 
-    if (object->meshName[0] == '\0') {
-        printf("scene_add_object: object %s hat keinen meshName aus der Config\n",
-               object->name);
-        return;
+  if (object->meshName[0] == '\0')
+    {
+      printf (
+          "scene_add_object: object %s hat keinen meshName aus der Config\n",
+          object->name);
+      return;
     }
 
-    char meshNameWithoutExtension[256];
+  char meshNameWithoutExtension[256];
 
-    getNameWithoutExtension(object->meshName,
-                            meshNameWithoutExtension,
-                            sizeof(meshNameWithoutExtension));
+  getNameWithoutExtension (object->meshName, meshNameWithoutExtension,
+                           sizeof (meshNameWithoutExtension));
 
-    printf("scene_add_object: object = %s\n", object->name);
-    printf("scene_add_object: mesh from config = %s\n", object->meshName);
-    printf("scene_add_object: mesh without extension = %s\n",
-           meshNameWithoutExtension);
+  printf ("scene_add_object: object = %s\n", object->name);
+  printf ("scene_add_object: mesh from config = %s\n", object->meshName);
+  printf ("scene_add_object: mesh without extension = %s\n",
+          meshNameWithoutExtension);
 
-    object->mesh = NULL;
+  object->mesh = NULL;
 
-    for (int i = 0; i < scene->mesh_count; i++) {
-        if (scene->meshes[i] == NULL) {
-            continue;
+  for (int i = 0; i < scene->mesh_count; i++)
+    {
+      if (scene->meshes[i] == NULL)
+        {
+          continue;
         }
 
-        printf("scene_add_object: compare '%s' with '%s'\n",
-               scene->meshes[i]->name,
-               meshNameWithoutExtension);
+      printf ("scene_add_object: compare '%s' with '%s'\n",
+              scene->meshes[i]->name, meshNameWithoutExtension);
 
-        if (strcmp(scene->meshes[i]->name, meshNameWithoutExtension) == 0) {
-            object->mesh = scene->meshes[i];
+      if (strcmp (scene->meshes[i]->name, meshNameWithoutExtension) == 0)
+        {
+          object->mesh = scene->meshes[i];
 
-            printf("scene_add_object: mesh %s assigned to object %s\n",
-                   scene->meshes[i]->name,
-                   object->name);
+          printf ("scene_add_object: mesh %s assigned to object %s\n",
+                  scene->meshes[i]->name, object->name);
 
-            break;
+          break;
         }
     }
 
-    if (object->mesh == NULL) {
-        printf("scene_add_object: kein passendes Mesh gefunden für object %s. Gesucht: %s\n",
-               object->name,
-               meshNameWithoutExtension);
-        return;
+  if (object->mesh == NULL)
+    {
+      printf ("scene_add_object: kein passendes Mesh gefunden für object %s. "
+              "Gesucht: %s\n",
+              object->name, meshNameWithoutExtension);
+      return;
     }
 
-    scene->objects[scene->object_count] = object;
-    scene->object_count++;
+  scene->objects[scene->object_count] = object;
+  scene->object_count++;
 }
 
 void
-scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input)
+scene_update (Scene *scene, sceneObject *objectList, int objectCount,
+              float input)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Test Daten
-    static GLfloat boxAngle[3] = {0.0f, 0.0f, 0.0f};
-    static GLfloat teapotAngle[3] = {0.0f, 0.0f, 0.0f};
+  // Test Daten
+  static GLfloat boxAngle[3] = { 0.0f, 0.0f, 0.0f };
+  static GLfloat teapotAngle[3] = { 0.0f, 0.0f, 0.0f };
 
-    //boxAngle[0] += 0.02f;
-    //boxAngle[1] += 0.02f;
-    //boxAngle[2] += 0.02f;
+  // boxAngle[0] += 0.02f;
+  // boxAngle[1] += 0.02f;
+  // boxAngle[2] += 0.02f;
 
-    teapotAngle[0] += 0.001f;
-    teapotAngle[1] += 0.002f;
-    teapotAngle[2] += 0.003f;
+  teapotAngle[0] += 0.001f;
+  teapotAngle[1] += 0.002f;
+  teapotAngle[2] += 0.003f;
 
-    for (int j = 0; j < scene->object_count; j++) {
-        if (scene->objects[j] == NULL) {
-            continue;
+  for (int j = 0; j < scene->object_count; j++)
+    {
+      if (scene->objects[j] == NULL)
+        {
+          continue;
         }
 
-        if (scene->objects[j]->mesh == NULL) {
-            printf("mesh from object %d in scene is NULL!!!\n", j);
-            continue;
+      if (scene->objects[j]->mesh == NULL)
+        {
+          printf ("mesh from object %d in scene is NULL!!!\n", j);
+          continue;
         }
 
-        
-        identity(scene->objects[j]->modelMatrix);
-        
-        object_transformation(scene->objects[j], scene->objects[j]->transformation->translation, scene->objects[j]->transformation->scaling, scene->objects[j]->transformation->rotation);
-        object_draw(scene->objects[j], scene->camera->viewProj);
+      identity (scene->objects[j]->modelMatrix);
+
+      object_transformation (scene->objects[j],
+                             scene->objects[j]->transformation->translation,
+                             scene->objects[j]->transformation->scaling,
+                             scene->objects[j]->transformation->rotation);
+      object_draw (scene->objects[j], scene->camera->viewProj);
     }
 }
-

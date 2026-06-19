@@ -114,29 +114,26 @@ rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
   multiplyMatrices (out, in, R);
 }
 
-void 
-rotatex(GLfloat *out, const GLfloat *in, GLfloat angle)
+void
+rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
 {
-    GLfloat
-        c = cosf(angle),
-        s = sinf(angle),
-        R[16];
-      
-    identity(R);
+  GLfloat c = cosf (angle), s = sinf (angle), R[16];
 
-    // 2.Spalte:
-    R[4] = in[4] * c + in[8] * s;
-    R[5] = in[5] * c + in[9] * s;
-    R[6] = in[6] * c + in[10] * s;
-    R[7] = in[7] * c + in[11] * s;
+  identity (R);
 
-    // 3.Spalte:
-    R[8] = in[4] * (-s) + in[8] * c;
-    R[9] = in[5] * (-s) + in[9] * c;
-    R[10] = in[6] * (-s) + in[10] * c;
-    R[11] = in[7] * (-s) + in[11] * c;
+  // 2.Spalte:
+  R[4] = in[4] * c + in[8] * s;
+  R[5] = in[5] * c + in[9] * s;
+  R[6] = in[6] * c + in[10] * s;
+  R[7] = in[7] * c + in[11] * s;
 
-    multiplyMatrices(out, in, R);
+  // 3.Spalte:
+  R[8] = in[4] * (-s) + in[8] * c;
+  R[9] = in[5] * (-s) + in[9] * c;
+  R[10] = in[6] * (-s) + in[10] * c;
+  R[11] = in[7] * (-s) + in[11] * c;
+
+  multiplyMatrices (out, in, R);
 }
 
 void

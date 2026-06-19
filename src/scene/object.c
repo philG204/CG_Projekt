@@ -12,71 +12,79 @@
 #include "../../headers/utilities/config.h"
 
 static void
-object_load_config(Object *object, const char *configPath)
+object_load_config (Object *object, const char *configPath)
 {
-    if (object == NULL || configPath == NULL || object->material == NULL) {
-        return;
+  if (object == NULL || configPath == NULL || object->material == NULL)
+    {
+      return;
     }
 
-    char line[512];
+  char line[512];
 
-    if (config_find_line_by_key(configPath, "name", line, sizeof(line))) {
-        config_parse_string_value(line,
-                                  object->name,
-                                  sizeof(object->name));
+  if (config_find_line_by_key (configPath, "name", line, sizeof (line)))
+    {
+      config_parse_string_value (line, object->name, sizeof (object->name));
     }
 
-    if (config_find_line_by_key(configPath, "mesh", line, sizeof(line))) {
-        config_parse_string_value(line,
-                                  object->meshName,
-                                  sizeof(object->meshName));
-    }
-      
-    if (object->material->light != NULL) {
-        if (config_find_line_by_key(configPath, "emissive", line, sizeof(line))) {
-            config_parse_float_value(line,
-                                     &object->material->light->emissive);
-            printf("emissive: %f\n", object->material->light->emissive);
-        }
-
-        if (config_find_line_by_key(configPath, "ambient", line, sizeof(line))) {
-            config_parse_float_value(line,
-                                     &object->material->light->ambient);
-        }
-
-        if (config_find_line_by_key(configPath, "diffuse", line, sizeof(line))) {
-            config_parse_float_value(line,
-                                     &object->material->light->diffuse);
-        }
-
-        if (config_find_line_by_key(configPath, "specular", line, sizeof(line))) {
-            config_parse_float_value(line,
-                                     &object->material->light->specular);
-        }
+  if (config_find_line_by_key (configPath, "mesh", line, sizeof (line)))
+    {
+      config_parse_string_value (line, object->meshName,
+                                 sizeof (object->meshName));
     }
 
-    if (config_find_line_by_key(configPath, "transparency", line, sizeof(line))) {
-        float transparencyValue = 0.0f;
+  if (object->material->light != NULL)
+    {
+      if (config_find_line_by_key (configPath, "emissive", line,
+                                   sizeof (line)))
+        {
+          config_parse_float_value (line, &object->material->light->emissive);
+          printf ("emissive: %f\n", object->material->light->emissive);
+        }
 
-        if (config_parse_float_value(line, &transparencyValue)) {
-            object->material->transparency = (int)transparencyValue;
+      if (config_find_line_by_key (configPath, "ambient", line, sizeof (line)))
+        {
+          config_parse_float_value (line, &object->material->light->ambient);
+        }
+
+      if (config_find_line_by_key (configPath, "diffuse", line, sizeof (line)))
+        {
+          config_parse_float_value (line, &object->material->light->diffuse);
+        }
+
+      if (config_find_line_by_key (configPath, "specular", line,
+                                   sizeof (line)))
+        {
+          config_parse_float_value (line, &object->material->light->specular);
         }
     }
 
-    if (object->transformation != NULL) {
-        if (config_find_line_by_key(configPath, "translation", line, sizeof(line))) {
-            config_parse_vec3_value(line,
-                                     object->transformation->translation);
+  if (config_find_line_by_key (configPath, "transparency", line,
+                               sizeof (line)))
+    {
+      float transparencyValue = 0.0f;
+
+      if (config_parse_float_value (line, &transparencyValue))
+        {
+          object->material->transparency = (int)transparencyValue;
+        }
+    }
+
+  if (object->transformation != NULL)
+    {
+      if (config_find_line_by_key (configPath, "translation", line,
+                                   sizeof (line)))
+        {
+          config_parse_vec3_value (line, object->transformation->translation);
         }
 
-        if (config_find_line_by_key(configPath, "scaling", line, sizeof(line))) {
-            config_parse_vec3_value(line,
-                                     object->transformation->scaling);
+      if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
+        {
+          config_parse_vec3_value (line, object->transformation->scaling);
         }
 
-        if (config_find_line_by_key(configPath, "rotaion", line, sizeof(line))) {
-            config_parse_vec3_value(line,
-                                     object->transformation->rotation);
+      if (config_find_line_by_key (configPath, "rotaion", line, sizeof (line)))
+        {
+          config_parse_vec3_value (line, object->transformation->rotation);
         }
     }
 }
@@ -87,15 +95,17 @@ object_init (char *objDir)
 
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
-  MaterialLight *materialLight = malloc (sizeof (MaterialLight));;
-  Texture **textures = malloc(sizeof(Texture*) * MAX_TEXTURES);
-  Transformation *transformation = malloc(sizeof(Transformation*));
+  MaterialLight *materialLight = malloc (sizeof (MaterialLight));
+  ;
+  Texture **textures = malloc (sizeof (Texture *) * MAX_TEXTURES);
+  Transformation *transformation = malloc (sizeof (Transformation *));
 
   GLuint shaderProgram = shader_init (objDir);
- 
-  if(shaderProgram == 0){
-    printf("object_init: no shader program for %s\n", objDir);
-  }
+
+  if (shaderProgram == 0)
+    {
+      printf ("object_init: no shader program for %s\n", objDir);
+    }
 
   material->shader = shaderProgram;
   material->textures = textures;
@@ -107,41 +117,35 @@ object_init (char *objDir)
 
   char configPath[512];
 
-  snprintf(configPath,
-            sizeof(configPath),
-            "assets/%s/object.cfg",
-            objDir);
+  snprintf (configPath, sizeof (configPath), "assets/%s/object.cfg", objDir);
 
-  object_load_config(object, configPath);
- 
-  material->texture_count = texture_init_from_config(objDir,
-                                                       material->shader,
-                                                       material->textures,
-                                                       MAX_TEXTURES);
+  object_load_config (object, configPath);
 
-  //materialLight->emissive = 0.0f;
-  //materialLight->ambient  = 0.2f;
-  //materialLight->diffuse  = 0.8f;
-  //materialLight->specular = 1.0f;
+  material->texture_count = texture_init_from_config (
+      objDir, material->shader, material->textures, MAX_TEXTURES);
+
+  // materialLight->emissive = 0.0f;
+  // materialLight->ambient  = 0.2f;
+  // materialLight->diffuse  = 0.8f;
+  // materialLight->specular = 1.0f;
 
   object->material->light = materialLight;
 
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-  
-  printf("object_init loaded:\n");
-    printf("  name         = %s\n", object->name);
-    printf("  meshName     = %s\n", object->meshName);
-    printf("  textures     = %d\n", object->material->texture_count);
-    printf("  transparency = %d\n", object->material->transparency);
-    printf("  emissive     = %f\n", object->material->light->emissive);
-    printf("  ambient      = %f\n", object->material->light->ambient);
-    printf("  diffuse      = %f\n", object->material->light->diffuse);
-    printf("  specular     = %f\n", object->material->light->specular);
-    printf("  translation  = %f\n", object->transformation->translation[0]);
-    printf("  scaling      = %f\n", object->transformation->scaling[0]);
-    printf("  rotation     = %f\n", object->transformation->rotation[0]);
+  printf ("object_init loaded:\n");
+  printf ("  name         = %s\n", object->name);
+  printf ("  meshName     = %s\n", object->meshName);
+  printf ("  textures     = %d\n", object->material->texture_count);
+  printf ("  transparency = %d\n", object->material->transparency);
+  printf ("  emissive     = %f\n", object->material->light->emissive);
+  printf ("  ambient      = %f\n", object->material->light->ambient);
+  printf ("  diffuse      = %f\n", object->material->light->diffuse);
+  printf ("  specular     = %f\n", object->material->light->specular);
+  printf ("  translation  = %f\n", object->transformation->translation[0]);
+  printf ("  scaling      = %f\n", object->transformation->scaling[0]);
+  printf ("  rotation     = %f\n", object->transformation->rotation[0]);
 
   return object;
 }
@@ -151,17 +155,19 @@ void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)
 {
-  if(!(translation == NULL)){
-    translate(object->modelMatrix, object->modelMatrix, translation);
-  }
+  if (!(translation == NULL))
+    {
+      translate (object->modelMatrix, object->modelMatrix, translation);
+    }
 
-  if(!(scaling == NULL)){
-    scale(object->modelMatrix, object->modelMatrix, scaling);
-  }
+  if (!(scaling == NULL))
+    {
+      scale (object->modelMatrix, object->modelMatrix, scaling);
+    }
 
-  rotatex(object->modelMatrix, object->modelMatrix, rotation[0]);
-  rotatey(object->modelMatrix, object->modelMatrix, rotation[1]);
-  rotatez(object->modelMatrix, object->modelMatrix, rotation[2]);
+  rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
+  rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
+  rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
 }
 
 void
@@ -174,7 +180,7 @@ object_draw (Object *object, GLfloat *cameraMatrix)
       cameraMatrix);
   glUniformMatrix4fv (glGetUniformLocation (object->material->shader, "model"),
                       1, GL_FALSE, object->modelMatrix);
- 
+
   glBindVertexArray (object->mesh->vao);
 
   for (int i = 0; i < object->material->texture_count; i++)
