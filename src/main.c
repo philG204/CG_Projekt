@@ -29,11 +29,6 @@ main (void)
                                     .eye = { 3.0f, 4.0f, 5.0f },
                                     .center = { 0.0f, 0.0f, 0.0f },
                                     .up = { 0.0f, 1.0f, 0.0f } 
-                                  },
-                                  {
-                                    .eye = { -6.0f, 4.0f, 5.0f },
-                                    .center = { 0.0f, 0.0f, 0.0f },
-                                    .up = { 0.0f, 1.0f, 0.0f } 
                                   }
                                 };
 
@@ -57,16 +52,14 @@ main (void)
   while (!glfwWindowShouldClose (window))
     {
       // get input
-      processKeyInput(window, cameraCount, &activeCamera);                                
+      processKeyInput(window, cameraCount, &activeCamera);
 
       // than draw with input;
       // Update Camera when input has change the camera
-      // wir können uns natürlich überlgen ob das sinn macht weil die camera_setCameraSettings function überprüft ob die aktive camera settings und die neuen camera settings gleich sind passiert nichts
       if(activeCamera != lastactivecamera){
         camera_setCameraSettings(scene->camera, &cameraSettings[activeCamera]);
         lastactivecamera = activeCamera;
       }
-      //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
       camera_update(scene->camera);
 
