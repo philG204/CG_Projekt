@@ -69,6 +69,7 @@ main (void)
 
       // than draw with input;
       // Update Camera when input has change the camera
+      // wir können uns natürlich überlgen ob das sinn macht weil die camera_setCameraSettings function überprüft ob die aktive camera settings und die neuen camera settings gleich sind passiert nichts
       if(activeCamera != lastactivecamera){
         camera_setCameraSettings(scene->camera, &cameraSettings[activeCamera]);
         lastactivecamera = activeCamera;
