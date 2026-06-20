@@ -5,7 +5,7 @@
 #define OBJECTNAME_LENGTH 256
 
 // Pfad zu den Objektdateien
-# define PATH "assets/"
+#define PATH "assets/"
 
 
 
