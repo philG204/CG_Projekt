@@ -49,11 +49,10 @@ main (void)
   Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings[activeCamera],
                              &projectionSettings);
 
-  scene_add_object (scene, "Box1");
-  scene_add_object (scene, "Box2");
-  scene_add_object (scene, "Box3");
-  scene_add_object (scene, "Box4");
-  scene_add_object (scene, "Box5");
+
+  float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+  int objectCnt = load_object_list ("room.txt", scene);
+
 
   while (!glfwWindowShouldClose (window))
     {
