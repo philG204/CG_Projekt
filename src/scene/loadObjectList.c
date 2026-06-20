@@ -2,20 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "../../headers/scene/loadObjectList.h"
-#include "../../headers/scene/scene.h"
-
 
 /**
- * Lädt aus übergebenen Datei die Objekte und speichert diese in ein
- * sceneObject-Array mit zugehörigen Translations- Rotations- und
- * Scalingwerten.
+ * Lädt aus übergebenen Datei die Objekte und fügt diese in eine Scene hinzu.
  */
 int
-load_object_list (const char *filename, sceneObject objectList[])
+load_object_list (const char *filename, Scene *scene)
 {
 
+  // 1. Objektliste laden:
   FILE *fp = fopen (filename, "r");
   if (fp == NULL)
     {
@@ -27,11 +23,11 @@ load_object_list (const char *filename, sceneObject objectList[])
   int count = 0;
   char buffer[512];
 
+  // 2. Objektnamen einlesen und zur Scene hinzufügen:
   while (fgets (buffer, sizeof (buffer), fp) && count < MAX_OBJECTS)
     {
       buffer[strcspn(buffer, "\n")] = '\0';
-      strcpy(objectList[count].objectName, buffer);
-
+      scene_add_object(scene, buffer);
       ++count;
     }
 

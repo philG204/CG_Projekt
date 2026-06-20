@@ -147,7 +147,7 @@ scene_add_object (Scene *scene, char *objDir)
 }
 
 void
-scene_update (Scene *scene, sceneObject *objectList, int objectCount,
+scene_update (Scene *scene, int objectCount,
               float input)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

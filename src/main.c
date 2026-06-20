@@ -32,14 +32,10 @@ main (void)
   Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings,
                              &projectionSettings);
 
-  sceneObject objectList[MAX_OBJECTS];
-  int objectCnt = load_object_list ("room.txt", objectList);
 
   float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+  int objectCnt = load_object_list ("room.txt", scene);
 
-  for(int i = 0; i < objectCnt; ++i) {
-    scene_add_object(scene, objectList[i].objectName);
-  }
 
   while (!glfwWindowShouldClose (window))
     {
@@ -48,7 +44,7 @@ main (void)
       glfwSwapBuffers (window);
       glfwPollEvents ();
 
-      scene_update (scene, objectList, objectCnt, 0.0f);
+      scene_update (scene, objectCnt, 0.0f);
     }
 
   glfwTerminate ();
