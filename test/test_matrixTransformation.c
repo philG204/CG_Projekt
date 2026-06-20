@@ -141,16 +141,16 @@ test_translate_in_place (void)
 }
 
 int
-test_rotatez_90deg (void)
+test_rotatex_90deg (void)
 {
   GLfloat m[16];
 
   identity (m);
 
-  rotatez (m, m, (GLfloat)(M_PI / 2.0));
+  rotatex (m, m, (GLfloat)(M_PI / 2.0));
 
-  return float_equal (m[0], 0.0f) && float_equal (m[1], 1.0f)
-         && float_equal (m[4], -1.0f) && float_equal (m[5], 0.0f);
+  return float_equal (m[5], 0.0f) && float_equal (m[6], 1.0f)
+         && float_equal (m[9], -1.0f) && float_equal (m[10], 0.0f);
 }
 
 int
@@ -164,6 +164,19 @@ test_rotatey_90deg (void)
 
   return float_equal (m[0], 0.0f) && float_equal (m[2], -1.0f)
          && float_equal (m[8], 1.0f) && float_equal (m[10], 0.0f);
+}
+
+int
+test_rotatez_90deg (void)
+{
+  GLfloat m[16];
+
+  identity (m);
+
+  rotatez (m, m, (GLfloat)(M_PI / 2.0));
+
+  return float_equal (m[0], 0.0f) && float_equal (m[1], 1.0f)
+         && float_equal (m[4], -1.0f) && float_equal (m[5], 0.0f);
 }
 
 int
@@ -228,8 +241,9 @@ test_matrixTransormation (void)
   run_test ("translate", test_translate_identity);
   run_test ("translate in place", test_translate_in_place);
 
-  run_test ("rotatez 90deg", test_rotatez_90deg);
+  run_test ("rotatex 90deg", test_rotatex_90deg);
   run_test ("rotatey 90deg", test_rotatey_90deg);
+  run_test ("rotatez 90deg", test_rotatez_90deg);
 
   run_test ("scale", test_scale);
 
