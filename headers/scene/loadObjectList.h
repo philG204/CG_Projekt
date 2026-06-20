@@ -8,8 +8,6 @@
 // Pfad zu den Objektdateien
 #define PATH "assets/"
 
-
-
 /**
  * Lädt aus übergebenen Datei die Objekte und fügt diese in eine Scene hinzu.
  */

@@ -1,7 +1,8 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "../../headers/scene/loadObjectList.h"
 
 /**
@@ -10,6 +11,8 @@
 int
 load_object_list (const char *filename, Scene *scene)
 {
+  assert (filename != NULL);
+  assert (scene != NULL);
 
   // 1. Objektliste laden:
   FILE *fp = fopen (filename, "r");
@@ -26,8 +29,8 @@ load_object_list (const char *filename, Scene *scene)
   // 2. Objektnamen einlesen und zur Scene hinzufügen:
   while (fgets (buffer, sizeof (buffer), fp) && count < MAX_OBJECTS)
     {
-      buffer[strcspn(buffer, "\n")] = '\0';
-      scene_add_object(scene, buffer);
+      buffer[strcspn (buffer, "\n")] = '\0';
+      scene_add_object (scene, buffer);
       ++count;
     }
 

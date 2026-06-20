@@ -1,9 +1,10 @@
-#include <GL/glew.h>
-
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/renderer/texture.h"
 #include "../../headers/stb_image.h"
@@ -24,6 +25,9 @@ static Texture *
 texture_get_or_load (const char *texturePath, GLuint shader,
                      const char *textureName)
 {
+  assert (texturePath != NULL);
+  assert (textureName != NULL);
+
   for (int i = 0; i < textureCacheCount; i++)
     {
       if (strcmp (textureCache[i].path, texturePath) == 0)
@@ -69,6 +73,9 @@ int
 texture_init_from_config (const char *configPath, GLuint shader,
                           Texture **textures, int maxTextures)
 {
+  assert (configPath != NULL);
+  assert (textures != NULL);
+
   char textureLine[512];
   char completeConfigPath[512];
   snprintf (completeConfigPath, sizeof (completeConfigPath),
@@ -125,6 +132,9 @@ texture_init_from_config (const char *configPath, GLuint shader,
 Texture *
 texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 {
+  assert (filename != NULL);
+  assert (shaderVariable != NULL);
+
   printf ("entering texture_init with filename: %s\n", filename);
   Texture *texture = malloc (sizeof (Texture));
   GLuint textureId;
@@ -172,25 +182,22 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 }
 
 void
-activate_texture (Texture *textures[], int texture_count)
+activate_texture (Texture **textures, int texture_count)
 {
-  if (textures == NULL)
-    {
-      printf ("textures are NULL!!!\n");
-    }
+  assert (textures != NULL);
+
   for (int i = 0; i < texture_count; i++)
     {
-      if (textures[i] == NULL)
-        {
-          printf ("texture is NULL!!!\n");
-        }
+      Texture *texture = textures[i];
+
+      assert (texture != NULL);
 
       glActiveTexture (GL_TEXTURE0 + i);
 
-      glBindTexture (GL_TEXTURE_2D, textures[i]->textureId);
+      glBindTexture (GL_TEXTURE_2D, texture->textureId);
 
-      GLint location = glGetUniformLocation (textures[i]->shaderProgramId,
-                                             textures[i]->shaderVariable);
+      GLint location = glGetUniformLocation (texture->shaderProgramId,
+                                             texture->shaderVariable);
       glUniform1i (location, i);
     }
 }

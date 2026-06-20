@@ -1,8 +1,10 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/loadObjectList.h"
@@ -14,6 +16,11 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
             CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
+  assert (meshDir != NULL);
+  assert (scene_name != NULL);
+  assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
+
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
@@ -74,14 +81,11 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
 void
 scene_add_object (Scene *scene, char *objDir)
 {
+  assert (scene != NULL);
+  assert (objDir != NULL);
+
   printf ("entering scene_add_object\n");
   Object *object = object_init (objDir);
-
-  if (scene == NULL)
-    {
-      printf ("scene_add_object: scene is NULL\n");
-      return;
-    }
 
   if (object == NULL)
     {
@@ -151,6 +155,8 @@ scene_add_object (Scene *scene, char *objDir)
 void
 scene_update (Scene *scene)
 {
+  assert (scene != NULL);
+
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   Object *object = NULL;

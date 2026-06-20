@@ -1,8 +1,10 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/renderer/loadObj.h"
 #include "../../headers/renderer/mesh.h"
@@ -10,6 +12,9 @@
 static void
 getNameWithoutExtension (const char *path, char *out, size_t outSize)
 {
+  assert (path != NULL);
+  assert (out != NULL);
+
   // letzten Slash suchen
   const char *filename = strrchr (path, '/');
 
@@ -37,6 +42,8 @@ getNameWithoutExtension (const char *path, char *out, size_t outSize)
 Mesh *
 mesh_init (char *meshFile)
 {
+  assert (meshFile != NULL);
+
   GLuint vao;
   GLuint vbo;
 
@@ -99,5 +106,7 @@ mesh_init (char *meshFile)
 void
 mesh_draw (Mesh *mesh)
 {
+  assert (mesh != NULL);
+
   glDrawArrays (GL_TRIANGLES, 0, (GLsizei)mesh->vertexCount);
 }
