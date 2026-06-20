@@ -6,10 +6,10 @@
 // TODO THIS IS HERE TO EXISTS BECAUSE I NEED IT FOR THE BUTTONS INPUT CHECK
 typedef struct Button
 {
-    float x;
-    float y;
-    float width;
-    float height;
+  GLfloat x;
+  GLfloat y;
+  GLfloat width;
+  GLfloat height;
 } Button;
 
 /*
@@ -19,10 +19,11 @@ typedef struct Button
  * @param cameraCount   - number of available cameras
  * @param *activeCamera  - pointer to current camera index
  */
-void processKeyInput (GLFWwindow *window, int cameraCount,  int* activeCamera);
+void processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera);
 
 /*
- * @brief Processes input from the buttons on the screen and updates the active camera.
+ * @brief Processes input from the buttons on the screen and updates the active
+ * camera.
  *
  * @param *window        - GLFW window handle
  * @param button        - button
@@ -30,6 +31,7 @@ void processKeyInput (GLFWwindow *window, int cameraCount,  int* activeCamera);
  * @param cameraCount   - number of available cameras
  * @param *activeCamera  - pointer to current camera index
  */
-void handleButtons(GLFWwindow* window, Button button, int back, int cameraCount,  int *activeCamera);
+void handleButtons (GLFWwindow *window, Button button, int back,
+                    int cameraCount, int *activeCamera);
 
 #endif // INPUT_H

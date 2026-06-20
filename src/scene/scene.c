@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
@@ -19,10 +20,11 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   LightDirection light;
   Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
   Object **objects = malloc (sizeof (Object *) * MAX_OBJECTS);
-  scene->mesh_count = 0;
+  scene->mesh_count = mesh_count;
   scene->object_count = 0;
   scene->objects = objects;
   scene->camera = malloc (sizeof (Camera));
+  strncpy (scene->name, scene_name, sizeof (scene->name));
 
   light.x = 0.0f;
   light.y = 4.0f;
@@ -147,42 +149,31 @@ scene_add_object (Scene *scene, char *objDir)
 }
 
 void
-scene_update (Scene *scene, int objectCount,
-              float input)
+scene_update (Scene *scene)
 {
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  // Test Daten
-  static GLfloat boxAngle[3] = { 0.0f, 0.0f, 0.0f };
-  static GLfloat teapotAngle[3] = { 0.0f, 0.0f, 0.0f };
-
-  // boxAngle[0] += 0.02f;
-  // boxAngle[1] += 0.02f;
-  // boxAngle[2] += 0.02f;
-
-  teapotAngle[0] += 0.001f;
-  teapotAngle[1] += 0.002f;
-  teapotAngle[2] += 0.003f;
+  Object *object = NULL;
 
   for (int j = 0; j < scene->object_count; j++)
     {
-      if (scene->objects[j] == NULL)
+      object = scene->objects[j];
+      if (object == NULL)
         {
           continue;
         }
 
-      if (scene->objects[j]->mesh == NULL)
+      if (object->mesh == NULL)
         {
           printf ("mesh from object %d in scene is NULL!!!\n", j);
           continue;
         }
 
-      identity (scene->objects[j]->modelMatrix);
+      identity (object->modelMatrix);
 
-      object_transformation (scene->objects[j],
-                             scene->objects[j]->transformation->translation,
-                             scene->objects[j]->transformation->scaling,
-                             scene->objects[j]->transformation->rotation);
-      object_draw (scene->objects[j], scene->camera->viewProj);
+      object_transformation (object, object->transformation->translation,
+                             object->transformation->scaling,
+                             object->transformation->rotation);
+      object_draw (object, scene->camera->viewProj);
     }
 }
