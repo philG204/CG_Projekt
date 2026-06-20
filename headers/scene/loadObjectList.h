@@ -2,6 +2,7 @@
 #define LOADOBJECTLIST_H
 
 #include "../../headers/scene/scene.h"
+
 #define OBJECTNAME_LENGTH 256
 
 // Pfad zu den Objektdateien
