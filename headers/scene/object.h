@@ -13,10 +13,10 @@
 #include "loadObjectList.h"
 
 typedef struct Transformation{
-    float translation[3];
-    float scaling[3];
-    float rotation[3];
-    float rotaionCircle[3];
+    GLfloat translation[3];
+    GLfloat scaling[3];
+    GLfloat rotation[3];
+    GLfloat rotaionCircle[3];
 } Transformation;
 
 typedef struct Material {

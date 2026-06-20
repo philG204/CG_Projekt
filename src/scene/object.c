@@ -166,20 +166,15 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   }
 
   if(!(object->transformation->rotaionCircle == NULL)){
-    int xCircle = object->transformation->rotaionCircle[0];
-    rotatex(object->modelMatrix, object->modelMatrix, rotation[0] + xCircle);
-  }
-  
-  if(!(object->transformation->rotaionCircle == NULL)){
-    int yCircle = object->transformation->rotaionCircle[1];
-    rotatex(object->modelMatrix, object->modelMatrix, rotation[1] + yCircle);
+    rotation[0] += object->transformation->rotaionCircle[0];
+    rotation[1] += object->transformation->rotaionCircle[1];
+    rotation[2] += object->transformation->rotaionCircle[2];
   }
 
-
-  if(!(object->transformation->rotaionCircle == NULL)){
-    int zCircle = object->transformation->rotaionCircle[2];
-    rotatex(object->modelMatrix, object->modelMatrix, rotation[2] + zCircle);
-  }
+  rotatex(object->modelMatrix, object->modelMatrix, rotation[0]);
+  rotatey(object->modelMatrix, object->modelMatrix, rotation[1]);
+  rotatez(object->modelMatrix, object->modelMatrix, rotation[2]);
+  printf("rotaion x: %d, rotaion y: %d, rotation z: %d\n", rotation[0], rotation[1], rotation[2]);
 }
 
 void
