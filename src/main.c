@@ -20,16 +20,33 @@ main (void)
 
   GLFWwindow *window = window_create (1920, 1080, "CG1");
 
-  CameraSettings cameraSettings = { .eye = { 3.0f, 2.0f, 5.0f },
+  CameraSettings cameraSettings[] = {{ 
+                                    .eye = { 3.0f, 2.0f, 5.0f },
                                     .center = { 0.0f, 0.0f, 0.0f },
-                                    .up = { 0.0f, 1.0f, 0.0f } };
+                                    .up = { 0.0f, 1.0f, 0.0f } 
+                                  },
+                                  {
+                                    .eye = { 3.0f, 4.0f, 5.0f },
+                                    .center = { 0.0f, 0.0f, 0.0f },
+                                    .up = { 0.0f, 1.0f, 0.0f } 
+                                  },
+                                  {
+                                    .eye = { -6.0f, 4.0f, 5.0f },
+                                    .center = { 0.0f, 0.0f, 0.0f },
+                                    .up = { 0.0f, 1.0f, 0.0f } 
+                                  }
+                                };
+
+  int activeCamera = 0;
+  int cameraCount = sizeof(cameraSettings)/sizeof(CameraSettings);
+  int lastactivecamera = activeCamera;
 
   ProjectionSettings projectionSettings = { .fovy = 100.0f * (3.14f / 270.0f),
                                             .aspect = 1920.0f / 1080.0f,
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
 
-  Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings,
+  Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings[activeCamera],
                              &projectionSettings);
 
   int objectCnt = 0;
@@ -48,7 +65,18 @@ main (void)
   while (!glfwWindowShouldClose (window))
     {
       // get input
+      processKeyInput(window, cameraCount, &activeCamera);
+
       // than draw with input;
+      // Update Camera when input has change the camera
+      // wir können uns natürlich überlgen ob das sinn macht weil die camera_setCameraSettings function überprüft ob die aktive camera settings und die neuen camera settings gleich sind passiert nichts
+      if(activeCamera != lastactivecamera){
+        camera_setCameraSettings(scene->camera, &cameraSettings[activeCamera]);
+        lastactivecamera = activeCamera;
+      }
+
+      camera_update(scene->camera);
+
       glfwSwapBuffers (window);
       glfwPollEvents ();
 
