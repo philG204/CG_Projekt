@@ -20,30 +20,6 @@ typedef struct TextureCacheEntry
 static TextureCacheEntry textureCache[MAX_CACHED_TEXTURES];
 static int textureCacheCount = 0;
 
-static int
-read_next_data_line (FILE *file, char *buffer, size_t bufferSize)
-{
-  while (fgets (buffer, bufferSize, file) != NULL)
-    {
-      char *line = config_trim (buffer);
-
-      if (line[0] == '\0')
-        {
-          continue;
-        }
-
-      if (line[0] == '/' && line[1] == '/')
-        {
-          continue;
-        }
-
-      memmove (buffer, line, strlen (line) + 1);
-      return 1;
-    }
-
-  return 0;
-}
-
 static Texture *
 texture_get_or_load (const char *texturePath, GLuint shader,
                      const char *textureName)

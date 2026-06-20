@@ -22,6 +22,23 @@ SRC = \
 	src/scene/scene.c \
 	src/scene/loadObjectList.c \
 	src/main.c
+
+HEADERS = \
+	headers/core/input.h \
+	headers/core/window.h \
+	headers/math/matrixTransformation.h \
+	headers/renderer/loadObj.h \
+	headers/renderer/loadShader.h \
+	headers/renderer/mesh.h \
+	headers/renderer/shader.h \
+	headers/renderer/texture.h \
+	headers/scene/camera.h \
+	headers/scene/light.h \
+	headers/scene/loadObjectList.h \
+	headers/scene/object.h \
+	headers/scene/scene.h \
+	headers/utilities/config.h \
+	headers/utilities/fileOperations.h
 	  
 OBJ = $(SRC:.c=.o)
 
@@ -45,7 +62,7 @@ test: $(TEST_TARGET)
 	./$(TEST_TARGET)
 
 format:
-	clang-format --style=GNU -i $(SRC) $(TEST_SRC)
+	clang-format --style=GNU -i $(SRC) $(HEADERS) $(TEST_SRC)
 
 $(TARGET): $(OBJ)
 	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)

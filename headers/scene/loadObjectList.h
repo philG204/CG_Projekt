@@ -1,24 +1,30 @@
 #ifndef LOADOBJECTLIST_H
 #define LOADOBJECTLIST_H
 
+#include <GL/glew.h>
+
 #define PATH_LENGTH 256
 
 // Pfad zu den Objektdateien
-# define PATH "assets/models/"
+#define PATH "assets/models/"
 
-
-// Speichert den Pfad zur Objekt-Datei und die Position, Rotation, und Skalierung des Objekts.
-typedef struct sceneObject {
-    char filename[PATH_LENGTH];    
-    char objectName[PATH_LENGTH];         
-    GLfloat translation[4];   
-    GLfloat rotation[3];        
-    GLfloat scaling[3];          
+// Speichert den Pfad zur Objekt-Datei und die Position, Rotation, und
+// Skalierung des Objekts.
+typedef struct sceneObject
+{
+  char filename[PATH_LENGTH];
+  char objectName[PATH_LENGTH];
+  GLfloat translation[4];
+  GLfloat rotation[3];
+  GLfloat scaling[3];
 } sceneObject;
 
 /**
- * Lädt aus übergebenen Datei die Objekte und speichert diese in ein sceneObject-Array mit zugehörigen Translations- Rotations- und Scalingwerten.
+ * Lädt aus übergebenen Datei die Objekte und speichert diese in ein
+ * sceneObject-Array mit zugehörigen Translations- Rotations- und
+ * Scalingwerten.
  */
-sceneObject *load_object_list(const char * fileName, int *objectCount, int maxObjects);
+sceneObject *load_object_list (const char *fileName, int *objectCount,
+                               int maxObjects);
 
 #endif // LOADOBJECTLIST_H
