@@ -1,13 +1,16 @@
-#include "../../headers/utilities/config.h"
-
+#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "../../headers/utilities/config.h"
+
 char *
 config_trim (char *str)
 {
+  assert (str != NULL);
+
   while (isspace ((unsigned char)*str))
     {
       str++;
@@ -32,6 +35,8 @@ config_trim (char *str)
 int
 config_is_data_line (char *line)
 {
+  assert (line != NULL);
+
   char *trimmed = config_trim (line);
 
   if (trimmed[0] == '\0')
@@ -50,6 +55,9 @@ config_is_data_line (char *line)
 int
 config_line_has_key (const char *line, const char *key)
 {
+  assert (line != NULL);
+  assert (key != NULL);
+
   while (isspace ((unsigned char)*line))
     {
       line++;
@@ -75,6 +83,9 @@ config_line_has_key (const char *line, const char *key)
 int
 config_parse_string_value (const char *line, char *out, size_t outSize)
 {
+  assert (line != NULL);
+  assert (out != NULL);
+
   const char *equal = strchr (line, '=');
 
   if (equal == NULL || out == NULL || outSize == 0)
@@ -138,6 +149,9 @@ config_parse_string_value (const char *line, char *out, size_t outSize)
 int
 config_parse_float_value (const char *line, float *out)
 {
+  assert (line != NULL);
+  assert (out != NULL);
+
   printf ("entering config_find_line_by_key\n");
   const char *equal = strchr (line, '=');
 
@@ -154,6 +168,8 @@ config_parse_float_value (const char *line, float *out)
 int
 config_parse_vec3_value (const char *line, float out[3])
 {
+  assert (line != NULL);
+
   const char *start = strchr (line, '[');
   const char *end = strchr (line, ']');
 
@@ -197,6 +213,8 @@ config_parse_string_list_value (const char *line,
                                 char items[][CONFIG_MAX_STRING_LENGTH],
                                 int maxItems)
 {
+  assert (line != NULL);
+
   const char *start = strchr (line, '[');
   const char *end = strchr (line, ']');
 
@@ -254,6 +272,10 @@ int
 config_find_line_by_key (const char *configPath, const char *key,
                          char *outLine, size_t outLineSize)
 {
+  assert (configPath != NULL);
+  assert (key != NULL);
+  assert (outLine != NULL);
+
   FILE *file = fopen (configPath, "r");
 
   if (file == NULL)

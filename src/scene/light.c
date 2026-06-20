@@ -1,5 +1,7 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/renderer/shader.h"
 #include "../../headers/scene/light.h"
@@ -8,12 +10,8 @@
 void
 gouraudLightning (const GLfloat *lightDir, const GLfloat *modelViewMatrix)
 {
-
-  if (lightDir == NULL)
-    {
-      printf ("(gouraudLightning) Fehler: LightDirection fehlt!\n");
-      return;
-    }
+  assert (lightDir != NULL);
+  assert (modelViewMatrix != NULL);
 
   GLuint shaderProg = shader_init ("v_lightning.glsl");
 

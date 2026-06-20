@@ -1,9 +1,12 @@
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 char *
 loadShader (const char *filename)
 {
+  assert (filename != NULL);
+
   printf ("load shader: %s\n", filename);
   FILE *f = fopen (filename, "rb");
   if (!f)

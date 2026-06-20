@@ -1,8 +1,9 @@
-
-#include <GL/glew.h>
+#include <assert.h>
 #include <complex.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
@@ -11,6 +12,9 @@ Camera *
 camera_init (CameraSettings *cameraSettings,
              ProjectionSettings *projectionSettings)
 {
+  assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
+
   Camera *camera = malloc (sizeof (Camera));
   Pos position = { .x = cameraSettings->eye[0],
                    .y = cameraSettings->eye[1],
@@ -41,6 +45,8 @@ camera_init (CameraSettings *cameraSettings,
 void
 camera_update (Camera *camera)
 {
+  assert (camera != NULL);
+
   // nothing has change no recalculation needed
   if (camera->isDirty == 0)
     {
@@ -72,6 +78,9 @@ camera_update (Camera *camera)
 void
 camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings)
 {
+  assert (camera != NULL);
+  assert (cameraSettings != NULL);
+
   if (memcmp (&camera->settings, cameraSettings, sizeof (CameraSettings)) != 0)
     {
       memcpy (&camera->settings, cameraSettings, sizeof (CameraSettings));
@@ -86,6 +95,9 @@ void
 camera_setProjectionSettings (Camera *camera,
                               ProjectionSettings *projectionSettings)
 {
+  assert (camera != NULL);
+  assert (projectionSettings != NULL);
+
   if (memcmp (&camera->settings, projectionSettings,
               sizeof (ProjectionSettings))
       != 0)
@@ -102,6 +114,8 @@ camera_setProjectionSettings (Camera *camera,
 void
 camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
+  assert (camera != NULL);
+
   camera->settings.eye[0] = x;
   camera->settings.eye[1] = y;
   camera->settings.eye[2] = z;
@@ -114,6 +128,8 @@ camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 void
 camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
+  assert (camera != NULL);
+
   camera->settings.center[0] = x;
   camera->settings.center[1] = y;
   camera->settings.center[2] = z;
@@ -126,6 +142,8 @@ camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 void
 camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
+  assert (camera != NULL);
+
   camera->settings.up[0] = x;
   camera->settings.up[1] = y;
   camera->settings.up[2] = z;
@@ -138,6 +156,8 @@ camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 void
 camera_setFovy (Camera *camera, GLfloat fovy)
 {
+  assert (camera != NULL);
+
   camera->projectSettings.fovy = fovy;
   camera->isDirty = 1;
 }
@@ -148,6 +168,8 @@ camera_setFovy (Camera *camera, GLfloat fovy)
 void
 camera_setAspect (Camera *camera, GLfloat aspect)
 {
+  assert (camera != NULL);
+
   camera->projectSettings.aspect = aspect;
   camera->isDirty = 1;
 }
@@ -158,6 +180,8 @@ camera_setAspect (Camera *camera, GLfloat aspect)
 void
 camera_setNearPlane (Camera *camera, GLfloat near_plane)
 {
+  assert (camera != NULL);
+
   camera->projectSettings.near_plane = near_plane;
   camera->isDirty = 1;
 }
@@ -168,6 +192,8 @@ camera_setNearPlane (Camera *camera, GLfloat near_plane)
 void
 camera_setFarPlane (Camera *camera, GLfloat far_plane)
 {
+  assert (camera != NULL);
+
   camera->projectSettings.far_plane = far_plane;
   camera->isDirty = 1;
 }

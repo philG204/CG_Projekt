@@ -1,7 +1,9 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/scene/loadObjectList.h"
 
@@ -13,6 +15,8 @@
 sceneObject *
 load_object_list (const char *filename, int *objectCount, int maxObjects)
 {
+  assert (filename != NULL);
+  assert (objectCount != NULL);
 
   FILE *fp = fopen (filename, "r");
   if (fp == NULL)
