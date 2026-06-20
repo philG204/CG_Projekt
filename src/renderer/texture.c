@@ -8,6 +8,7 @@
 #include "../../headers/renderer/texture.h"
 #include "../../headers/stb_image.h"
 #include "../../headers/utilities/config.h"
+#include "../../headers/utilities/fileOperations.h"
 
 #define MAX_CACHED_TEXTURES 128
 
@@ -117,10 +118,15 @@ texture_init_from_config(const char *configPath,
                                                       maxTextures);
 
     int loadedCount = 0;
-
+    //if(textureCount == NULL || textureCount == 0){
+    //    printf("textureCount is NULL or not set!!!\n");
+    //} else {
+    //    printf("texture_init_from_config: textureCount: %s\n", textureCount);
+    //}
+    
     for (int i = 0; i < textureCount; i++) {
         char completeTexturePath[512];
-
+        printf("texture index: %d\n", i);
         snprintf(completeTexturePath,
                  sizeof(completeTexturePath),
                  "assets/Textures/%s",
@@ -129,7 +135,7 @@ texture_init_from_config(const char *configPath,
         Texture *texture = texture_get_or_load(completeTexturePath,
                                                shader,
                                                textureNames[i]);
-
+        printf("texture loaded: %s\n", completeTexturePath);
         if (texture == NULL) {
             printf("texture_init_from_config: texture konnte nicht geladen werden: %s\n",
                    completeTexturePath);
@@ -147,49 +153,51 @@ Texture *
 texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 {
     printf("entering texture_init with filename: %s\n", filename);
-  Texture *texture = malloc (sizeof (Texture));
-  GLuint textureId;
+    Texture *texture = malloc (sizeof (Texture));
+    GLuint textureId;
 
-  int width = 0;
-  int height = 0;
-  int channels = 0;
+    int width = 0;
+    int height = 0;
+    int channels = 0;
 
-  unsigned char *image = stbi_load (filename, &width, &height, &channels, 4);
-  // printf("loaded file %s image %s\n", filename, image);
-  if (image == NULL)
+    unsigned char *image = stbi_load (filename, &width, &height, &channels, 4);
+    // printf("loaded file %s image %s\n", filename, image);
+    if (image == NULL)
     {
-      // printf(stderr, "Fehler beim Laden der Textur %s: %s\n", filename,
-      // stbi_failure_reason());
-      return NULL;
+        // printf(stderr, "Fehler beim Laden der Textur %s: %s\n", filename,
+        // stbi_failure_reason());
+        return NULL;
     }
 
-  glGenTextures (1, &textureId);
-  glBindTexture (GL_TEXTURE_2D, textureId);
+    glGenTextures (1, &textureId);
+    glBindTexture (GL_TEXTURE_2D, textureId);
 
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
                    GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
                 GL_UNSIGNED_BYTE, image);
 
-  glGenerateMipmap (GL_TEXTURE_2D);
+    glGenerateMipmap (GL_TEXTURE_2D);
 
-  stbi_image_free (image);
+    stbi_image_free (image);
 
-  glBindTexture (GL_TEXTURE_2D, 0);
+    glBindTexture (GL_TEXTURE_2D, 0);
 
-  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
+    printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
           textureId, width, height, channels);
 
-  texture->textureId = textureId;
-  texture->shaderProgramId = shaderProgram;
-  texture->shaderVariable = shaderVariable;
+    char realShaderVariable[256];
+    getNameWithoutExtension(shaderVariable, realShaderVariable, sizeof(realShaderVariable));
+    texture->textureId = textureId;
+    texture->shaderProgramId = shaderProgram;
+    texture->shaderVariable = realShaderVariable;
 
-  return texture;
+    return texture;
 }
 
 void

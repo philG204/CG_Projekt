@@ -16,18 +16,15 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   printf("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
-  LightDirection light;
+  LightDirection** lights = malloc(sizeof(LightDirection*) * MAX_LIGHT_OBJECTS);
   Mesh **meshes = malloc(sizeof(Mesh *) * MAX_MESHES);
   Object **objects = malloc(sizeof(Object*) * MAX_OBJECTS);
   scene->mesh_count = 0;
   scene->object_count = 0;
   scene->objects = objects;
   scene->camera = malloc(sizeof (Camera));
-
-  light.x = 0.0f;
-  light.y = 4.0f;
-  light.z = 0.0f;
-  scene->light = light;
+  scene->lights = lights;
+  scene->lightCount = 0;
 
   camera = camera_init (cameraSettings, projectionSettings);
   scene->camera = camera;
@@ -88,6 +85,15 @@ scene_add_object(Scene *scene, char* objDir)
     if (scene->object_count >= MAX_OBJECTS) {
         printf("scene_add_object: MAX_OBJECTS erreicht\n");
         return;
+    }
+
+    if(object->isLight == 1){
+        LightDirection* lightObject = malloc(sizeof(LightDirection));
+        lightObject->x = object->transformation->translation[0];
+        lightObject->y = object->transformation->translation[1];
+        lightObject->z = object->transformation->translation[2];
+        scene->lights[scene->lightCount] = lightObject;
+        scene->lightCount++;
     }
 
     if (object->meshName[0] == '\0') {
@@ -171,7 +177,7 @@ scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input
         identity(scene->objects[j]->modelMatrix);
         
         object_transformation(scene->objects[j], scene->objects[j]->transformation->translation, scene->objects[j]->transformation->scaling, scene->objects[j]->transformation->rotation);
-        object_draw(scene->objects[j], scene->camera->viewProj);
+        object_draw(scene->objects[j], scene->camera->viewProj, scene->lights, scene->lightCount);
     }
 }
 

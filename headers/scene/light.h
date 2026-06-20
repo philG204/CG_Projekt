@@ -8,10 +8,11 @@ typedef struct LightDirection{
 } LightDirection;
 
 typedef struct MaterialLight {
-    float emissive;
-    float ambient;
-    float diffuse;
-    float specular;
+    float emissive[4];
+    float ambient[4];
+    float diffuse[4];
+    float specular[4];
+    float shininess;
 } MaterialLight;
 
 // Setzt die Beleuchtung nach dem Gouraud-Shading um.

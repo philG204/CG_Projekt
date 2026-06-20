@@ -16,6 +16,7 @@ typedef struct Transformation{
     float translation[3];
     float scaling[3];
     float rotation[3];
+    float rotaionCircle[3];
 } Transformation;
 
 typedef struct Material {
@@ -34,10 +35,11 @@ typedef struct Object {
     Material* material;
     GLfloat* modelMatrix;
     Transformation* transformation;
+    int isLight;
 } Object;
 
 Object* object_init(char* objDir);
 void object_transformation(Object* object, GLfloat* translation, GLfloat* scaling, GLfloat* rotation);
-void object_draw(Object* object, GLfloat* cameraMatrix);
+void object_draw(Object* object, GLfloat* cameraMatrix, LightDirection **lightDirections, int lightCounts);
 
 #endif // OBJECT_H

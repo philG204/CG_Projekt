@@ -122,6 +122,21 @@ config_parse_string_value(const char *line, char *out, size_t outSize)
 }
 
 int
+config_parse_int_value(const char *line, int *out)
+{
+    printf("entering config_find_line_by_key\n");
+    const char *equal = strchr(line, '=');
+
+    if (equal == NULL || out == NULL) {
+        return 0;
+    }
+
+    *out = strtof(equal + 1, NULL);
+
+    return 1;
+}
+
+int
 config_parse_float_value(const char *line, float *out)
 {
     printf("entering config_find_line_by_key\n");
@@ -132,6 +147,43 @@ config_parse_float_value(const char *line, float *out)
     }
 
     *out = strtof(equal + 1, NULL);
+
+    return 1;
+}
+
+int
+config_parse_vec4_value(const char *line, float out[4])
+{
+    const char *start = strchr(line, '[');
+    const char *end = strchr(line, ']');
+
+    if (start == NULL || end == NULL || end <= start || out == NULL) {
+        return 0;
+    }
+
+    char buffer[256];
+
+    size_t len = end - start - 1;
+
+    if (len >= sizeof(buffer)) {
+        len = sizeof(buffer) - 1;
+    }
+
+    strncpy(buffer, start + 1, len);
+    buffer[len] = '\0';
+
+    char *token = strtok(buffer, ",");
+
+    for (int i = 0; i < 4; i++) {
+        if (token == NULL) {
+            return 0;
+        }
+
+        token = config_trim(token);
+        out[i] = strtof(token, NULL);
+
+        token = strtok(NULL, ",");
+    }
 
     return 1;
 }
