@@ -21,23 +21,23 @@ main (void)
   GLFWwindow *window = window_create (1920, 1080, "CG1");
 
   CameraSettings cameraSettings[] = {{ 
-                                  //   .eye = { 3.0f, 2.0f, 5.0f },
-                                  //   .center = { 0.0f, 0.0f, 0.0f },
-                                  //   .up = { 0.0f, 1.0f, 0.0f } 
+                                    // .eye = { 3.0f, 2.0f, 5.0f },
+                                    // .center = { 0.0f, 0.0f, 0.0f },
+                                    // .up = { 0.0f, 1.0f, 0.0f } 
                                   // },
                                   // {
-                                  //   .eye = { 3.0f, 4.0f, 5.0f },
-                                  //   .center = { 0.0f, 0.0f, 0.0f },
-                                  //   .up = { 0.0f, 1.0f, 0.0f } 
+                                    // .eye = { 3.0f, 4.0f, 5.0f },
+                                    // .center = { 0.0f, 0.0f, 0.0f },
+                                    // .up = { 0.0f, 1.0f, 0.0f } 
                                   // },
                                   // {
-                                  //   .eye = { -6.0f, 4.0f, 5.0f },
-                                  //   .center = { 0.0f, 0.0f, 0.0f },
-                                  //   .up = { 0.0f, 1.0f, 0.0f } 
+                                    // .eye = { -6.0f, 4.0f, 5.0f },
+                                    // .center = { 0.0f, 0.0f, 0.0f },
+                                    // .up = { 0.0f, 1.0f, 0.0f } 
                                   // }
 
-                                  .eye = { -12.0f, 1.4f, 0.0f },
-                                  .center = { 0.0f, 0.0f, 0.0f },
+                                  .eye = { -12.0f, 2.0f, 0.0f },
+                                  .center = { -1.0f, -0.6f, 0.0f },
                                   .up = { 0.0f, 1.0f, 0.0f }
                                   }
                                 };
@@ -73,6 +73,7 @@ main (void)
         camera_setCameraSettings(scene->camera, &cameraSettings[activeCamera]);
         lastactivecamera = activeCamera;
       }
+      //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
       camera_update(scene->camera);
 
