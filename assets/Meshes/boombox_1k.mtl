@@ -1,0 +1,25 @@
+# Blender 5.1.2 MTL File: 'room.blend'
+# www.blender.org
+
+newmtl boombox
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_diff_1k.jpg
+map_Ns /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_rough_1k.exr
+map_refl /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_metal_1k.exr
+map_Bump -bm 1.000000 /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_nor_gl_1k.exr
+
+newmtl boombox_speakers
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_speakers_diff_1k.png
+map_Ns /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_speakers_rough_1k.png
+map_refl /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_speakers_metal_1k.png
+map_d /home/bennet/Dokumente/03_Studium/23_HSH-BIN/06-SoSe26/41-Computergrafik_1/Projekt/room/assets/models/boombox_1k.blend/textures/boombox_speakers_diff_1k.png
