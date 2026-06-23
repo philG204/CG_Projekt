@@ -118,11 +118,6 @@ texture_init_from_config(const char *configPath,
                                                       maxTextures);
 
     int loadedCount = 0;
-    //if(textureCount == NULL || textureCount == 0){
-    //    printf("textureCount is NULL or not set!!!\n");
-    //} else {
-    //    printf("texture_init_from_config: textureCount: %s\n", textureCount);
-    //}
     
     for (int i = 0; i < textureCount; i++) {
         char completeTexturePath[512];

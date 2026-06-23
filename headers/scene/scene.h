@@ -1,12 +1,6 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#define MAX_OBJECTS 100
-#define MAX_LIGHT_OBJECTS 100
-#define MAX_MESHES 100
-#define PATH_LENGTH 256
-#define MAX_SHADER_COUNT 100
-
 #include <GL/glew.h>
 
 #include "camera.h"
@@ -14,6 +8,12 @@
 #include "object.h"
 #include "../renderer/mesh.h"
 #include "loadObjectList.h"
+
+#define MAX_OBJECTS 100
+#define MAX_LIGHT_OBJECTS 100
+#define MAX_MESHES 100
+#define PATH_LENGTH 256
+#define MAX_SHADER_COUNT 100
 
 
 typedef struct Scene {

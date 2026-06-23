@@ -78,38 +78,28 @@ dot (const GLfloat *a, const GLfloat *b)
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-void 
-reverseMatrecies (GLfloat *matrix)
-{
-  for(int col = 0; col < 4; ++col){
-    for(int row = 0; row < 4; ++row){
-      
-    }
-  }
-}
-
-
 void
 multiplyMatrices (GLfloat *out, const GLfloat *A, GLfloat *B)
 {
   GLfloat temp[16];
 
   for (int col = 0; col < 4; ++col)
+  {
+    for (int row = 0; row < 4; ++row)
     {
-      for (int row = 0; row < 4; ++row)
-        {
-          float sum = 0.0f;
-          for (int k = 0; k < 4; ++k)
-            {
-              sum += A[k * 4 + row] * B[col * 4 + k];
-            }
-          temp[col * 4 + row] = sum;
-        }
+      float sum = 0.0f;
+      for (int k = 0; k < 4; ++k)
+      {
+        sum += A[k * 4 + row] * B[col * 4 + k];
+      }
+      temp[col * 4 + row] = sum;
     }
+  }
+
   for (int i = 0; i < 16; ++i)
-    {
-      out[i] = temp[i];
-    }
+  {
+    out[i] = temp[i];
+  }
 }
 
 void

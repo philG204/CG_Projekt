@@ -1,11 +1,13 @@
-#include "../../headers/renderer/shader.h"
-#include "../../headers/renderer/loadShader.h"
 #include <GL/glew.h>
 
+#include <assert.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+
+#include "../../headers/renderer/shader.h"
+#include "../../headers/renderer/loadShader.h"
 
 
 typedef struct ShaderPaths {
