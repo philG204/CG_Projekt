@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-float* loadObj(const char* location, size_t* vertexCount);
+float *loadObj (const char *location, size_t *vertexCount);
 
 #endif // LOAD_OBJ_H

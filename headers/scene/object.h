@@ -1,16 +1,13 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#define PATH_LENGTH 256
-
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
-#include "light.h"
 #include "../renderer/mesh.h"
 #include "../renderer/texture.h"
-#include "../../headers/math/matrixTransformation.h"
-#include "loadObjectList.h"
+#include "light.h"
+
+#define PATH_LENGTH 256
 
 
 typedef struct MeshObject {

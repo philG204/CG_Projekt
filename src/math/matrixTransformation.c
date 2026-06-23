@@ -1,5 +1,4 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,6 +54,8 @@ inverse(GLfloat out[9], const GLfloat in[9])
 void
 normalize (GLfloat *v)
 {
+  assert (v != NULL);
+
   GLfloat len = sqrtf (v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
   if (len > 0.0f)
     {
@@ -67,6 +68,10 @@ normalize (GLfloat *v)
 void
 cross (const GLfloat *a, const GLfloat *b, GLfloat *out)
 {
+  assert (a != NULL);
+  assert (b != NULL);
+  assert (out != NULL);
+
   out[0] = a[1] * b[2] - a[2] * b[1];
   out[1] = a[2] * b[0] - a[0] * b[2];
   out[2] = a[0] * b[1] - a[1] * b[0];
@@ -75,6 +80,9 @@ cross (const GLfloat *a, const GLfloat *b, GLfloat *out)
 GLfloat
 dot (const GLfloat *a, const GLfloat *b)
 {
+  assert (a != NULL);
+  assert (b != NULL);
+
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
@@ -90,8 +98,12 @@ reverseMatrecies (GLfloat *matrix)
 
 
 void
-multiplyMatrices (GLfloat *out, const GLfloat *A, GLfloat *B)
+multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
 {
+  assert (a != NULL);
+  assert (b != NULL);
+  assert (out != NULL);
+
   GLfloat temp[16];
 
   for (int col = 0; col < 4; ++col)
@@ -101,7 +113,7 @@ multiplyMatrices (GLfloat *out, const GLfloat *A, GLfloat *B)
           float sum = 0.0f;
           for (int k = 0; k < 4; ++k)
             {
-              sum += A[k * 4 + row] * B[col * 4 + k];
+              sum += a[k * 4 + row] * b[col * 4 + k];
             }
           temp[col * 4 + row] = sum;
         }
@@ -115,6 +127,8 @@ multiplyMatrices (GLfloat *out, const GLfloat *A, GLfloat *B)
 void
 identity (GLfloat *out)
 {
+  assert (out != NULL);
+
   for (int i = 0; i < 16; i++)
     {
       out[i] = 0.0f;
@@ -129,92 +143,114 @@ identity (GLfloat *out)
 void
 translate (GLfloat *out, const GLfloat *in, GLfloat *v)
 {
-  GLfloat T[16];
+  assert (out != NULL);
+  assert (in != NULL);
+  assert (v != NULL);
 
-  identity (T);
-  T[12] = v[0];
-  T[13] = v[1];
-  T[14] = v[2];
+  GLfloat t[16];
 
-  multiplyMatrices (out, in, T);
+  identity (t);
+  t[12] = v[0];
+  t[13] = v[1];
+  t[14] = v[2];
+
+  multiplyMatrices (out, in, t);
 }
 
 void
-rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
+rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
 {
-  GLfloat R[16];
+  assert (out != NULL);
+  assert (in != NULL);
+
+  GLfloat r[16];
 
   GLfloat c = cosf (angle);
   GLfloat s = sinf (angle);
 
-  identity (R);
-  R[0] = c;
-  R[4] = -s;
-  R[1] = s;
-  R[5] = c;
+  identity (r);
 
-  multiplyMatrices (out, in, R);
+  // 2.Spalte:
+  r[4] = in[4] * c + in[8] * s;
+  r[5] = in[5] * c + in[9] * s;
+  r[6] = in[6] * c + in[10] * s;
+  r[7] = in[7] * c + in[11] * s;
+
+  // 3.Spalte:
+  r[8] = in[4] * (-s) + in[8] * c;
+  r[9] = in[5] * (-s) + in[9] * c;
+  r[10] = in[6] * (-s) + in[10] * c;
+  r[11] = in[7] * (-s) + in[11] * c;
+
+  multiplyMatrices (out, in, r);
 }
 
 void
 rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
 {
-  GLfloat R[16];
+  assert (out != NULL);
+  assert (in != NULL);
+
+  GLfloat r[16];
 
   GLfloat c = cosf (angle);
   GLfloat s = sinf (angle);
 
-  identity (R);
-  R[0] = c;
-  R[2] = -s;
-  R[8] = s;
-  R[10] = c;
+  identity (r);
+  r[0] = c;
+  r[2] = -s;
+  r[8] = s;
+  r[10] = c;
 
-  multiplyMatrices (out, in, R);
+  multiplyMatrices (out, in, r);
 }
 
-void 
-rotatex(GLfloat *out, const GLfloat *in, GLfloat angle)
+void
+rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
 {
-    GLfloat
-        c = cosf(angle),
-        s = sinf(angle),
-        R[16];
-      
-    identity(R);
+  assert (out != NULL);
+  assert (in != NULL);
 
-    // 2.Spalte:
-    R[4] = in[4] * c + in[8] * s;
-    R[5] = in[5] * c + in[9] * s;
-    R[6] = in[6] * c + in[10] * s;
-    R[7] = in[7] * c + in[11] * s;
+  GLfloat r[16];
 
-    // 3.Spalte:
-    R[8] = in[4] * (-s) + in[8] * c;
-    R[9] = in[5] * (-s) + in[9] * c;
-    R[10] = in[6] * (-s) + in[10] * c;
-    R[11] = in[7] * (-s) + in[11] * c;
+  GLfloat c = cosf (angle);
+  GLfloat s = sinf (angle);
 
-    multiplyMatrices(out, in, R);
+  identity (r);
+  r[0] = c;
+  r[4] = -s;
+  r[1] = s;
+  r[5] = c;
+
+  multiplyMatrices (out, in, r);
 }
 
 void
 scale (GLfloat *out, GLfloat *in, const GLfloat *v)
 {
-  GLfloat S[16];
+  assert (out != NULL);
+  assert (in != NULL);
+  assert (v != NULL);
 
-  identity (S);
-  S[0] = v[0];
-  S[5] = v[1];
-  S[10] = v[2];
+  GLfloat s[16];
 
-  multiplyMatrices (out, in, S);
+  identity (s);
+  s[0] = v[0];
+  s[5] = v[1];
+  s[10] = v[2];
+
+  multiplyMatrices (out, in, s);
 }
 
 void
 lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
         const GLfloat *up)
 {
+  assert (out != NULL);
+  assert (eye != NULL);
+  assert (center != NULL);
+  assert (up != NULL);
+
   GLfloat f[3]
       = { center[0] - eye[0], center[1] - eye[1], center[2] - eye[2] };
   normalize (f);
@@ -247,6 +283,8 @@ lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
 void
 perspective (GLfloat *out, float fovy, float aspect, float near, float far)
 {
+  assert (out != NULL);
+
   for (int i = 0; i < 16; i++)
     {
       out[i] = 0.0f;

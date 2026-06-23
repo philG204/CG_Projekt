@@ -108,6 +108,11 @@ get_shader_paths_from_dir(const char *shaderDir, ShaderPaths *outPaths)
     return 1;
 }
 
+#include <GL/glew.h>
+
+#include "../../headers/renderer/loadShader.h"
+#include "../../headers/renderer/shader.h"
+
 GLuint
 shader_init (char *shaderDir)
 {
@@ -178,7 +183,7 @@ shader_init (char *shaderDir)
     }
   glValidateProgram (shaderProgramId);
   glGetProgramiv (shaderProgramId, GL_VALIDATE_STATUS, &status);
-  
+
   return shaderProgramId;
 }
 

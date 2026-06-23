@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <stdio.h>
@@ -8,6 +8,7 @@
 #include "../../headers/scene/scene.h"
 #include "../../headers/renderer/shader.h"
 #include "../../headers/scene/loadObjectList.h"
+#include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
 
@@ -141,7 +142,12 @@ scene_init (char *meshDir, char* shaderDir, int mesh_count, int shader_count, ch
             CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
-  printf("entering scene_init\n");
+  assert (meshDir != NULL);
+  assert (scene_name != NULL);
+  assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
+
+  printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
   LightDirection** lights = malloc(sizeof(LightDirection*) * MAX_LIGHT_OBJECTS);
@@ -205,24 +211,24 @@ scene_init (char *meshDir, char* shaderDir, int mesh_count, int shader_count, ch
 }
 
 void
-scene_add_object(Scene *scene, char* objDir)
+scene_add_object (Scene *scene, char *objDir)
 {
-  printf("entering scene_add_object\n");
+  assert (scene != NULL);
+  assert (objDir != NULL);
+
+  printf ("entering scene_add_object\n");
   Object *object = object_init (objDir);
 
-    if (scene == NULL) {
-        printf("scene_add_object: scene is NULL\n");
-        return;
+  if (object == NULL)
+    {
+      printf ("scene_add_object: object is NULL\n");
+      return;
     }
 
-    if (object == NULL) {
-        printf("scene_add_object: object is NULL\n");
-        return;
-    }
-
-    if (scene->object_count >= MAX_OBJECTS) {
-        printf("scene_add_object: MAX_OBJECTS erreicht\n");
-        return;
+  if (scene->object_count >= MAX_OBJECTS)
+    {
+      printf ("scene_add_object: MAX_OBJECTS erreicht\n");
+      return;
     }
 
     if(object->isLight == 1){
@@ -240,7 +246,7 @@ scene_add_object(Scene *scene, char* objDir)
         return;
     }
 
-    char meshNameWithoutExtension[256];
+  char meshNameWithoutExtension[256];
 
     getNameWithoutExtension(object->meshObject->meshName,
                             meshNameWithoutExtension,
@@ -253,23 +259,23 @@ scene_add_object(Scene *scene, char* objDir)
 
     object->meshObject->mesh = NULL;
 
-    for (int i = 0; i < scene->mesh_count; i++) {
-        if (scene->meshes[i] == NULL) {
-            continue;
+  for (int i = 0; i < scene->mesh_count; i++)
+    {
+      if (scene->meshes[i] == NULL)
+        {
+          continue;
         }
 
-        printf("scene_add_object: compare '%s' with '%s'\n",
-               scene->meshes[i]->name,
-               meshNameWithoutExtension);
+      printf ("scene_add_object: compare '%s' with '%s'\n",
+              scene->meshes[i]->name, meshNameWithoutExtension);
 
         if (strcmp(scene->meshes[i]->name, meshNameWithoutExtension) == 0) {
             object->meshObject->mesh = scene->meshes[i];
 
-            printf("scene_add_object: mesh %s assigned to object %s\n",
-                   scene->meshes[i]->name,
-                   object->name);
+          printf ("scene_add_object: mesh %s assigned to object %s\n",
+                  scene->meshes[i]->name, object->name);
 
-            break;
+          break;
         }
     }
 
@@ -317,25 +323,20 @@ scene_add_object(Scene *scene, char* objDir)
 }
 
 void
-scene_update(Scene* scene, sceneObject* objectList, int objectCount, float input)
+scene_update (Scene *scene)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  assert (scene != NULL);
 
-    // Test Daten
-    static GLfloat boxAngle[3] = {0.0f, 0.0f, 0.0f};
-    static GLfloat teapotAngle[3] = {0.0f, 0.0f, 0.0f};
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //boxAngle[0] += 0.02f;
-    //boxAngle[1] += 0.02f;
-    //boxAngle[2] += 0.02f;
+  Object *object = NULL;
 
-    teapotAngle[0] += 0.001f;
-    teapotAngle[1] += 0.002f;
-    teapotAngle[2] += 0.003f;
-
-    for (int j = 0; j < scene->object_count; j++) {
-        if (scene->objects[j] == NULL) {
-            continue;
+  for (int j = 0; j < scene->object_count; j++)
+    {
+      object = scene->objects[j];
+      if (object == NULL)
+        {
+          continue;
         }
 
         if (scene->objects[j]->meshObject->mesh == NULL) {
