@@ -39,20 +39,11 @@ main (void)
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
 
-  Scene *scene = scene_init ("Meshes", "Shaders", 1, 1, "scene1", cameraSettings,
+  Scene *scene = scene_init ("Meshes", "Shaders", 1, 1, "scene1", &cameraSettings[activeCamera],
                              &projectionSettings);
 
 
   load_object_list ("room.txt", scene);
-
-  scene_add_object (scene, "Box1");
-  scene_add_object (scene, "Box2");
-  //scene_add_object (scene, "Box3");
-  //scene_add_object (scene, "Box4");
-  //scene_add_object (scene, "Box5");
-  //scene_add_object (scene, "Teapot");
-  //scene_add_object (scene, "Earth");
-  
   
   
   while (!glfwWindowShouldClose (window))

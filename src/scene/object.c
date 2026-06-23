@@ -2,7 +2,6 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
 
 #include <GL/glew.h>
 
@@ -229,6 +228,12 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix, GLfloat* projMatrix, LightDirection **lightDirections, int lightCounts)
 {
+  assert (object != NULL);
+  assert (viewProj != NULL);
+  assert (viewMatrix != NULL);
+  assert (projMatrix != NULL);
+  assert (lightDirections != NULL);
+
   use_shader (object->material->shaderObject->shader);
 
   glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, "materialEmission"), object->material->light->emissive[0], object->material->light->emissive[1], object->material->light->emissive[2], object->material->light->emissive[3]);

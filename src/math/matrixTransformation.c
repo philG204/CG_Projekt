@@ -1,13 +1,13 @@
-#include <GL/glew.h>
-
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <GL/glew.h>
+
 
 int
-inverse(GLfloat out[9], const GLfloat in[9])
+inverse(const GLfloat out[9], const GLfloat in[9])
 {
     GLfloat mHash[9];
 
@@ -101,15 +101,12 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
   {
     for (int row = 0; row < 4; ++row)
     {
-      for (int row = 0; row < 4; ++row)
-        {
-          float sum = 0.0f;
-          for (int k = 0; k < 4; ++k)
-            {
-              sum += a[k * 4 + row] * b[col * 4 + k];
-            }
-          temp[col * 4 + row] = sum;
-        }
+      float sum = 0.0f;
+      for (int k = 0; k < 4; ++k)
+      {
+        sum += a[k * 4 + row] * b[col * 4 + k];
+      }
+      temp[col * 4 + row] = sum;
     }
   }
 

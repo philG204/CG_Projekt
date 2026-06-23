@@ -133,7 +133,9 @@ texture_init_from_config (const char *configPath, GLuint shader,
 Texture *
 texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 {
-    printf("entering texture_init with filename: %s\n", filename);
+    assert (filename != NULL);
+    assert (shaderVariable != NULL);
+    
     Texture *texture = malloc (sizeof (Texture));
     GLuint textureId;
 

@@ -113,7 +113,7 @@ get_shader_paths_from_dir(const char *shaderDir, ShaderPaths *outPaths)
 GLuint
 shader_init (char *shaderDir)
 {
-  printf("entering shader_init with file: %s\n", shaderDir);
+  assert (shaderDir != NULL);
   GLuint shaderProgramId;
   GLint status;
   GLuint vertexShader;

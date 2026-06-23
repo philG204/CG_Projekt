@@ -143,9 +143,9 @@ scene_init (char *meshDir, char* shaderDir, int mesh_count, int shader_count, ch
             CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
+  assert (shaderDir != NULL);
   assert (meshDir != NULL);
   assert (scene_name != NULL);
-  assert (cameraSettings != NULL);
   assert (projectionSettings != NULL);
 
   printf ("entering scene_init\n");
