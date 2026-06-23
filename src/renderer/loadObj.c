@@ -1,8 +1,8 @@
-#include "../../headers/renderer/loadObj.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../headers/renderer/loadObj.h"
 
 typedef float Vec2[2];
 typedef float Vec3[3];

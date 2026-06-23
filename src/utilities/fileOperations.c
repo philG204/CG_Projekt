@@ -1,31 +1,35 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../../headers/utilities/fileOperations.h"
 
-void 
-getNameWithoutExtension(const char *path, char *out, size_t outSize)
+void
+getNameWithoutExtension (const char *path, char *out, size_t outSize)
 {
-    // letzten Slash suchen
-    const char *filename = strrchr(path, '/');
+  assert (path != NULL);
+  assert (out != NULL);
 
-    if (filename)
-        filename++;   // Slash überspringen
-    else
-        filename = path;
+  // letzten Slash suchen
+  const char *filename = strrchr (path, '/');
 
-    // letzte Dateiendung suchen
-    const char *dot = strrchr(filename, '.');
+  if (filename)
+    filename++; // Slash überspringen
+  else
+    filename = path;
 
-    size_t len;
-    if (dot)
-        len = dot - filename;
-    else
-        len = strlen(filename);
+  // letzte Dateiendung suchen
+  const char *dot = strrchr (filename, '.');
 
-    if (len >= outSize)
-        len = outSize - 1;
+  size_t len;
+  if (dot)
+    len = dot - filename;
+  else
+    len = strlen (filename);
 
-    strncpy(out, filename, len);
-    out[len] = '\0';
+  if (len >= outSize)
+    len = outSize - 1;
+
+  strncpy (out, filename, len);
+  out[len] = '\0';
 }

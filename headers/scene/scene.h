@@ -3,11 +3,10 @@
 
 #include <GL/glew.h>
 
+#include "../renderer/mesh.h"
 #include "camera.h"
 #include "light.h"
 #include "object.h"
-#include "../renderer/mesh.h"
-#include "loadObjectList.h"
 
 #define MAX_OBJECTS 100
 #define MAX_LIGHT_OBJECTS 100

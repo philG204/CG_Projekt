@@ -1,8 +1,10 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/mesh.h"
@@ -14,21 +16,16 @@
 
 
 static void
-object_load_config(Object *object, const char *configPath)
+object_load_config (Object *object, const char *configPath)
 {
-    assert (object != NULL);
-    assert (configPath != NULL);
-    
-    if (object == NULL || configPath == NULL || object->material == NULL) {
-        return;
-    }
+  assert (object != NULL);
+  assert (configPath != NULL);
 
-    char line[512];
+  char line[512];
 
-    if (config_find_line_by_key(configPath, "name", line, sizeof(line))) {
-        config_parse_string_value(line,
-                                  object->name,
-                                  sizeof(object->name));
+  if (config_find_line_by_key (configPath, "name", line, sizeof (line)))
+    {
+      config_parse_string_value (line, object->name, sizeof (object->name));
     }
 
     if (config_find_line_by_key(configPath, "mesh", line, sizeof(line))) {
@@ -69,23 +66,28 @@ object_load_config(Object *object, const char *configPath)
                                 object->material->light->specular);
     }
 
-    if (config_find_line_by_key(configPath, "transparency", line, sizeof(line))) {
-        float transparencyValue = 0.0f;
+  if (config_find_line_by_key (configPath, "transparency", line,
+                               sizeof (line)))
+    {
+      float transparencyValue = 0.0f;
 
-        if (config_parse_float_value(line, &transparencyValue)) {
-            object->material->transparency = (int)transparencyValue;
+      if (config_parse_float_value (line, &transparencyValue))
+        {
+          object->material->transparency = (int)transparencyValue;
         }
     }
 
-    if (object->transformation != NULL) {
-        if (config_find_line_by_key(configPath, "translation", line, sizeof(line))) {
-            config_parse_vec3_value(line,
-                                     object->transformation->translation);
+  if (object->transformation != NULL)
+    {
+      if (config_find_line_by_key (configPath, "translation", line,
+                                   sizeof (line)))
+        {
+          config_parse_vec3_value (line, object->transformation->translation);
         }
 
-        if (config_find_line_by_key(configPath, "scaling", line, sizeof(line))) {
-            config_parse_vec3_value(line,
-                                     object->transformation->scaling);
+      if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
+        {
+          config_parse_vec3_value (line, object->transformation->scaling);
         }
 
         if (config_find_line_by_key(configPath, "rotation", line, sizeof(line))) {
@@ -162,10 +164,9 @@ object_init (char *objDir)
 
   char configPath[512];
 
-  snprintf(configPath,
-            sizeof(configPath),
-            "assets/%s/object.cfg",
-            objDir);
+  snprintf (configPath, sizeof (configPath), "assets/%s/object.cfg", objDir);
+
+  object_load_config (object, configPath);
 
   object_load_config(object, configPath);
  
@@ -205,13 +206,13 @@ void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)
 {
-  if(translation != NULL){
-    translate(object->modelMatrix, object->modelMatrix, translation);
-  }
+  assert (object != NULL);
+  assert (translation != NULL);
+  assert (scaling != NULL);
+  assert (rotation != NULL);
 
-  if(scaling != NULL){
-    scale(object->modelMatrix, object->modelMatrix, scaling);
-  }
+  translate (object->modelMatrix, object->modelMatrix, translation);
+  scale (object->modelMatrix, object->modelMatrix, scaling);
 
   if(object->transformation->rotaionCircle != NULL){
     rotation[0] += object->transformation->rotaionCircle[0];

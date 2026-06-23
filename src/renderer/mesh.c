@@ -1,8 +1,10 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
 #include <string.h>
+#include <strings.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/renderer/loadObj.h"
 #include "../../headers/renderer/mesh.h"
@@ -12,14 +14,15 @@
 Mesh *
 mesh_init (char *meshFile)
 {
+  assert (meshFile != NULL);
+
   GLuint vao;
   GLuint vbo;
 
   size_t vertexCount = 0;
 
   Mesh *mesh = malloc (sizeof (Mesh));
-  mesh->name = malloc(strlen(meshFile) + 1);
-
+  mesh->name = malloc (strlen (meshFile) + 1);
 
   float *vertices = loadObj (meshFile, &vertexCount);
   printf ("loaded vertecies\n");
@@ -61,9 +64,9 @@ mesh_init (char *meshFile)
   mesh->vao = vao;
   mesh->vertexCount = vertexCount;
   char name[256];
-  getNameWithoutExtension(meshFile, name, sizeof(name));
-  strcpy(mesh->name, name);
-  
+  getNameWithoutExtension (meshFile, name, sizeof (name));
+  strcpy (mesh->name, name);
+
   free (vertices);
 
   printf ("OBJ geladen: %s, VAO=%u, VBO=%u, Vertices=%zu\n", meshFile, vao,
@@ -75,5 +78,7 @@ mesh_init (char *meshFile)
 void
 mesh_draw (Mesh *mesh)
 {
+  assert (mesh != NULL);
+
   glDrawArrays (GL_TRIANGLES, 0, (GLsizei)mesh->vertexCount);
 }

@@ -10,16 +10,30 @@ float_equal (GLfloat a, GLfloat b)
   return fabsf (a - b) < EPSILON;
 }
 
-int
-matrix_equal (const GLfloat *a, const GLfloat *b)
+// Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher liegen
+// können wir einen Array-Vergleich ausführen
+static int
+array_equal (const GLfloat *a, const GLfloat *b, int n)
 {
-  for (int i = 0; i < 16; i++)
+  for (int i = 0; i < n; i++)
     {
       if (!float_equal (a[i], b[i]))
         return 0;
     }
 
   return 1;
+}
+
+int
+vector_equal (const GLfloat *a, const GLfloat *b)
+{
+  return array_equal (a, b, 3);
+}
+
+int
+matrix_equal (const GLfloat *a, const GLfloat *b)
+{
+  return array_equal (a, b, 16);
 }
 
 void

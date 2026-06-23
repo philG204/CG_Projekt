@@ -1,11 +1,14 @@
+#include <assert.h>
+#include <stdio.h>
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
-#include <stdio.h>
 
 static void
 framebuffer_size_callback (GLFWwindow *window, int width, int height)
 {
+  assert (window != NULL);
+
   (void)window;
   glViewport (0, 0, width, height);
 }
@@ -13,6 +16,8 @@ framebuffer_size_callback (GLFWwindow *window, int width, int height)
 GLFWwindow *
 window_create (int width, int height, const char *title)
 {
+  assert (title != NULL);
+
   glfwInitHint (GLFW_PLATFORM, GLFW_PLATFORM_X11);
   glfwInit ();
   glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);

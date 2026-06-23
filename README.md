@@ -1,5 +1,14 @@
 # CG_Projekt
 
+## Bedienung
+Das Programm lässt sich durch einen einfachen Aufruf an `make` kompilieren.
+
+Die exportierte Binary heißt `demo`.
+
+Mit `make run` lässt sich das Programm auch direkt kompilieren und neu ausführen.
+
+Eine Testsuite lässt sich mit `make test` ausführen.
+
 ## src/
 
 Enthält den gesamten C-Quellcode des Programms.
@@ -106,10 +115,14 @@ Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
 - Sofa 03; https://polyhaven.com/a/sofa_03
 - Boombox; https://polyhaven.com/a/boombox
 - Vintage Cabinet 01; https://polyhaven.com/a/vintage_cabinet_01
-- Potted Plant 01; https://polyhaven.com/a/potted_plant_01
-- Chess Set; https://polyhaven.com/a/chess_set
-- Gothic Commode 01; https://polyhaven.com/a/GothicCommode_01
 - Wooden Table 02; https://polyhaven.com/a/wooden_table_02
+- Chandelier 02; https://polyhaven.com/a/Chandelier_02
+- Hanging Picture Frame 02; https://polyhaven.com/a/hanging_picture_frame_02
+- Fancy Picture Frame 01; https://polyhaven.com/a/fancy_picture_frame_01
+- Gamepad; https://polyhaven.com/a/gamepad
+- Modern Wooden Cabinet; https://polyhaven.com/a/modern_wooden_cabinet
+
 ### Texturen
 - Bi Stretch; https://polyhaven.com/a/bi_stretch
 - Wood Floor; https://polyhaven.com/a/wood_floor
+- Crepe Satin; https://polyhaven.com/a/crepe_satin
