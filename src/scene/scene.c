@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "../../headers/scene/scene.h"
+#include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/shader.h"
 #include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"

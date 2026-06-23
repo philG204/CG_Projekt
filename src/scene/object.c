@@ -181,7 +181,7 @@ object_init (char *objDir)
   identity (object->modelMatrix);
 
   object->normalMatrix = malloc (16 * sizeof (GLfloat));
-  object->normalMatrix = inverse(object->modelMatrix);
+  inverse(object->normalMatrix, object->modelMatrix);
   
   
   printf("object_init loaded:\n");

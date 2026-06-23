@@ -39,12 +39,9 @@ main (void)
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
 
-  Scene *scene = scene_init ("Meshes", "Shaders", 1, 1, "scene1", &cameraSettings,
+  Scene *scene = scene_init ("Meshes", "Shaders", 1, 1, "scene1", cameraSettings,
                              &projectionSettings);
 
-
-  int objectCnt= 0;
-  sceneObject *objectList = load_object_list("room.txt", &objectCnt, 12);    
 
   load_object_list ("room.txt", scene);
 

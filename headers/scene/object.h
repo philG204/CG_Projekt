@@ -8,6 +8,7 @@
 #include "light.h"
 
 #define PATH_LENGTH 256
+#define MAX_TEXTURES 10
 
 
 typedef struct MeshObject {
