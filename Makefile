@@ -17,6 +17,7 @@ SRC = \
 	src/renderer/shader.c \
 	src/renderer/texture.c \
 	src/scene/camera.c \
+	src/scene/cubemap.c \
 	src/scene/light.c \
 	src/scene/object.c \
 	src/scene/scene.c \
@@ -33,6 +34,7 @@ HEADERS = \
 	headers/renderer/shader.h \
 	headers/renderer/texture.h \
 	headers/scene/camera.h \
+	headers/scene/cubemap.h \
 	headers/scene/light.h \
 	headers/scene/loadObjectList.h \
 	headers/scene/object.h \

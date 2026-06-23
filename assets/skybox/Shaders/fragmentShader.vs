@@ -1,0 +1,8 @@
+#version 330 core
+in vec3 Position;
+out vec4 fragColor;
+uniform samplerCube cubemap;
+
+void main() {
+    fragColor = texture(cubemap, Position);
+}

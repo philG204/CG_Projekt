@@ -8,6 +8,7 @@
 #include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
+#include "../../headers/scene/cubemap.h"
 
 Scene *
 scene_init (char *meshDir, int mesh_count, char *scene_name,
@@ -175,5 +176,6 @@ scene_update (Scene *scene)
                              object->transformation->scaling,
                              object->transformation->rotation);
       object_draw (object, scene->camera->viewProj);
+
     }
 }

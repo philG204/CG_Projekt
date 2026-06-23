@@ -189,5 +189,7 @@ object_draw (Object *object, GLfloat *cameraMatrix)
                         object->material->texture_count);
     }
 
+  glDepthFunc(GL_LEQUAL);
   glDrawArrays (GL_TRIANGLES, 0, (GLsizei)object->mesh->vertexCount);
+  glDepthFunc(GL_LESS);
 }

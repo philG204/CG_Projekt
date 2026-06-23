@@ -13,6 +13,7 @@
 #include "../headers/scene/loadObjectList.h"
 #include "../headers/scene/object.h"
 #include "../headers/scene/scene.h"
+#include "../headers/scene/cubemap.h"
 
 int
 main (void)
@@ -51,8 +52,19 @@ main (void)
 
 
   float light[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-  int objectCnt = load_object_list ("room.txt", scene);
 
+  char *textureFiles[] = {
+      "cubemap/right.jpg",
+      "cubemap/left.jpg",
+      "cubemap/top.jpg",
+      "cubemap/bottom.jpg",
+      "cubemap/front.jpg",
+      "cubemap/back.jpg"
+  };
+
+  GLuint *cubemapTexture = cubemap_init(scene, textureFiles, "skybox");
+
+  int objectCnt = load_object_list ("room.txt", scene);
 
   while (!glfwWindowShouldClose (window))
     {
