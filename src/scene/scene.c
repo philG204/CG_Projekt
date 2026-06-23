@@ -75,6 +75,27 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   scene->meshes = meshes;
   closedir (dirMesh);
 
+  glGenFramebuffers (1, &scene->framebuffer);
+  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
+
+  glGenTextures (1, &scene->texturebuffer);
+  glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
+
+  // TODO add proper size handling
+  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
+                GL_UNSIGNED_BYTE, NULL);
+
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                          scene->texturebuffer, 0);
+
+  if (glCheckFramebufferStatus (GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    perror ("framebuffer incomplete!");
+
+  glBindFramebuffer (GL_FRAMEBUFFER, 0);
+
   return scene;
 }
 
@@ -157,6 +178,9 @@ scene_update (Scene *scene)
 {
   assert (scene != NULL);
 
+  glBindFramebuffer(GL_FRAMEBUFFER, scene->framebuffer);
+  glEnable(GL_DEPTH_TEST);
+
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   Object *object = NULL;
@@ -182,4 +206,7 @@ scene_update (Scene *scene)
                              object->transformation->rotation);
       object_draw (object, scene->camera->viewProj);
     }
+
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glDisable(GL_DEPTH_TEST);
 }

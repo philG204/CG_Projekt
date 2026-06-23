@@ -9,6 +9,7 @@
 
 #include "../headers/core/input.h"
 #include "../headers/core/window.h"
+#include "../headers/renderer/postProcessing.h"
 #include "../headers/scene/camera.h"
 #include "../headers/scene/loadObjectList.h"
 #include "../headers/scene/object.h"
@@ -68,6 +69,8 @@ main (void)
       glfwPollEvents ();
 
       scene_update (scene);
+
+      render_scene (scene);
     }
 
   glfwTerminate ();

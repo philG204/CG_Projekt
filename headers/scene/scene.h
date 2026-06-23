@@ -20,6 +20,8 @@ typedef struct Scene
   int mesh_count;
   Camera *camera;
   LightDirection light;
+  GLuint framebuffer;
+  GLuint texturebuffer;
   char name[PATH_LENGTH];
 } Scene;
 
