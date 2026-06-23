@@ -10,12 +10,13 @@ typedef struct LightDirection
   GLfloat z;
 } LightDirection;
 
-typedef struct MaterialLight {
-    float emissive[4];
-    float ambient[4];
-    float diffuse[4];
-    float specular[4];
-    float shininess;
+typedef struct MaterialLight
+{
+  float emissive[4];
+  float ambient[4];
+  float diffuse[4];
+  float specular[4];
+  float shininess;
 } MaterialLight;
 
 // Setzt die Beleuchtung nach dem Gouraud-Shading um.

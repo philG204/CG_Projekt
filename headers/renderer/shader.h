@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 
-GLuint shader_init(char* shaderDir);
-void use_shader(GLuint shaderProgram);
+GLuint shader_init (char *shaderDir);
+void use_shader (GLuint shaderProgram);
 
 #endif // SHADER_H

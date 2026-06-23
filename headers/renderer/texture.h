@@ -3,11 +3,12 @@
 
 #include <GL/glew.h>
 
-typedef struct Texture{
-    GLuint textureId;
-    GLuint shaderProgramId;
-    char shaderVariable[256];
-}Texture;
+typedef struct Texture
+{
+  GLuint textureId;
+  GLuint shaderProgramId;
+  char shaderVariable[256];
+} Texture;
 
 Texture *texture_init (char *filename, GLuint shaderProgram,
                        char *shaderVariable);
