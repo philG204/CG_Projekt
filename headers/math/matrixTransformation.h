@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void inverse(const GLfloat out[9], const GLfloat in[9]);
+void inverse (const GLfloat out[9], const GLfloat in[9]);
 void normalize (GLfloat *v);
 void cross (const GLfloat *a, const GLfloat *b, GLfloat *out);
 GLfloat dot (const GLfloat *a, const GLfloat *b);

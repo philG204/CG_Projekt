@@ -10,7 +10,6 @@
 #include "../../headers/renderer/mesh.h"
 #include "../../headers/utilities/fileOperations.h"
 
-
 Mesh *
 mesh_init (char *meshFile)
 {

@@ -5,52 +5,47 @@
 
 #include <GL/glew.h>
 
-
 int
-inverse(const GLfloat out[9], const GLfloat in[9])
+inverse (const GLfloat out[9], const GLfloat in[9])
 {
-    GLfloat mHash[9];
+  GLfloat mHash[9];
 
-    const GLfloat det =
-        (in[0] * in[4] * in[8]) +
-        (in[3] * in[7] * in[2]) +
-        (in[6] * in[1] * in[5]) -
-        (in[6] * in[4] * in[2]) -
-        (in[0] * in[7] * in[5]) -
-        (in[3] * in[1] * in[8]);
+  const GLfloat det = (in[0] * in[4] * in[8]) + (in[3] * in[7] * in[2])
+                      + (in[6] * in[1] * in[5]) - (in[6] * in[4] * in[2])
+                      - (in[0] * in[7] * in[5]) - (in[3] * in[1] * in[8]);
 
-    if (fabsf(det) < 0.000001f)
+  if (fabsf (det) < 0.000001f)
     {
-        printf("inverse: Matrix ist nicht invertierbar, det = %f\n", det);
+      printf ("inverse: Matrix ist nicht invertierbar, det = %f\n", det);
 
-        for (int i = 0; i < 9; i++)
+      for (int i = 0; i < 9; i++)
         {
-            out[i] = 0.0f;
+          out[i] = 0.0f;
         }
 
-        return 0;
+      return 0;
     }
 
-    mHash[0] =  (in[4] * in[8]) - (in[5] * in[7]);
-    mHash[1] = -((in[1] * in[8]) - (in[2] * in[7]));
-    mHash[2] =  (in[1] * in[5]) - (in[2] * in[4]);
+  mHash[0] = (in[4] * in[8]) - (in[5] * in[7]);
+  mHash[1] = -((in[1] * in[8]) - (in[2] * in[7]));
+  mHash[2] = (in[1] * in[5]) - (in[2] * in[4]);
 
-    mHash[3] = -((in[3] * in[8]) - (in[5] * in[6]));
-    mHash[4] =  (in[0] * in[8]) - (in[2] * in[6]);
-    mHash[5] = -((in[0] * in[5]) - (in[2] * in[3]));
+  mHash[3] = -((in[3] * in[8]) - (in[5] * in[6]));
+  mHash[4] = (in[0] * in[8]) - (in[2] * in[6]);
+  mHash[5] = -((in[0] * in[5]) - (in[2] * in[3]));
 
-    mHash[6] =  (in[3] * in[7]) - (in[4] * in[6]);
-    mHash[7] = -((in[0] * in[7]) - (in[1] * in[6]));
-    mHash[8] =  (in[0] * in[4]) - (in[1] * in[3]);
+  mHash[6] = (in[3] * in[7]) - (in[4] * in[6]);
+  mHash[7] = -((in[0] * in[7]) - (in[1] * in[6]));
+  mHash[8] = (in[0] * in[4]) - (in[1] * in[3]);
 
-    const GLfloat invDet = 1.0f / det;
+  const GLfloat invDet = 1.0f / det;
 
-    for (int i = 0; i < 9; i++)
+  for (int i = 0; i < 9; i++)
     {
-        out[i] = mHash[i] * invDet;
+      out[i] = mHash[i] * invDet;
     }
 
-    return 1;
+  return 1;
 }
 
 void
@@ -98,22 +93,22 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
   GLfloat temp[16];
 
   for (int col = 0; col < 4; ++col)
-  {
-    for (int row = 0; row < 4; ++row)
     {
-      float sum = 0.0f;
-      for (int k = 0; k < 4; ++k)
-      {
-        sum += a[k * 4 + row] * b[col * 4 + k];
-      }
-      temp[col * 4 + row] = sum;
+      for (int row = 0; row < 4; ++row)
+        {
+          float sum = 0.0f;
+          for (int k = 0; k < 4; ++k)
+            {
+              sum += a[k * 4 + row] * b[col * 4 + k];
+            }
+          temp[col * 4 + row] = sum;
+        }
     }
-  }
 
   for (int i = 0; i < 16; ++i)
-  {
-    out[i] = temp[i];
-  }
+    {
+      out[i] = temp[i];
+    }
 }
 
 void

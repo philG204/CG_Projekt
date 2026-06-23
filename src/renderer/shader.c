@@ -2,112 +2,104 @@
 
 #include <assert.h>
 #include <dirent.h>
-#include <sys/stat.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 
-#include "../../headers/renderer/shader.h"
 #include "../../headers/renderer/loadShader.h"
+#include "../../headers/renderer/shader.h"
 
-
-typedef struct ShaderPaths {
-    char vertexPath[512];
-    char fragmentPath[512];
+typedef struct ShaderPaths
+{
+  char vertexPath[512];
+  char fragmentPath[512];
 } ShaderPaths;
 
-static
-int
-get_shader_paths_from_dir(const char *shaderDir, ShaderPaths *outPaths)
+static int
+get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 {
-    if (shaderDir == NULL || outPaths == NULL)
+  if (shaderDir == NULL || outPaths == NULL)
     {
-        printf("get_shader_paths_from_dir: shaderDir oder outPaths ist NULL\n");
-        return 0;
+      printf ("get_shader_paths_from_dir: shaderDir oder outPaths ist NULL\n");
+      return 0;
     }
 
-    outPaths->vertexPath[0] = '\0';
-    outPaths->fragmentPath[0] = '\0';
+  outPaths->vertexPath[0] = '\0';
+  outPaths->fragmentPath[0] = '\0';
 
-    DIR *dir = opendir(shaderDir);
+  DIR *dir = opendir (shaderDir);
 
-    if (dir == NULL)
+  if (dir == NULL)
     {
-        printf("Shader-Ordner konnte nicht geöffnet werden: %s\n", shaderDir);
-        return 0;
+      printf ("Shader-Ordner konnte nicht geöffnet werden: %s\n", shaderDir);
+      return 0;
     }
 
-    struct dirent *entry;
+  struct dirent *entry;
 
-    while ((entry = readdir(dir)) != NULL)
+  while ((entry = readdir (dir)) != NULL)
     {
-        if (strcmp(entry->d_name, ".") == 0 ||
-            strcmp(entry->d_name, "..") == 0)
+      if (strcmp (entry->d_name, ".") == 0
+          || strcmp (entry->d_name, "..") == 0)
         {
-            continue;
+          continue;
         }
 
-        char completePath[512];
+      char completePath[512];
 
-        snprintf(
-            completePath,
-            sizeof(completePath),
-            "%s/%s",
-            shaderDir,
-            entry->d_name
-        );
+      snprintf (completePath, sizeof (completePath), "%s/%s", shaderDir,
+                entry->d_name);
 
-        struct stat fileStat;
+      struct stat fileStat;
 
-        if (stat(completePath, &fileStat) != 0)
+      if (stat (completePath, &fileStat) != 0)
         {
-            printf("Shader-Datei konnte nicht geprüft werden: %s\n",
-                   completePath);
-            continue;
+          printf ("Shader-Datei konnte nicht geprüft werden: %s\n",
+                  completePath);
+          continue;
         }
 
-        if (!S_ISREG(fileStat.st_mode))
+      if (!S_ISREG (fileStat.st_mode))
         {
-            continue;
+          continue;
         }
 
-        if (strstr(entry->d_name, "vertex") != NULL ||
-            strstr(entry->d_name, "Vertex") != NULL)
+      if (strstr (entry->d_name, "vertex") != NULL
+          || strstr (entry->d_name, "Vertex") != NULL)
         {
-            strncpy(outPaths->vertexPath,
-                    completePath,
-                    sizeof(outPaths->vertexPath));
+          strncpy (outPaths->vertexPath, completePath,
+                   sizeof (outPaths->vertexPath));
 
-            outPaths->vertexPath[sizeof(outPaths->vertexPath) - 1] = '\0';
+          outPaths->vertexPath[sizeof (outPaths->vertexPath) - 1] = '\0';
         }
-        else if (strstr(entry->d_name, "fragment") != NULL ||
-                 strstr(entry->d_name, "Fragment") != NULL)
+      else if (strstr (entry->d_name, "fragment") != NULL
+               || strstr (entry->d_name, "Fragment") != NULL)
         {
-            strncpy(outPaths->fragmentPath,
-                    completePath,
-                    sizeof(outPaths->fragmentPath));
+          strncpy (outPaths->fragmentPath, completePath,
+                   sizeof (outPaths->fragmentPath));
 
-            outPaths->fragmentPath[sizeof(outPaths->fragmentPath) - 1] = '\0';
+          outPaths->fragmentPath[sizeof (outPaths->fragmentPath) - 1] = '\0';
         }
     }
 
-    closedir(dir);
+  closedir (dir);
 
-    if (outPaths->vertexPath[0] == '\0')
+  if (outPaths->vertexPath[0] == '\0')
     {
-        printf("Kein Vertex-Shader gefunden in: %s\n", shaderDir);
-        return 0;
+      printf ("Kein Vertex-Shader gefunden in: %s\n", shaderDir);
+      return 0;
     }
 
-    if (outPaths->fragmentPath[0] == '\0')
+  if (outPaths->fragmentPath[0] == '\0')
     {
-        printf("Kein Fragment-Shader gefunden in: %s\n", shaderDir);
-        return 0;
+      printf ("Kein Fragment-Shader gefunden in: %s\n", shaderDir);
+      return 0;
     }
 
-    printf("Vertex Shader gefunden:   %s\n", outPaths->vertexPath);
-    printf("Fragment Shader gefunden: %s\n", outPaths->fragmentPath);
+  printf ("Vertex Shader gefunden:   %s\n", outPaths->vertexPath);
+  printf ("Fragment Shader gefunden: %s\n", outPaths->fragmentPath);
 
-    return 1;
+  return 1;
 }
 
 GLuint
@@ -120,7 +112,7 @@ shader_init (char *shaderDir)
   GLuint fragmentShader;
   ShaderPaths shaderPath;
 
-  get_shader_paths_from_dir(shaderDir, &shaderPath);
+  get_shader_paths_from_dir (shaderDir, &shaderPath);
 
   const char *vertexShaderText = loadShader (shaderPath.vertexPath);
   vertexShader = glCreateShader (GL_VERTEX_SHADER);
@@ -130,12 +122,12 @@ shader_init (char *shaderDir)
   glGetShaderiv (vertexShader, GL_COMPILE_STATUS, &status);
 
   if (!status)
-  {
-    printf ("Error compiling vertex shader: ");
-    GLchar infoLog[1024];
-    glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
-    printf (infoLog);
-  }
+    {
+      printf ("Error compiling vertex shader: ");
+      GLchar infoLog[1024];
+      glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
+      printf (infoLog);
+    }
   printf ("loaded vertex shader\n");
 
   const char *fragmentShaderText = loadShader (shaderPath.fragmentPath);
@@ -147,12 +139,12 @@ shader_init (char *shaderDir)
   glGetShaderiv (fragmentShader, GL_COMPILE_STATUS, &status);
 
   if (!status)
-  {
-    printf ("Error compiling fragment shader: ");
-    GLchar infoLog[1024];
-    glGetShaderInfoLog (fragmentShader, 1024, NULL, infoLog);
-    printf ("%s\n", infoLog);
-  }
+    {
+      printf ("Error compiling fragment shader: ");
+      GLchar infoLog[1024];
+      glGetShaderInfoLog (fragmentShader, 1024, NULL, infoLog);
+      printf ("%s\n", infoLog);
+    }
 
   shaderProgramId = glCreateProgram ();
   glAttachShader (shaderProgramId, vertexShader);
