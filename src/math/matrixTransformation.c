@@ -7,7 +7,7 @@
 
 
 int
-inverse(const GLfloat out[9], const GLfloat in[9])
+inverse(GLfloat out[9], const GLfloat in[9])
 {
     GLfloat mHash[9];
 
