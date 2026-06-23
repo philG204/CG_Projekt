@@ -29,7 +29,7 @@ main (void)
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
 
-  Scene *scene = scene_init ("Meshes", 1, "scene1", &cameraSettings,
+  Scene *scene = scene_init ("Meshes", "Shaders", 1, 1, "scene1", &cameraSettings,
                              &projectionSettings);
 
 

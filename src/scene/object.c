@@ -11,6 +11,34 @@
 #include "../../headers/scene/object.h"
 #include "../../headers/utilities/config.h"
 
+
+void
+print_mat4(const char *name, const GLfloat m[16])
+{
+    if (name != NULL)
+    {
+        printf("%s:\n", name);
+    }
+
+    if (m == NULL)
+    {
+        printf("  Matrix ist NULL\n");
+        return;
+    }
+
+    printf("[ %10.4f  %10.4f  %10.4f  %10.4f ]\n",
+           m[0], m[1], m[2], m[3]);
+
+    printf("[ %10.4f  %10.4f  %10.4f  %10.4f ]\n",
+           m[4], m[5], m[6], m[7]);
+
+    printf("[ %10.4f  %10.4f  %10.4f  %10.4f ]\n",
+           m[8], m[9], m[10], m[11]);
+
+    printf("[ %10.4f  %10.4f  %10.4f  %10.4f ]\n",
+           m[12], m[13], m[14], m[15]);
+}
+
 static void
 object_load_config(Object *object, const char *configPath)
 {
@@ -28,31 +56,40 @@ object_load_config(Object *object, const char *configPath)
 
     if (config_find_line_by_key(configPath, "mesh", line, sizeof(line))) {
         config_parse_string_value(line,
-                                  object->meshName,
-                                  sizeof(object->meshName));
+                                  object->meshObject->meshName,
+                                  sizeof(object->meshObject->meshName));
     }
 
-    if (object->isLight != NULL) {
-        if (config_find_line_by_key(configPath, "emissive", line, sizeof(line))) {
-            config_parse_float_value(line,
+    if (config_find_line_by_key(configPath, "shader", line, sizeof(line))) {
+        config_parse_string_value(line,
+                                  object->material->shaderObject->shaderName,
+                                  sizeof(object->material->shaderObject->shaderName));
+    }
+
+  
+    if (config_find_line_by_key(configPath, "isLight", line, sizeof(line))) {
+        config_parse_int_value(line, &object->isLight);
+    }
+
+    if (config_find_line_by_key(configPath, "emissive", line, sizeof(line))) {
+        config_parse_float_value(line,
                                      object->material->light->emissive);
-            printf("emissive: %f\n", object->material->light->emissive);
-        }
+        printf("emissive: %f\n", object->material->light->emissive);
+    }
 
-        if (config_find_line_by_key(configPath, "ambient", line, sizeof(line))) {
-            config_parse_vec4_value(line,
-                                     object->material->light->ambient);
-        }
+    if (config_find_line_by_key(configPath, "ambient", line, sizeof(line))) {
+        config_parse_vec4_value(line,
+                                object->material->light->ambient);
+    }
 
-        if (config_find_line_by_key(configPath, "diffuse", line, sizeof(line))) {
-            config_parse_vec4_value(line,
-                                     object->material->light->diffuse);
-        }
+    if (config_find_line_by_key(configPath, "diffuse", line, sizeof(line))) {
+        config_parse_vec4_value(line,
+                                object->material->light->diffuse);
+    }
 
-        if (config_find_line_by_key(configPath, "specular", line, sizeof(line))) {
+    if (config_find_line_by_key(configPath, "specular", line, sizeof(line))) {
             config_parse_vec4_value(line,
-                                     object->material->light->specular);
-        }
+                                object->material->light->specular);
     }
 
     if (config_find_line_by_key(configPath, "transparency", line, sizeof(line))) {
@@ -74,7 +111,7 @@ object_load_config(Object *object, const char *configPath)
                                      object->transformation->scaling);
         }
 
-        if (config_find_line_by_key(configPath, "rotaion", line, sizeof(line))) {
+        if (config_find_line_by_key(configPath, "rotation", line, sizeof(line))) {
             config_parse_vec3_value(line,
                                      object->transformation->rotation);
         }
@@ -89,27 +126,61 @@ object_load_config(Object *object, const char *configPath)
 Object *
 object_init (char *objDir)
 {
+ Object *object = calloc(1, sizeof(Object));
+ Material *material = calloc(1, sizeof(Material));
+ MaterialLight *materialLight = calloc(1, sizeof(MaterialLight));
+ Texture **textures = calloc(MAX_TEXTURES, sizeof(Texture*));  
+ Transformation *transformation = calloc(1, sizeof(Transformation));
+ MeshObject *meshObject = calloc(1, sizeof(MeshObject));
+ ShaderObject *shaderObject = calloc(1, sizeof(ShaderObject));
 
-  Object *object = malloc (sizeof (Object));
-  Material *material = malloc (sizeof (Material));
-  MaterialLight *materialLight = malloc (sizeof (MaterialLight));;
-  Texture **textures = malloc(sizeof(Texture*) * MAX_TEXTURES);
-  Transformation *transformation = malloc(sizeof(Transformation*));
-
-
-  GLuint shaderProgram = shader_init (objDir);
- 
-  if(shaderProgram == 0){
-    printf("object_init: no shader program for %s\n", objDir);
+ if (object == NULL ||
+    material == NULL ||
+    materialLight == NULL ||
+    textures == NULL ||
+    transformation == NULL ||
+    meshObject == NULL ||
+    shaderObject == NULL)
+  {
+    printf("object_init: malloc/calloc fehlgeschlagen\n");
+    return NULL;
   }
 
-  material->shader = shaderProgram;
+  transformation->scaling[0] = 1.0f;
+  transformation->scaling[1] = 1.0f;
+  transformation->scaling[2] = 1.0f;
+
+  materialLight->emissive[0] = 0.0f;
+  materialLight->emissive[1] = 0.0f;
+  materialLight->emissive[2] = 0.0f;
+  materialLight->emissive[3] = 1.0f;
+
+  materialLight->ambient[0] = 0.2f;
+  materialLight->ambient[1] = 0.2f;
+  materialLight->ambient[2] = 0.2f;
+  materialLight->ambient[3] = 1.0f;
+
+  materialLight->diffuse[0] = 0.8f;
+  materialLight->diffuse[1] = 0.8f;
+  materialLight->diffuse[2] = 0.8f;
+  materialLight->diffuse[3] = 1.0f;
+
+  materialLight->specular[0] = 1.0f;
+  materialLight->specular[1] = 1.0f;
+  materialLight->specular[2] = 1.0f;
+  materialLight->specular[3] = 1.0f;
+
+  materialLight->shininess = 32.0f;
+
+  material->shaderObject = shaderObject;
+  //material->shaderObject->shader = shaderProgram;
   material->textures = textures;
   material->texture_count = 0;
   material->light = materialLight;
 
   object->material = material;
   object->transformation = transformation;
+  object->meshObject = meshObject;
 
   char configPath[512];
 
@@ -121,7 +192,7 @@ object_init (char *objDir)
   object_load_config(object, configPath);
  
   material->texture_count = texture_init_from_config(objDir,
-                                                       material->shader,
+                                                       material->shaderObject->shader,
                                                        material->textures,
                                                        MAX_TEXTURES);
 
@@ -135,10 +206,14 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
+  object->normalMatrix = malloc (16 * sizeof (GLfloat));
+  object->normalMatrix = inverse(object->modelMatrix);
+  
   
   printf("object_init loaded:\n");
     printf("  name         = %s\n", object->name);
-    printf("  meshName     = %s\n", object->meshName);
+    printf("  meshName     = %s\n", object->meshObject->meshName);
+    printf("  shaderName     = %s\n", object->material->shaderObject->shaderName);
     printf("  textures     = %d\n", object->material->texture_count);
     printf("  transparency = %d\n", object->material->transparency);
     printf("  emissive     = %f\n", object->material->light->emissive);
@@ -174,34 +249,44 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   rotatex(object->modelMatrix, object->modelMatrix, rotation[0]);
   rotatey(object->modelMatrix, object->modelMatrix, rotation[1]);
   rotatez(object->modelMatrix, object->modelMatrix, rotation[2]);
-  printf("rotaion x: %d, rotaion y: %d, rotation z: %d\n", rotation[0], rotation[1], rotation[2]);
+  //printf("rotaion x: %f, rotaion y: %f, rotation z: %f\n", rotation[0], rotation[1], rotation[2]);
 }
 
 void
-object_draw (Object *object, GLfloat *cameraMatrix, LightDirection **lightDirections, int lightCounts)
+object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix, GLfloat* projMatrix, LightDirection **lightDirections, int lightCounts)
 {
-  use_shader (object->material->shader);
+  //print_mat4("viewMatrix", viewMatrix);
+  //print_mat4("projectionMatrix", projMatrix);
+  use_shader (object->material->shaderObject->shader);
 
-  glUniform4f(glGetUniformLocation(object->material->shader, "materialEmission"), object->material->light->emissive[0], object->material->light->emissive[1], object->material->light->emissive[2], object->material->light->emissive[3]);
-  glUniform4f(glGetUniformLocation(object->material->shader, "materialAmbient"), object->material->light->ambient[0], object->material->light->ambient[1], object->material->light->ambient[2], object->material->light->ambient[3]);
-  glUniform4f(glGetUniformLocation(object->material->shader, "materialDiffuse"), object->material->light->diffuse[0], object->material->light->diffuse[1], object->material->light->diffuse[2],object->material->light->diffuse[3]);
-  glUniform4f(glGetUniformLocation(object->material->shader, "materialSpecular"), object->material->light->specular[0], object->material->light->specular[1], object->material->light->specular[2], object->material->light->specular[3]);
-  glUniform1f(glGetUniformLocation(object->material->shader, "materialShininess"), object->material->light->shininess);  
+  glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, "materialEmission"), object->material->light->emissive[0], object->material->light->emissive[1], object->material->light->emissive[2], object->material->light->emissive[3]);
+  glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, "materialAmbient"), object->material->light->ambient[0], object->material->light->ambient[1], object->material->light->ambient[2], object->material->light->ambient[3]);
+  glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, "materialDiffuse"), object->material->light->diffuse[0], object->material->light->diffuse[1], object->material->light->diffuse[2],object->material->light->diffuse[3]);
+  glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, "materialSpecular"), object->material->light->specular[0], object->material->light->specular[1], object->material->light->specular[2], object->material->light->specular[3]);
+  glUniform1f(glGetUniformLocation(object->material->shaderObject->shader, "materialShininess"), object->material->light->shininess);  
 
   //if(lightDirections == NULL){
   //  printf("light is NULL!!!\n");
   //}
   for(int i=0;i<lightCounts;i++){
-    glUniform3f(glGetUniformLocation(object->material->shader, "lightPos" + i), lightDirections[i]->x, lightDirections[i]->y, lightDirections[i]->z);
+    glUniform3f(glGetUniformLocation(object->material->shaderObject->shader, "lightPos" + i), lightDirections[i]->x, lightDirections[i]->y, lightDirections[i]->z);
   }
   
   glUniformMatrix4fv (
-      glGetUniformLocation (object->material->shader, "viewProj"), 1, GL_FALSE,
-      cameraMatrix);
-  glUniformMatrix4fv (glGetUniformLocation (object->material->shader, "model"),
+      glGetUniformLocation (object->material->shaderObject->shader, "view"), 1, GL_FALSE,
+      viewMatrix);
+  
+  glUniformMatrix4fv (
+      glGetUniformLocation (object->material->shaderObject->shader, "proj"), 1, GL_FALSE,
+      projMatrix);
+
+  glUniformMatrix4fv (glGetUniformLocation (object->material->shaderObject->shader, "model"),
                       1, GL_FALSE, object->modelMatrix);
  
-  glBindVertexArray (object->mesh->vao);
+  glUniformMatrix4fv(glGetUniformLocation (object->material->shaderObject->shader, "normalM"),
+                      1, GL_FALSE, object->modelMatrix);
+
+  glBindVertexArray (object->meshObject->mesh->vao);
 
   for (int i = 0; i < object->material->texture_count; i++)
     {
@@ -209,5 +294,5 @@ object_draw (Object *object, GLfloat *cameraMatrix, LightDirection **lightDirect
                         object->material->texture_count);
     }
 
-  glDrawArrays (GL_TRIANGLES, 0, (GLsizei)object->mesh->vertexCount);
+  glDrawArrays (GL_TRIANGLES, 0, (GLsizei)object->meshObject->mesh->vertexCount);
 }

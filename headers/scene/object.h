@@ -12,6 +12,17 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "loadObjectList.h"
 
+
+typedef struct MeshObject {
+    char meshName[PATH_LENGTH];
+    Mesh* mesh;
+} MeshObject;
+
+typedef struct ShaderObject {
+    char shaderName[PATH_LENGTH];
+    GLuint shader;
+} ShaderObject;
+
 typedef struct Transformation{
     GLfloat translation[3];
     GLfloat scaling[3];
@@ -20,7 +31,7 @@ typedef struct Transformation{
 } Transformation;
 
 typedef struct Material {
-    GLuint shader;
+    ShaderObject* shaderObject;
     Texture** textures;
     int texture_count;
     GLfloat rgb_values;
@@ -30,16 +41,16 @@ typedef struct Material {
 
 typedef struct Object {
     char name[PATH_LENGTH];
-    char meshName[PATH_LENGTH];
-    Mesh* mesh;
+    MeshObject* meshObject;
     Material* material;
     GLfloat* modelMatrix;
+    GLfloat* normalMatrix;
     Transformation* transformation;
     int isLight;
 } Object;
 
 Object* object_init(char* objDir);
 void object_transformation(Object* object, GLfloat* translation, GLfloat* scaling, GLfloat* rotation);
-void object_draw(Object* object, GLfloat* cameraMatrix, LightDirection **lightDirections, int lightCounts);
+void object_draw(Object* object, GLfloat *viewProj, GLfloat *viewMatrix, GLfloat* projMatrix, LightDirection **lightDirections, int lightCounts);
 
 #endif // OBJECT_H

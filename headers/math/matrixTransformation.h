@@ -6,11 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void inverse(GLfloat out, const GLfloat in);
 void normalize (GLfloat *v);
 void cross (const GLfloat *a, const GLfloat *b, GLfloat *out);
 GLfloat dot (const GLfloat *a, const GLfloat *b);
 
 void multiplyMatrices (GLfloat *out, const GLfloat *a, const GLfloat *b);
+void reverseMatrecies (GLfloat *out, const GLfloat *a, const GLfloat *b);
 
 void identity(GLfloat *out);
 void translate(GLfloat *out, const GLfloat *in, GLfloat *v);

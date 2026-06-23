@@ -192,10 +192,19 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
           textureId, width, height, channels);
 
     char realShaderVariable[256];
-    getNameWithoutExtension(shaderVariable, realShaderVariable, sizeof(realShaderVariable));
+
+    getNameWithoutExtension(shaderVariable, 
+                            realShaderVariable, 
+                            sizeof(realShaderVariable));
+
     texture->textureId = textureId;
     texture->shaderProgramId = shaderProgram;
-    texture->shaderVariable = realShaderVariable;
+
+    strncpy(texture->shaderVariable,
+        realShaderVariable,
+        sizeof(texture->shaderVariable) - 1);
+
+    texture->shaderVariable[sizeof(texture->shaderVariable) - 1] = '\0';
 
     return texture;
 }
@@ -217,7 +226,7 @@ activate_texture (Texture *textures[], int texture_count)
       glBindTexture (GL_TEXTURE_2D, textures[i]->textureId);
 
       GLint location = glGetUniformLocation (textures[i]->shaderProgramId,
-                                             textures[i]->shaderVariable);
+                                             textures[i]->shaderVariable/*"baseTexture"*/);
       glUniform1i (location, i);
     }
 }
