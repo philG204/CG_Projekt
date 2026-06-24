@@ -4,9 +4,18 @@
 
 #include "../../headers/renderer/loadObj.h"
 
+/** @brief */
 typedef float Vec2[2];
+/** @brief */
 typedef float Vec3[3];
 
+/**
+  @brief
+
+  @param v
+  @param vt 
+  @param vn
+*/
 typedef struct FaceIndex
 {
   int v;
@@ -14,6 +23,13 @@ typedef struct FaceIndex
   int vn;
 } FaceIndex;
 
+/**
+  @brief
+
+  @param token
+  @param out
+  @return 
+*/
 static int
 parseFaceToken (const char *token, FaceIndex *out)
 {
@@ -52,12 +68,26 @@ parseFaceToken (const char *token, FaceIndex *out)
   return 0;
 }
 
+/**
+  @brief
+
+  @param index
+  @param count
+  @return
+*/
 static int
 validIndex (int index, size_t count)
 {
   return index > 0 && (size_t)index <= count;
 }
 
+/**
+  @brief
+
+  @param location
+  @param vertexCount
+  @return
+*/
 float *
 loadObj (const char *location, size_t *vertexCount)
 {

@@ -2,6 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+  @brief
+
+  @param filename
+  @return
+*/
 char *
 loadShader (const char *filename)
 {

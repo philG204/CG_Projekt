@@ -11,6 +11,16 @@
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
+/**
+  @brief
+
+  @param meshDir
+  @param mesh_count
+  @param scene_name
+  @param cameraSettings
+  @param projectionSettings
+  @return 
+*/
 Scene *
 scene_init (char *meshDir, int mesh_count, char *scene_name,
             CameraSettings *cameraSettings,
@@ -108,6 +118,12 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   return scene;
 }
 
+/**
+  @brief
+
+  @param scene
+  @param objDir
+*/
 void
 scene_add_object (Scene *scene, char *objDir)
 {
@@ -182,6 +198,11 @@ scene_add_object (Scene *scene, char *objDir)
   scene->object_count++;
 }
 
+/**
+  @brief
+
+  @param scene
+*/
 void
 scene_update (Scene *scene)
 {

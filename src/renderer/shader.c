@@ -6,6 +6,12 @@
 #include "../../headers/renderer/loadShader.h"
 #include "../../headers/renderer/shader.h"
 
+/**
+  @brief
+
+  @param objDir
+  @return
+*/
 GLuint
 shader_init (char *objDir)
 {
@@ -82,6 +88,11 @@ shader_init (char *objDir)
   return shaderProgramId;
 }
 
+/**
+  @brief
+
+  @param shaderProgram
+*/
 void
 use_shader (GLuint shaderProgram)
 {

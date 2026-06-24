@@ -5,6 +5,11 @@
 #include "framework.h"
 #include "test_entries.h"
 
+/**
+  @brief
+
+  @return
+*/
 int
 test_normalize_vector (void)
 {
@@ -17,6 +22,11 @@ test_normalize_vector (void)
   return vector_equal (v, expected);
 }
 
+/**
+  @brief
+
+  @return
+*/
 int
 test_normalize_zero_vector (void)
 {
@@ -29,6 +39,11 @@ test_normalize_zero_vector (void)
   return vector_equal (v, expected);
 }
 
+/**
+  @brief test the cross product a × b
+
+  @return
+*/
 int
 test_cross_product (void)
 {
@@ -43,6 +58,11 @@ test_cross_product (void)
   return vector_equal (out, expected);
 }
 
+/**
+  @brief test the dot function(Skalarprodukt)
+
+  @return
+*/
 int
 test_dot_product (void)
 {
@@ -52,6 +72,11 @@ test_dot_product (void)
   return float_equal (dot (a, b), 32.0f);
 }
 
+/**
+  @brief test the identity function
+
+  @return
+*/
 int
 test_identity (void)
 {
@@ -64,6 +89,11 @@ test_identity (void)
   return matrix_equal (m, expected);
 }
 
+/**
+  @brief
+
+  @return
+*/
 int
 test_multiply_identity (void)
 {
@@ -79,6 +109,11 @@ test_multiply_identity (void)
   return matrix_equal (out, a);
 }
 
+/**
+  @brief
+
+  @return
+*/
 int
 test_multiply_alias_output_left_operand (void)
 {
@@ -95,6 +130,11 @@ test_multiply_alias_output_left_operand (void)
   return float_equal (a[12], 3.0f);
 }
 
+/**
+  @brief 
+
+  @return
+*/
 int
 test_multiply_alias_output_right_operand (void)
 {
@@ -111,6 +151,11 @@ test_multiply_alias_output_right_operand (void)
   return float_equal (b[12], 7.0f);
 }
 
+/**
+  @brief
+
+  @return
+*/
 int
 test_translate_identity (void)
 {
@@ -126,6 +171,11 @@ test_translate_identity (void)
          && float_equal (out[14], 3.0f) && float_equal (out[15], 1.0f);
 }
 
+/**
+  @brief 
+
+  @return
+*/
 int
 test_translate_in_place (void)
 {
@@ -140,6 +190,11 @@ test_translate_in_place (void)
          && float_equal (m[14], 7.0f);
 }
 
+/**
+  @brief checks the rotateX function
+
+  @return
+*/
 int
 test_rotatex_90deg (void)
 {
@@ -153,6 +208,11 @@ test_rotatex_90deg (void)
          && float_equal (m[9], -1.0f) && float_equal (m[10], 0.0f);
 }
 
+/**
+  @brief checks the rotatey function
+
+  @return
+*/
 int
 test_rotatey_90deg (void)
 {
@@ -166,6 +226,11 @@ test_rotatey_90deg (void)
          && float_equal (m[8], 1.0f) && float_equal (m[10], 0.0f);
 }
 
+/**
+  @brief checks the rotatez function
+
+  @return
+*/
 int
 test_rotatez_90deg (void)
 {
@@ -179,6 +244,11 @@ test_rotatez_90deg (void)
          && float_equal (m[4], -1.0f) && float_equal (m[5], 0.0f);
 }
 
+/**
+  @brief checks the scale function
+
+  @return
+*/
 int
 test_scale (void)
 {
@@ -193,6 +263,11 @@ test_scale (void)
          && float_equal (m[10], 4.0f) && float_equal (m[15], 1.0f);
 }
 
+/**
+  @brief checks looksAt Methode
+
+  @return
+*/
 int
 test_lookat_origin (void)
 {
@@ -211,6 +286,11 @@ test_lookat_origin (void)
   return matrix_equal (out, expected);
 }
 
+/**
+  @brief checks the the calculation for the perspective
+
+  @return
+*/
 int
 test_perspective_basic (void)
 {
@@ -223,6 +303,11 @@ test_perspective_basic (void)
          && float_equal (m[14], -200.0f / 99.0f);
 }
 
+/**
+  @brief test all the Test one after the another
+
+  @return
+*/
 void
 test_matrixTransormation (void)
 {
