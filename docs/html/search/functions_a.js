@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['object_5fdraw_0',['object_draw',['../object_8c.html#ad9613d3bf25a46b19301f086db063df6',1,'object_draw(Object *object, GLfloat *viewProj, GLfloat *viewMatrix, GLfloat *projMatrix, LightSource **lightSources, int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ):&#160;object.c'],['../object_8h.html#ad9613d3bf25a46b19301f086db063df6',1,'object_draw(Object *object, GLfloat *viewProj, GLfloat *viewMatrix, GLfloat *projMatrix, LightSource **lightSources, int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ):&#160;object.c']]],
+  ['object_5finit_1',['object_init',['../object_8c.html#a15df8370689633b1f4c4ba953934fe1d',1,'object_init(char *objDir):&#160;object.c'],['../object_8h.html#a15df8370689633b1f4c4ba953934fe1d',1,'object_init(char *objDir):&#160;object.c']]],
+  ['object_5ftransformation_2',['object_transformation',['../object_8c.html#ac0afeefec5dbf455177f1602d01d2a82',1,'object_transformation(Object *object, GLfloat *translation, GLfloat *scaling, GLfloat *rotation):&#160;object.c'],['../object_8h.html#ac0afeefec5dbf455177f1602d01d2a82',1,'object_transformation(Object *object, GLfloat *translation, GLfloat *scaling, GLfloat *rotation):&#160;object.c']]]
+];

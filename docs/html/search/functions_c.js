@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['render_5fscene_0',['render_scene',['../postProcessing_8c.html#aa44f72222fdcef23b9f8a6f284620876',1,'render_scene(Scene *scene, Window *window):&#160;postProcessing.c'],['../postProcessing_8h.html#aa44f72222fdcef23b9f8a6f284620876',1,'render_scene(Scene *scene, Window *window):&#160;postProcessing.c']]],
+  ['rotatex_1',['rotatex',['../matrixTransformation_8c.html#ab5d6b8cb1ae94374b0a599040461d73a',1,'rotatex(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c'],['../matrixTransformation_8h.html#ab5d6b8cb1ae94374b0a599040461d73a',1,'rotatex(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c']]],
+  ['rotatey_2',['rotatey',['../matrixTransformation_8c.html#a2c14dd3354b885f1dd8e84c78bc1d788',1,'rotatey(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c'],['../matrixTransformation_8h.html#a2c14dd3354b885f1dd8e84c78bc1d788',1,'rotatey(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c']]],
+  ['rotatez_3',['rotatez',['../matrixTransformation_8c.html#a3a0a38a3afa341689395164a19ddbea7',1,'rotatez(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c'],['../matrixTransformation_8h.html#a3a0a38a3afa341689395164a19ddbea7',1,'rotatez(GLfloat *out, const GLfloat *in, GLfloat angle):&#160;matrixTransformation.c']]],
+  ['run_5ftest_4',['run_test',['../framework_8c.html#a13efcdeb1723d22b932bb97d5e7afc0d',1,'run_test(const char *name, test_fn fn):&#160;framework.c'],['../framework_8h.html#a13efcdeb1723d22b932bb97d5e7afc0d',1,'run_test(const char *name, test_fn fn):&#160;framework.c']]]
+];
