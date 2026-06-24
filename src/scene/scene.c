@@ -122,8 +122,8 @@ loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
 }
 
 Scene *
-scene_init (char *meshDir, char *shaderDir,
-            char *scene_name, CameraSettings *cameraSettings,
+scene_init (char *meshDir, char *shaderDir, char *scene_name,
+            CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
   assert (shaderDir != NULL);
@@ -380,15 +380,14 @@ scene_update (Scene *scene)
         }
 
       identity (object->modelMatrix);
-      
-      object_transformation (object,
-                             object->transformation->translation,
+
+      object_transformation (object, object->transformation->translation,
                              object->transformation->scaling,
                              object->transformation->rotation);
-      object_draw (object, scene->camera->viewProj,
-                   scene->camera->view, scene->camera->projection,
-                   scene->lights, scene->lightCount, scene->camera->position.x,
-                   scene->camera->position.y, scene->camera->position.z);
+      object_draw (object, scene->camera->viewProj, scene->camera->view,
+                   scene->camera->projection, scene->lights, scene->lightCount,
+                   scene->camera->position.x, scene->camera->position.y,
+                   scene->camera->position.z);
     }
 
   glBindFramebuffer (GL_FRAMEBUFFER, 0);
