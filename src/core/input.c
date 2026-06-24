@@ -6,6 +6,7 @@
 
 int keyboardpressed_left = 0;
 int keyboardpressed_right = 0;
+int keyboardpressed_space = 0;
 /*
  * @brief Processes input from the Keyboards and updates the active camera.
  *
@@ -14,26 +15,28 @@ int keyboardpressed_right = 0;
  * @param *activeCamera  - pointer to current camera index
  */
 void
-processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera)
+processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
+                 int *processingEnabled)
 {
   assert (window != NULL);
   assert (activeCamera != NULL);
 
   int left = (glfwGetKey (window, GLFW_KEY_LEFT) == GLFW_PRESS);
   int right = (glfwGetKey (window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+  int space = (glfwGetKey (window, GLFW_KEY_SPACE) == GLFW_PRESS);
 
   if (left && !keyboardpressed_left)
-    {
-      *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
-    }
+    *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
 
   if (right && !keyboardpressed_right)
-    {
-      *activeCamera = (*activeCamera + 1) % cameraCount;
-    }
+    *activeCamera = (*activeCamera + 1) % cameraCount;
+
+  if (space && !keyboardpressed_space)
+    *processingEnabled = (*processingEnabled + 1) % 2;
 
   keyboardpressed_left = left;
   keyboardpressed_right = right;
+  keyboardpressed_space = space;
 }
 
 /*
