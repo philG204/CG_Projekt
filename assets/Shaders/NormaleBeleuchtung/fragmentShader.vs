@@ -63,6 +63,6 @@ void main(){
     vec4 baseColor = texture(crateTex, tex);
 
     //FragColor = vec4(1.0, 1.0, 0.0, 1.0);
-    FragColor = emissiv + (ambient) + (diffuseSum) + specularSum;
+    FragColor = emissiv + (ambient * baseColor) + (diffuseSum * baseColor) + specularSum;
     //FragColor = texture(crateTex, tex);
 }

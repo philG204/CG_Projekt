@@ -65,12 +65,12 @@ main (void)
 
       camera_update (scene->camera);
 
-      glfwSwapBuffers (window->window);
-      glfwPollEvents ();
-
       scene_update (scene);
 
       render_scene (scene, window);
+
+      glfwSwapBuffers (window->window);
+      glfwPollEvents ();
     }
 
   glfwTerminate ();
