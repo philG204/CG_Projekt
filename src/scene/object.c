@@ -1,7 +1,9 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/mesh.h"
@@ -14,10 +16,8 @@
 static void
 object_load_config (Object *object, const char *configPath)
 {
-  if (object == NULL || configPath == NULL || object->material == NULL)
-    {
-      return;
-    }
+  assert (object != NULL);
+  assert (configPath != NULL);
 
   char line[512];
 
@@ -92,11 +92,12 @@ object_load_config (Object *object, const char *configPath)
 Object *
 object_init (char *objDir)
 {
+  assert (objDir != NULL);
 
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  ;
+
   Texture **textures = malloc (sizeof (Texture *) * MAX_TEXTURES);
   Transformation *transformation = malloc (sizeof (Transformation));
 
@@ -155,15 +156,13 @@ void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)
 {
-  if (!(translation == NULL))
-    {
-      translate (object->modelMatrix, object->modelMatrix, translation);
-    }
+  assert (object != NULL);
+  assert (translation != NULL);
+  assert (scaling != NULL);
+  assert (rotation != NULL);
 
-  if (!(scaling == NULL))
-    {
-      scale (object->modelMatrix, object->modelMatrix, scaling);
-    }
+  translate (object->modelMatrix, object->modelMatrix, translation);
+  scale (object->modelMatrix, object->modelMatrix, scaling);
 
   rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
   rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
@@ -173,6 +172,9 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *cameraMatrix)
 {
+  assert (object != NULL);
+  assert (cameraMatrix != NULL);
+
   use_shader (object->material->shader);
 
   glUniformMatrix4fv (

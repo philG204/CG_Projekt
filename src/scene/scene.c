@@ -1,8 +1,10 @@
-#include <GL/glew.h>
+#include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/loadObjectList.h"
@@ -14,6 +16,11 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
             CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
+  assert (meshDir != NULL);
+  assert (scene_name != NULL);
+  assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
+
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
@@ -68,20 +75,47 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   scene->meshes = meshes;
   closedir (dirMesh);
 
+  glGenFramebuffers (1, &scene->framebuffer);
+  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
+
+  glGenTextures (1, &scene->texturebuffer);
+  glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
+  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
+                GL_UNSIGNED_BYTE, NULL);
+
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                          scene->texturebuffer, 0);
+
+  GLuint depthbuffer;
+  glGenRenderbuffers (1, &depthbuffer);
+  glBindRenderbuffer (GL_RENDERBUFFER, depthbuffer);
+
+  glRenderbufferStorage (GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 1920, 1080);
+  glFramebufferRenderbuffer (GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                             GL_RENDERBUFFER, depthbuffer);
+
+  GLenum buf = GL_COLOR_ATTACHMENT0;
+  glDrawBuffers (1, &buf);
+
+  if (glCheckFramebufferStatus (GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    printf ("framebuffer incomplete!\n");
+
+  glBindFramebuffer (GL_FRAMEBUFFER, 0);
+
   return scene;
 }
 
 void
 scene_add_object (Scene *scene, char *objDir)
 {
+  assert (scene != NULL);
+  assert (objDir != NULL);
+
   printf ("entering scene_add_object\n");
   Object *object = object_init (objDir);
-
-  if (scene == NULL)
-    {
-      printf ("scene_add_object: scene is NULL\n");
-      return;
-    }
 
   if (object == NULL)
     {
@@ -151,6 +185,11 @@ scene_add_object (Scene *scene, char *objDir)
 void
 scene_update (Scene *scene)
 {
+  assert (scene != NULL);
+
+  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
+  glEnable (GL_DEPTH_TEST);
+
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   Object *object = NULL;
@@ -176,4 +215,7 @@ scene_update (Scene *scene)
                              object->transformation->rotation);
       object_draw (object, scene->camera->viewProj);
     }
+
+  glBindFramebuffer (GL_FRAMEBUFFER, 0);
+  glDisable (GL_DEPTH_TEST);
 }

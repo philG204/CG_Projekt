@@ -1,11 +1,16 @@
-#include "../../headers/renderer/shader.h"
-#include "../../headers/renderer/loadShader.h"
-#include <GL/glew.h>
+#include <assert.h>
 #include <stdio.h>
+
+#include <GL/glew.h>
+
+#include "../../headers/renderer/loadShader.h"
+#include "../../headers/renderer/shader.h"
 
 GLuint
 shader_init (char *objDir)
 {
+  assert (objDir != NULL);
+
   printf ("entering shader_init\n");
   GLuint shaderProgramId;
 
@@ -25,7 +30,7 @@ shader_init (char *objDir)
       printf ("Error compiling vertex shader: ");
       GLchar infoLog[1024];
       glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
-      printf (infoLog);
+      printf ("%s\n", infoLog);
     }
   printf ("loaded vertex shader\n");
   char fragmentShaderPath[512] = { 0 };

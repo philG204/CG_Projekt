@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -6,6 +7,9 @@
 void
 getNameWithoutExtension (const char *path, char *out, size_t outSize)
 {
+  assert (path != NULL);
+  assert (out != NULL);
+
   // letzten Slash suchen
   const char *filename = strrchr (path, '/');
 

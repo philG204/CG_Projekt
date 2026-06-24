@@ -1,5 +1,8 @@
-#include "../../headers/core/input.h"
+#include <assert.h>
+
 #include <GLFW/glfw3.h>
+
+#include "../../headers/core/input.h"
 
 int keyboardpressed_left = 0;
 int keyboardpressed_right = 0;
@@ -13,6 +16,9 @@ int keyboardpressed_right = 0;
 void
 processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera)
 {
+  assert (window != NULL);
+  assert (activeCamera != NULL);
+
   int left = (glfwGetKey (window, GLFW_KEY_LEFT) == GLFW_PRESS);
   int right = (glfwGetKey (window, GLFW_KEY_RIGHT) == GLFW_PRESS);
 
@@ -39,6 +45,8 @@ processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera)
 int
 isMouseOverButton (GLFWwindow *window, const Button button)
 {
+  assert (window != NULL);
+
   double mouseX, mouseY;
   glfwGetCursorPos (window, &mouseX, &mouseY);
 
@@ -63,6 +71,9 @@ void
 handleButtons (GLFWwindow *window, Button button, int back, int cameraCount,
                int *activeCamera)
 {
+  assert (window != NULL);
+  assert (activeCamera != NULL);
+
   int hovering = isMouseOverButton (window, button);
 
   int state = glfwGetMouseButton (window, GLFW_MOUSE_BUTTON_LEFT);
