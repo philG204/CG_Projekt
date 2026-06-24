@@ -46,7 +46,7 @@ object_load_config (Object *object, const char *configPath)
 
   if (config_find_line_by_key (configPath, "emissive", line, sizeof (line)))
     {
-      config_parse_float_value (line, object->material->light->emissive);
+      config_parse_vec4_value (line, object->material->light->emissive);
       printf ("emissive: %f\n", object->material->light->emissive);
     }
 
@@ -228,7 +228,7 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 void
 object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
              GLfloat *projMatrix, LightDirection **lightDirections,
-             int lightCounts)
+             int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ)
 {
   assert (object != NULL);
   assert (viewProj != NULL);
@@ -265,14 +265,57 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   glUniform1f (glGetUniformLocation (object->material->shaderObject->shader,
                                      "materialShininess"),
                object->material->light->shininess);
+  
+  if(object->isLight == 1){
+    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
+                                     "lightAmbient"),
+               object->material->light->ambient[0],
+               object->material->light->ambient[1],
+               object->material->light->ambient[2],
+               object->material->light->ambient[3]);
+    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
+                                     "lightDiffuse"),
+               object->material->light->diffuse[0],
+               object->material->light->diffuse[1],
+               object->material->light->diffuse[2],
+               object->material->light->diffuse[3]);
+    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
+                                     "lightSpecular"),
+               object->material->light->specular[0],
+               object->material->light->specular[1],
+               object->material->light->specular[2],
+               object->material->light->specular[3]);
+  }
 
-  for (int i = 0; i < lightCounts; i++)
+
+  glUniform1i (glGetUniformLocation (object->material->shaderObject->shader,
+                                     "lightCount"),
+                                    lightCounts);
+
+  char uniformName[32];
+
+    for (int i = 0; i < lightCounts; i++)
     {
-      glUniform3f (glGetUniformLocation (
-                       object->material->shaderObject->shader, "lightPos" + i),
-                   lightDirections[i]->x, lightDirections[i]->y,
-                   lightDirections[i]->z);
+        snprintf(uniformName, sizeof(uniformName), "lightPos[%d]", i + 1);
+
+        GLint location = glGetUniformLocation(
+            object->material->shaderObject->shader,
+            uniformName
+        );
+
+        glUniform3f(
+            location,
+            lightDirections[i]->x,
+            lightDirections[i]->y,
+            lightDirections[i]->z
+        );
     }
+
+    glUniform3f (glGetUniformLocation (object->material->shaderObject->shader,
+                                     "viewPos"),
+               cameraX,
+               cameraY,
+               cameraZ);
 
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "view"), 1,
@@ -286,9 +329,9 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
 
-  glUniformMatrix4fv (
-      glGetUniformLocation (object->material->shaderObject->shader, "normalM"),
-      1, GL_FALSE, object->modelMatrix);
+  //glUniformMatrix4fv (
+  //    glGetUniformLocation (object->material->shaderObject->shader, "normalM"),
+  //    1, GL_FALSE, object->modelMatrix);
 
   glBindVertexArray (object->meshObject->mesh->vao);
 

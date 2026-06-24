@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 
 int
-inverse (const GLfloat out[9], const GLfloat in[9])
+inverse (GLfloat *out, const GLfloat *in)
 {
   GLfloat mHash[9];
 

@@ -1,10 +1,10 @@
-#include <GL/glew.h>
-
 #include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+
+#include <GL/glew.h>
 
 #include "../../headers/renderer/loadShader.h"
 #include "../../headers/renderer/shader.h"
@@ -126,7 +126,7 @@ shader_init (char *shaderDir)
       printf ("Error compiling vertex shader: ");
       GLchar infoLog[1024];
       glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
-      printf (infoLog);
+      printf ("%s\n", infoLog);
     }
   printf ("loaded vertex shader\n");
 
