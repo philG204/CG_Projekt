@@ -3,19 +3,130 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <GL/glew.h>
+#include <sys/stat.h>
 
 #include "../../headers/math/matrixTransformation.h"
+#include "../../headers/renderer/shader.h"
 #include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
+static void
+loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
+{
+  if (scene == NULL || shaderDir == NULL)
+    {
+      printf ("loadShaderDirectoryStructure: scene oder shaderDir ist NULL\n");
+      return;
+    }
+
+  char shaderPath[512];
+
+  snprintf (shaderPath, sizeof (shaderPath), "assets/%s", shaderDir);
+
+  printf ("Shader-Hauptordner: %s\n", shaderPath);
+
+  DIR *dirShader = opendir (shaderPath);
+
+  if (dirShader == NULL)
+    {
+      printf ("Shader-Hauptordner konnte nicht geöffnet werden: %s\n",
+              shaderPath);
+      return;
+    }
+
+  struct dirent *entryShader;
+
+  while ((entryShader = readdir (dirShader)) != NULL)
+    {
+      printf ("1 while loop %s\n", entryShader->d_name);
+
+      if (strcmp (entryShader->d_name, ".") == 0
+          || strcmp (entryShader->d_name, "..") == 0)
+        {
+          continue;
+        }
+
+      char shaderSubFolderPath[512];
+
+      snprintf (shaderSubFolderPath, sizeof (shaderSubFolderPath),
+                "assets/%s/%s", shaderDir, entryShader->d_name);
+
+      struct stat subFolderStat;
+
+      if (stat (shaderSubFolderPath, &subFolderStat) != 0)
+        {
+          printf ("Pfad konnte nicht geprüft werden: %s\n",
+                  shaderSubFolderPath);
+          continue;
+        }
+
+      if (!S_ISDIR (subFolderStat.st_mode))
+        {
+          continue;
+        }
+
+      printf ("Shader-Unterordner gefunden: %s\n", shaderSubFolderPath);
+
+      if (scene->shader_count >= MAX_SHADER_COUNT)
+        {
+          printf ("MAX_SHADER_COUNT erreicht\n");
+          break;
+        }
+
+      ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
+
+      if (shaderObject == NULL)
+        {
+          printf ("ShaderObject konnte nicht alloziert werden.\n");
+          continue;
+        }
+
+      memset (shaderObject, 0, sizeof (ShaderObject));
+
+      strncpy (shaderObject->shaderName, entryShader->d_name,
+               sizeof (shaderObject->shaderName) - 1);
+
+      shaderObject->shaderName[sizeof (shaderObject->shaderName) - 1] = '\0';
+
+      printf ("before shader_init\n");
+
+      /*
+       * Wichtig:
+       * Hier wird der ORDNER übergeben,
+       * nicht fragmentShader.vs oder vertexShader.vs.
+       */
+      shaderObject->shader = shader_init (shaderSubFolderPath);
+
+      printf ("after shader_init\n");
+
+      if (shaderObject->shader == 0)
+        {
+          printf ("Shader konnte nicht geladen werden: %s\n",
+                  shaderSubFolderPath);
+
+          free (shaderObject);
+          continue;
+        }
+
+      scene->shaderObjects[scene->shader_count] = shaderObject;
+
+      printf ("Shader geladen: name='%s', id=%u\n",
+              scene->shaderObjects[scene->shader_count]->shaderName,
+              scene->shaderObjects[scene->shader_count]->shader);
+
+      scene->shader_count++;
+    }
+
+  closedir (dirShader);
+}
+
 Scene *
-scene_init (char *meshDir, int mesh_count, char *scene_name,
-            CameraSettings *cameraSettings,
+scene_init (char *meshDir, char *shaderDir,
+            char *scene_name, CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
+  assert (shaderDir != NULL);
   assert (meshDir != NULL);
   assert (scene_name != NULL);
   assert (cameraSettings != NULL);
@@ -24,22 +135,28 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
-  LightDirection light;
+  LightSource **lights = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
   Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
+  ShaderObject **shaderObjects
+      = malloc (sizeof (ShaderObject *) * MAX_SHADER_COUNT);
   Object **objects = malloc (sizeof (Object *) * MAX_OBJECTS);
-  scene->mesh_count = mesh_count;
+
+  scene->shaderObjects = shaderObjects;
+  scene->mesh_count = 0;
+  scene->shader_count = 0;
   scene->object_count = 0;
   scene->objects = objects;
   scene->camera = malloc (sizeof (Camera));
-  strncpy (scene->name, scene_name, sizeof (scene->name));
-
-  light.x = 0.0f;
-  light.y = 4.0f;
-  light.z = 0.0f;
-  scene->light = light;
+  scene->lights = lights;
+  scene->lightCount = 0;
 
   camera = camera_init (cameraSettings, projectionSettings);
   scene->camera = camera;
+
+  printf ("LOADING SHADERS!!!!\n");
+  loadShaderDirectoryStructure (scene, shaderDir);
+  printf ("DONE WITH LOADING SHADERS!!!!\n");
+  printf ("SHADER COUNT %d\n", scene->shader_count);
 
   char meshPath[512];
   snprintf (meshPath, sizeof (meshPath), "assets/%s", meshDir);
@@ -129,7 +246,27 @@ scene_add_object (Scene *scene, char *objDir)
       return;
     }
 
-  if (object->meshName[0] == '\0')
+  if (object->isLight == 1)
+    {
+      LightSource *lightObject = malloc (sizeof (LightSource));
+      lightObject->x = object->transformation->translation[0];
+      lightObject->y = object->transformation->translation[1];
+      lightObject->z = object->transformation->translation[2];
+
+      lightObject->diffuse[0] = object->material->light->diffuse[0];
+      lightObject->diffuse[1] = object->material->light->diffuse[1];
+      lightObject->diffuse[2] = object->material->light->diffuse[2];
+      lightObject->diffuse[3] = object->material->light->diffuse[3];
+
+      lightObject->specular[0] = object->material->light->specular[0];
+      lightObject->specular[1] = object->material->light->specular[1];
+      lightObject->specular[2] = object->material->light->specular[2];
+      lightObject->specular[3] = object->material->light->specular[3];
+      scene->lights[scene->lightCount] = lightObject;
+      scene->lightCount++;
+    }
+
+  if (object->meshObject->meshName[0] == '\0')
     {
       printf (
           "scene_add_object: object %s hat keinen meshName aus der Config\n",
@@ -139,15 +276,17 @@ scene_add_object (Scene *scene, char *objDir)
 
   char meshNameWithoutExtension[256];
 
-  getNameWithoutExtension (object->meshName, meshNameWithoutExtension,
+  getNameWithoutExtension (object->meshObject->meshName,
+                           meshNameWithoutExtension,
                            sizeof (meshNameWithoutExtension));
 
   printf ("scene_add_object: object = %s\n", object->name);
-  printf ("scene_add_object: mesh from config = %s\n", object->meshName);
+  printf ("scene_add_object: mesh from config = %s\n",
+          object->meshObject->meshName);
   printf ("scene_add_object: mesh without extension = %s\n",
           meshNameWithoutExtension);
 
-  object->mesh = NULL;
+  object->meshObject->mesh = NULL;
 
   for (int i = 0; i < scene->mesh_count; i++)
     {
@@ -161,7 +300,7 @@ scene_add_object (Scene *scene, char *objDir)
 
       if (strcmp (scene->meshes[i]->name, meshNameWithoutExtension) == 0)
         {
-          object->mesh = scene->meshes[i];
+          object->meshObject->mesh = scene->meshes[i];
 
           printf ("scene_add_object: mesh %s assigned to object %s\n",
                   scene->meshes[i]->name, object->name);
@@ -170,7 +309,7 @@ scene_add_object (Scene *scene, char *objDir)
         }
     }
 
-  if (object->mesh == NULL)
+  if (object->meshObject->mesh == NULL)
     {
       printf ("scene_add_object: kein passendes Mesh gefunden für object %s. "
               "Gesucht: %s\n",
@@ -178,8 +317,40 @@ scene_add_object (Scene *scene, char *objDir)
       return;
     }
 
+  object->material->shaderObject->shader = 0;
+
+  for (int i = 0; i < scene->shader_count; i++)
+    {
+      if (scene->shaderObjects[i] == NULL)
+        {
+          continue;
+        }
+
+      if (strcmp (scene->shaderObjects[i]->shaderName,
+                  object->material->shaderObject->shaderName)
+          == 0)
+        {
+          object->material->shaderObject->shader
+              = scene->shaderObjects[i]->shader;
+
+          printf ("scene_add_object: shader %s assigned to object %s\n",
+                  scene->shaderObjects[i]->shaderName, object->name);
+
+          break;
+        }
+    }
+
+  if (object->material->shaderObject->shader == 0)
+    {
+      printf ("scene_add_object: kein passendes Shader gefunden für object "
+              "%s. Gesucht: %s\n",
+              object->name, meshNameWithoutExtension);
+      return;
+    }
+
   scene->objects[scene->object_count] = object;
   scene->object_count++;
+  printf ("shader program id: %d\n", object->material->shaderObject->shader);
 }
 
 void
@@ -202,18 +373,22 @@ scene_update (Scene *scene)
           continue;
         }
 
-      if (object->mesh == NULL)
+      if (object->meshObject->mesh == NULL)
         {
           printf ("mesh from object %d in scene is NULL!!!\n", j);
           continue;
         }
 
       identity (object->modelMatrix);
-
-      object_transformation (object, object->transformation->translation,
+      
+      object_transformation (object,
+                             object->transformation->translation,
                              object->transformation->scaling,
                              object->transformation->rotation);
-      object_draw (object, scene->camera->viewProj);
+      object_draw (object, scene->camera->viewProj,
+                   scene->camera->view, scene->camera->projection,
+                   scene->lights, scene->lightCount, scene->camera->position.x,
+                   scene->camera->position.y, scene->camera->position.z);
     }
 
   glBindFramebuffer (GL_FRAMEBUFFER, 0);

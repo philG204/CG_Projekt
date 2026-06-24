@@ -41,8 +41,8 @@ main (void)
                                             .far_plane = 45.0f };
 
   Scene *scene
-      = scene_init ("Meshes", 1, "scene1", &cameraSettings[activeCamera],
-                    &projectionSettings);
+      = scene_init ("Meshes", "Shaders", "scene1",
+                    &cameraSettings[activeCamera], &projectionSettings);
 
   load_object_list ("room.txt", scene);
 
@@ -65,12 +65,12 @@ main (void)
 
       camera_update (scene->camera);
 
-      glfwSwapBuffers (window->window);
-      glfwPollEvents ();
-
       scene_update (scene);
 
       render_scene (scene, window);
+
+      glfwSwapBuffers (window->window);
+      glfwPollEvents ();
     }
 
   glfwTerminate ();

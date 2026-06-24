@@ -9,8 +9,10 @@
 #include "object.h"
 
 #define MAX_OBJECTS 100
+#define MAX_LIGHT_OBJECTS 100
 #define MAX_MESHES 100
 #define PATH_LENGTH 256
+#define MAX_SHADER_COUNT 100
 
 typedef struct Scene
 {
@@ -18,14 +20,18 @@ typedef struct Scene
   int object_count;
   Mesh **meshes;
   int mesh_count;
+  ShaderObject **shaderObjects;
+  int shader_count;
   Camera *camera;
-  LightDirection light;
+  LightSource **lights;
   GLuint framebuffer;
   GLuint texturebuffer;
+  int lightCount;
   char name[PATH_LENGTH];
 } Scene;
 
-Scene *scene_init (char *meshDir, int mesh_count, char *scene_name,
+Scene *scene_init (char *meshDir, char *shaderDir, 
+                   char *scene_name,
                    CameraSettings *cameraSettings,
                    ProjectionSettings *projectionSettings);
 void scene_add_object (Scene *scene, char *object);

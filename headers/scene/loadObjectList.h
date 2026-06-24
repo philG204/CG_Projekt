@@ -1,7 +1,7 @@
 #ifndef LOADOBJECTLIST_H
 #define LOADOBJECTLIST_H
 
-#include "../../headers/scene/scene.h"
+#include "scene.h"
 
 #define OBJECTNAME_LENGTH 256
 

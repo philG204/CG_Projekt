@@ -9,6 +9,7 @@
 #include "../../headers/renderer/texture.h"
 #include "../../headers/stb_image.h"
 #include "../../headers/utilities/config.h"
+#include "../../headers/utilities/fileOperations.h"
 
 #define MAX_CACHED_TEXTURES 128
 
@@ -107,13 +108,13 @@ texture_init_from_config (const char *configPath, GLuint shader,
   for (int i = 0; i < textureCount; i++)
     {
       char completeTexturePath[512];
-
+      printf ("texture index: %d\n", i);
       snprintf (completeTexturePath, sizeof (completeTexturePath),
                 "assets/Textures/%s", textureNames[i]);
 
       Texture *texture
           = texture_get_or_load (completeTexturePath, shader, textureNames[i]);
-
+      printf ("texture loaded: %s\n", completeTexturePath);
       if (texture == NULL)
         {
           printf ("texture_init_from_config: texture konnte nicht geladen "
@@ -135,7 +136,6 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   assert (filename != NULL);
   assert (shaderVariable != NULL);
 
-  printf ("entering texture_init with filename: %s\n", filename);
   Texture *texture = malloc (sizeof (Texture));
   GLuint textureId;
 
@@ -174,9 +174,18 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
           textureId, width, height, channels);
 
+  char realShaderVariable[256];
+
+  getNameWithoutExtension (shaderVariable, realShaderVariable,
+                           sizeof (realShaderVariable));
+
   texture->textureId = textureId;
   texture->shaderProgramId = shaderProgram;
-  texture->shaderVariable = shaderVariable;
+
+  strncpy (texture->shaderVariable, realShaderVariable,
+           sizeof (texture->shaderVariable) - 1);
+
+  texture->shaderVariable[sizeof (texture->shaderVariable) - 1] = '\0';
 
   return texture;
 }
@@ -196,8 +205,9 @@ activate_texture (Texture **textures, int texture_count)
 
       glBindTexture (GL_TEXTURE_2D, texture->textureId);
 
-      GLint location = glGetUniformLocation (texture->shaderProgramId,
-                                             texture->shaderVariable);
+      GLint location = glGetUniformLocation (
+          textures[i]->shaderProgramId,
+          textures[i]->shaderVariable /*"baseTexture"*/);
       glUniform1i (location, i);
     }
 }

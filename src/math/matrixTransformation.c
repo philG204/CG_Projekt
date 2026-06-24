@@ -4,7 +4,6 @@
 #include <stdlib.h>
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 void
 normalize (GLfloat *v)
@@ -62,6 +61,7 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
           temp[col * 4 + row] = sum;
         }
     }
+
   for (int i = 0; i < 16; ++i)
     {
       out[i] = temp[i];
