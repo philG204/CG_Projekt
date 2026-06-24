@@ -80,7 +80,6 @@ $(TEST_TARGET): $(TEST_OBJ)
 clean:
 	rm -f $(OBJ) $(TARGET) $(TEST_OBJ) $(TEST_TARGET)
 
-
 docs:
 	doxygen Doxyfile
 	xdg-open docs/html/index.html
