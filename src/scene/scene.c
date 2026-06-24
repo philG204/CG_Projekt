@@ -80,8 +80,6 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
 
   glGenTextures (1, &scene->texturebuffer);
   glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
-
-  // TODO add proper size handling
   glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
                 GL_UNSIGNED_BYTE, NULL);
 
@@ -91,8 +89,19 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
   glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
                           scene->texturebuffer, 0);
 
+  GLuint depthbuffer;
+  glGenRenderbuffers (1, &depthbuffer);
+  glBindRenderbuffer (GL_RENDERBUFFER, depthbuffer);
+
+  glRenderbufferStorage (GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 1920, 1080);
+  glFramebufferRenderbuffer (GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                             GL_RENDERBUFFER, depthbuffer);
+
+  GLenum buf = GL_COLOR_ATTACHMENT0;
+  glDrawBuffers (1, &buf);
+
   if (glCheckFramebufferStatus (GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    perror ("framebuffer incomplete!");
+    printf ("framebuffer incomplete!\n");
 
   glBindFramebuffer (GL_FRAMEBUFFER, 0);
 
