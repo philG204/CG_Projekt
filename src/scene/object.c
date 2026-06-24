@@ -188,6 +188,7 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
+
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
   printf ("  meshName     = %s\n", object->meshObject->meshName);
@@ -323,6 +324,12 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "proj"), 1,
       GL_FALSE, projMatrix);
+
+  glUniformMatrix4fv (
+      glGetUniformLocation (object->material->shaderObject->shader, "model"),
+      1, GL_FALSE, object->modelMatrix);
+
+  glBindVertexArray (object->meshObject->mesh->vao);
 
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "model"),

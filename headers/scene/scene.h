@@ -30,7 +30,8 @@ typedef struct Scene
   char name[PATH_LENGTH];
 } Scene;
 
-Scene *scene_init (char *meshDir, char *shaderDir, char *scene_name,
+Scene *scene_init (char *meshDir, char *shaderDir, 
+                   char *scene_name,
                    CameraSettings *cameraSettings,
                    ProjectionSettings *projectionSettings);
 void scene_add_object (Scene *scene, char *object);
