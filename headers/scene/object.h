@@ -3,7 +3,6 @@
 
 #include <GL/glew.h>
 
-#include "../renderer/mesh.h"
 #include "../renderer/texture.h"
 #include "light.h"
 
@@ -39,6 +38,8 @@ typedef struct Material
   GLfloat transparency;
   MaterialLight *light;
 } Material;
+
+typedef struct Mesh Mesh;
 
 typedef struct Object
 {

@@ -9,6 +9,7 @@
 
 #include "../headers/core/input.h"
 #include "../headers/core/window.h"
+#include "../headers/renderer/postProcessing.h"
 #include "../headers/scene/camera.h"
 #include "../headers/scene/loadObjectList.h"
 #include "../headers/scene/object.h"
@@ -18,7 +19,7 @@ int
 main (void)
 {
 
-  GLFWwindow *window = window_create (1920, 1080, "CG1");
+  Window *window = window_create (1920, 1080, "CG1");
 
   CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 5.0f },
                                         .center = { 0.0f, 0.0f, 0.0f },
@@ -45,10 +46,10 @@ main (void)
 
   load_object_list ("room.txt", scene);
 
-  while (!glfwWindowShouldClose (window))
+  while (!glfwWindowShouldClose (window->window))
     {
       // get input
-      processKeyInput (window, cameraCount, &activeCamera);
+      processKeyInput (window->window, cameraCount, &activeCamera);
 
       // than draw with input;
       // Update Camera when input has change the camera
@@ -64,10 +65,12 @@ main (void)
 
       camera_update (scene->camera);
 
-      glfwSwapBuffers (window);
+      glfwSwapBuffers (window->window);
       glfwPollEvents ();
 
       scene_update (scene);
+
+      render_scene (scene, window);
     }
 
   glfwTerminate ();
