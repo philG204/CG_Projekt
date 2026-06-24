@@ -177,8 +177,8 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-  object->normalMatrix = malloc (16 * sizeof (GLfloat));
-  inverse (object->normalMatrix, object->modelMatrix);
+  //object->normalMatrix = malloc (16 * sizeof (GLfloat));
+  //inverse (object->normalMatrix, object->modelMatrix);
 
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
@@ -269,14 +269,14 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   char uniformName[32];
   for (int i = 0; i < lightCounts; i++)
     {
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].position", i + 1);
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].position", i);
         glUniform3f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
             lightSources[i]->x,
             lightSources[i]->y,
             lightSources[i]->z
         );
 
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].diffuse", i + 1);
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].diffuse", i);
         glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
             lightSources[i]->diffuse[0],
             lightSources[i]->diffuse[1],
@@ -284,14 +284,13 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
             lightSources[i]->diffuse[3]
         );
 
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].specular", i + 1);
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].specular", i);
         glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
             lightSources[i]->specular[0],
             lightSources[i]->specular[1],
             lightSources[i]->specular[2],
             lightSources[i]->specular[3]
         );
-        
     }
 
   glUniform1i (glGetUniformLocation (object->material->shaderObject->shader,
