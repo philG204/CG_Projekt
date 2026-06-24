@@ -1,5 +1,4 @@
 #include "../../headers/core/window.h"
-#include "../../headers/renderer/mesh.h"
 #include "../../headers/scene/scene.h"
 
 /**

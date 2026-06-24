@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <complex.h>
-#include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <GL/glew.h>
 

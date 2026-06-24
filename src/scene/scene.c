@@ -7,7 +7,6 @@
 #include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
-#include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
