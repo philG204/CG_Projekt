@@ -14,6 +14,7 @@ SRC = \
 	src/renderer/loadObj.c \
 	src/renderer/loadShader.c \
 	src/renderer/mesh.c \
+	src/renderer/postProcessing.c \
 	src/renderer/shader.c \
 	src/renderer/texture.c \
 	src/scene/camera.c \
@@ -30,6 +31,7 @@ HEADERS = \
 	headers/renderer/loadObj.h \
 	headers/renderer/loadShader.h \
 	headers/renderer/mesh.h \
+	headers/renderer/postProcessing.h \
 	headers/renderer/shader.h \
 	headers/renderer/texture.h \
 	headers/scene/camera.h \
