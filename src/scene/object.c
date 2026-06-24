@@ -202,7 +202,7 @@ object_draw (Object *object, GLfloat *cameraMatrix)
 
   glBindVertexArray (object->mesh->vao);
 
-  for (int i = 0; i < object->material->texture_count; i++)
+  if (object->material->texture_count > 0)
     {
       activate_texture (object->material->textures,
                         object->material->texture_count);

@@ -111,8 +111,8 @@ texture_init_from_config (const char *configPath, GLuint shader,
       snprintf (completeTexturePath, sizeof (completeTexturePath),
                 "assets/Textures/%s", textureNames[i]);
 
-      Texture *texture
-          = texture_get_or_load (completeTexturePath, shader, textureNames[i]);
+      Texture *texture = texture_get_or_load (
+          completeTexturePath, shader, "crateTex");
 
       if (texture == NULL)
         {
@@ -143,12 +143,13 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   int height = 0;
   int channels = 0;
 
+  stbi_set_flip_vertically_on_load (1);
+
   unsigned char *image = stbi_load (filename, &width, &height, &channels, 4);
-  // printf("loaded file %s image %s\n", filename, image);
   if (image == NULL)
     {
-      // printf(stderr, "Fehler beim Laden der Textur %s: %s\n", filename,
-      // stbi_failure_reason());
+      printf ("Fehler beim Laden der Textur %s: %s\n", filename,
+              stbi_failure_reason ());
       return NULL;
     }
 
@@ -176,7 +177,7 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 
   texture->textureId = textureId;
   texture->shaderProgramId = shaderProgram;
-  texture->shaderVariable = shaderVariable;
+  texture->shaderVariable = strdup (shaderVariable);
 
   return texture;
 }
