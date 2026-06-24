@@ -14,9 +14,13 @@ int config_line_has_key (const char *line, const char *key);
 
 int config_parse_string_value (const char *line, char *out, size_t outSize);
 
+int config_parse_int_value (const char *line, int *out);
+
 int config_parse_float_value (const char *line, float *out);
 
 int config_parse_vec3_value (const char *line, float out[3]);
+
+int config_parse_vec4_value (const char *line, float out[4]);
 
 int config_parse_string_list_value (const char *line,
                                     char items[][CONFIG_MAX_STRING_LENGTH],

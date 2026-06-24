@@ -3,19 +3,23 @@
 
 #include <GL/glew.h>
 
-typedef struct LightDirection
+typedef struct LightSource
 {
   GLfloat x;
   GLfloat y;
   GLfloat z;
-} LightDirection;
+
+  float diffuse[4];
+  float specular[4];
+} LightSource;
 
 typedef struct MaterialLight
 {
-  GLfloat emissive;
-  GLfloat ambient;
-  GLfloat diffuse;
-  GLfloat specular;
+  float emissive[4];
+  float ambient[4];
+  float diffuse[4];
+  float specular[4];
+  float shininess;
 } MaterialLight;
 
 // Setzt die Beleuchtung nach dem Gouraud-Shading um.
