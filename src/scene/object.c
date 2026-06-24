@@ -176,8 +176,8 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-  //object->normalMatrix = malloc (16 * sizeof (GLfloat));
-  //inverse (object->normalMatrix, object->modelMatrix);
+  // object->normalMatrix = malloc (16 * sizeof (GLfloat));
+  // inverse (object->normalMatrix, object->modelMatrix);
 
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
@@ -223,8 +223,8 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 
 void
 object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
-             GLfloat *projMatrix, LightSource **lightSources,
-             int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ)
+             GLfloat *projMatrix, LightSource **lightSources, int lightCounts,
+             GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ)
 {
   assert (object != NULL);
   assert (viewProj != NULL);
@@ -261,43 +261,35 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   glUniform1f (glGetUniformLocation (object->material->shaderObject->shader,
                                      "materialShininess"),
                object->material->light->shininess);
-  
+
   char uniformName[32];
   for (int i = 0; i < lightCounts; i++)
     {
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].position", i);
-        glUniform3f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
-            lightSources[i]->x,
-            lightSources[i]->y,
-            lightSources[i]->z
-        );
+      snprintf (uniformName, sizeof (uniformName), "lights[%d].position", i);
+      glUniform3f (glGetUniformLocation (
+                       object->material->shaderObject->shader, uniformName),
+                   lightSources[i]->x, lightSources[i]->y, lightSources[i]->z);
 
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].diffuse", i);
-        glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
-            lightSources[i]->diffuse[0],
-            lightSources[i]->diffuse[1],
-            lightSources[i]->diffuse[2],
-            lightSources[i]->diffuse[3]
-        );
+      snprintf (uniformName, sizeof (uniformName), "lights[%d].diffuse", i);
+      glUniform4f (glGetUniformLocation (
+                       object->material->shaderObject->shader, uniformName),
+                   lightSources[i]->diffuse[0], lightSources[i]->diffuse[1],
+                   lightSources[i]->diffuse[2], lightSources[i]->diffuse[3]);
 
-        snprintf(uniformName, sizeof(uniformName), "lights[%d].specular", i);
-        glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
-            lightSources[i]->specular[0],
-            lightSources[i]->specular[1],
-            lightSources[i]->specular[2],
-            lightSources[i]->specular[3]
-        );
+      snprintf (uniformName, sizeof (uniformName), "lights[%d].specular", i);
+      glUniform4f (glGetUniformLocation (
+                       object->material->shaderObject->shader, uniformName),
+                   lightSources[i]->specular[0], lightSources[i]->specular[1],
+                   lightSources[i]->specular[2], lightSources[i]->specular[3]);
     }
 
   glUniform1i (glGetUniformLocation (object->material->shaderObject->shader,
                                      "lightCount"),
-                                    lightCounts);
+               lightCounts);
 
-    glUniform3f (glGetUniformLocation (object->material->shaderObject->shader,
-                                     "viewPos"),
-               cameraX,
-               cameraY,
-               cameraZ);
+  glUniform3f (
+      glGetUniformLocation (object->material->shaderObject->shader, "viewPos"),
+      cameraX, cameraY, cameraZ);
 
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "view"), 1,
@@ -310,7 +302,6 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
-
 
   glBindVertexArray (object->meshObject->mesh->vao);
 

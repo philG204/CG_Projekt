@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void normalize (GLfloat *v);
 void cross (const GLfloat *a, const GLfloat *b, GLfloat *out);
 GLfloat dot (const GLfloat *a, const GLfloat *b);

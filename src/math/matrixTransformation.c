@@ -5,7 +5,6 @@
 
 #include <GL/glew.h>
 
-
 void
 normalize (GLfloat *v)
 {

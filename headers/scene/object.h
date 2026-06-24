@@ -56,6 +56,7 @@ void object_transformation (Object *object, GLfloat *translation,
                             GLfloat *scaling, GLfloat *rotation);
 void object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
                   GLfloat *projMatrix, LightSource **lightSources,
-                  int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ);
+                  int lightCounts, GLfloat cameraX, GLfloat cameraY,
+                  GLfloat cameraZ);
 
 #endif // OBJECT_H
