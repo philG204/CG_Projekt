@@ -188,7 +188,6 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
   printf ("  meshName     = %s\n", object->meshObject->meshName);
