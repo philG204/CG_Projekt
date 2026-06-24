@@ -9,6 +9,10 @@ Mit `make run` lässt sich das Programm auch direkt kompilieren und neu ausführ
 
 Eine Testsuite lässt sich mit `make test` ausführen.
 
+Die Dokumentaion lässts sich über `make docs` aktuallisieren und öffnen(hier für ist für die generierung doxygen nötig).
+Zum alleinigen Aufrufen der Dokumentaion reicht `make docs_open`
+
+
 ## src/
 
 Enthält den gesamten C-Quellcode des Programms.
