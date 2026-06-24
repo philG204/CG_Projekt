@@ -40,7 +40,7 @@ main (void)
                                             .far_plane = 45.0f };
 
   Scene *scene
-      = scene_init ("Meshes", "Shaders", 1, 1, "scene1",
+      = scene_init ("Meshes", "Shaders", "scene1",
                     &cameraSettings[activeCamera], &projectionSettings);
 
   load_object_list ("room.txt", scene);

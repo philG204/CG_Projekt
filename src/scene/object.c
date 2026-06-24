@@ -47,7 +47,6 @@ object_load_config (Object *object, const char *configPath)
   if (config_find_line_by_key (configPath, "emissive", line, sizeof (line)))
     {
       config_parse_vec4_value (line, object->material->light->emissive);
-      printf ("emissive: %f\n", object->material->light->emissive);
     }
 
   if (config_find_line_by_key (configPath, "ambient", line, sizeof (line)))
@@ -186,11 +185,11 @@ object_init (char *objDir)
   printf ("  shaderName     = %s\n",
           object->material->shaderObject->shaderName);
   printf ("  textures     = %d\n", object->material->texture_count);
-  printf ("  transparency = %d\n", object->material->transparency);
-  printf ("  emissive     = %f\n", object->material->light->emissive);
-  printf ("  ambient      = %f\n", object->material->light->ambient);
-  printf ("  diffuse      = %f\n", object->material->light->diffuse);
-  printf ("  specular     = %f\n", object->material->light->specular);
+  printf ("  transparency = %lf\n", object->material->transparency);
+  printf ("  emissive     = [%f, %f, %f, %f]\n", object->material->light->emissive[0], object->material->light->emissive[1], object->material->light->emissive[2], object->material->light->emissive[3]);
+  printf ("  ambient      = [%f, %f, %f, %f]\n", object->material->light->ambient[0], object->material->light->ambient[1], object->material->light->ambient[2], object->material->light->ambient[3]);
+  printf ("  diffuse      = [%f, %f, %f, %f]\n", object->material->light->diffuse[0], object->material->light->diffuse[1], object->material->light->diffuse[2], object->material->light->diffuse[3]);
+  printf ("  specular     = [%f, %f, %f, %f]\n", object->material->light->specular[0], object->material->light->specular[1], object->material->light->specular[2],object->material->light->specular[3]);
   printf ("  translation  = %f\n", object->transformation->translation[0]);
   printf ("  scaling      = %f\n", object->transformation->scaling[0]);
   printf ("  rotation     = %f\n", object->transformation->rotation[0]);
@@ -211,12 +210,9 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
 
-  if (object->transformation->rotaionCircle != NULL)
-    {
-      rotation[0] += object->transformation->rotaionCircle[0];
-      rotation[1] += object->transformation->rotaionCircle[1];
-      rotation[2] += object->transformation->rotaionCircle[2];
-    }
+  rotation[0] += object->transformation->rotaionCircle[0];
+  rotation[1] += object->transformation->rotaionCircle[1];
+  rotation[2] += object->transformation->rotaionCircle[2];
 
   rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
   rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);

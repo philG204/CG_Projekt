@@ -122,7 +122,7 @@ loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
 }
 
 Scene *
-scene_init (char *meshDir, char *shaderDir, int mesh_count, int shader_count,
+scene_init (char *meshDir, char *shaderDir,
             char *scene_name, CameraSettings *cameraSettings,
             ProjectionSettings *projectionSettings)
 {
@@ -130,7 +130,7 @@ scene_init (char *meshDir, char *shaderDir, int mesh_count, int shader_count,
   assert (meshDir != NULL);
   assert (scene_name != NULL);
   assert (projectionSettings != NULL);
-  assert(cameraSettings != NULL);
+  assert (cameraSettings != NULL);
 
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
@@ -297,10 +297,6 @@ scene_add_object (Scene *scene, char *objDir)
           continue;
         }
 
-      printf ("scene_add_object: compare '%s' with '%s'\n",
-              scene->shaderObjects[i],
-              object->material->shaderObject->shaderName);
-
       if (strcmp (scene->shaderObjects[i]->shaderName,
                   object->material->shaderObject->shaderName)
           == 0)
@@ -315,7 +311,7 @@ scene_add_object (Scene *scene, char *objDir)
         }
     }
 
-  if (object->material->shaderObject->shader == NULL)
+  if (object->material->shaderObject->shader == 0)
     {
       printf ("scene_add_object: kein passendes Shader gefunden für object "
               "%s. Gesucht: %s\n",
@@ -345,19 +341,19 @@ scene_update (Scene *scene)
           continue;
         }
 
-      if (scene->objects[j]->meshObject->mesh == NULL)
+      if (object->meshObject->mesh == NULL)
         {
           printf ("mesh from object %d in scene is NULL!!!\n", j);
           continue;
         }
 
-      identity (scene->objects[j]->modelMatrix);
+      identity (object->modelMatrix);
       
-      object_transformation (scene->objects[j],
-                             scene->objects[j]->transformation->translation,
-                             scene->objects[j]->transformation->scaling,
-                             scene->objects[j]->transformation->rotation);
-      object_draw (scene->objects[j], scene->camera->viewProj,
+      object_transformation (object,
+                             object->transformation->translation,
+                             object->transformation->scaling,
+                             object->transformation->rotation);
+      object_draw (object, scene->camera->viewProj,
                    scene->camera->view, scene->camera->projection,
                    scene->lights, scene->lightCount, scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
     }
