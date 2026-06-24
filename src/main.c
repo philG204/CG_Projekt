@@ -49,7 +49,8 @@ main (void)
   while (!glfwWindowShouldClose (window->window))
     {
       // get input
-      processKeyInput (window->window, cameraCount, &activeCamera);
+      processKeyInput (window->window, cameraCount, &activeCamera,
+                       &window->processingEnabled);
 
       // than draw with input;
       // Update Camera when input has change the camera

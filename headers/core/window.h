@@ -7,8 +7,10 @@
 typedef struct
 {
   GLFWwindow *window;
-  GLuint screen_shader;
   GLuint vertex_array;
+  GLuint screen_shader;
+  GLuint processing_shader;
+  int processingEnabled;
 } Window;
 
 Window *window_create (int width, int height, const char *title);
