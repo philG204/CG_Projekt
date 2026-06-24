@@ -3,8 +3,6 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
     @brief Normalizes a 3D vector in-place
