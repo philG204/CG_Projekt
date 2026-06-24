@@ -24,6 +24,8 @@ typedef struct Scene
   int shader_count;
   Camera *camera;
   LightSource **lights;
+  GLuint framebuffer;
+  GLuint texturebuffer;
   int lightCount;
   char name[PATH_LENGTH];
 } Scene;

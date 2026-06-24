@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include "../renderer/texture.h"
+#include "../renderer/mesh.h"
 #include "light.h"
 
 #define PATH_LENGTH 256
