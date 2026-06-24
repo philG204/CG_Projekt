@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <dirent.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -82,7 +83,7 @@ object_load_config (Object *object, const char *configPath)
           config_parse_vec3_value (line, object->transformation->scaling);
         }
 
-      if (config_find_line_by_key (configPath, "rotaion", line, sizeof (line)))
+      if (config_find_line_by_key (configPath, "rotation", line, sizeof (line)))
         {
           config_parse_vec3_value (line, object->transformation->rotation);
         }
@@ -100,6 +101,16 @@ object_init (char *objDir)
 
   Texture **textures = malloc (sizeof (Texture *) * MAX_TEXTURES);
   Transformation *transformation = malloc (sizeof (Transformation));
+
+  transformation->translation[0] = 0.0f;
+  transformation->translation[1] = 0.0f;
+  transformation->translation[2] = 0.0f;
+  transformation->scaling[0] = 1.0f;
+  transformation->scaling[1] = 1.0f;
+  transformation->scaling[2] = 1.0f;
+  transformation->rotation[0] = 0.0f;
+  transformation->rotation[1] = 0.0f;
+  transformation->rotation[2] = 0.0f;
 
   GLuint shaderProgram = shader_init (objDir);
 
@@ -161,12 +172,18 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   assert (scaling != NULL);
   assert (rotation != NULL);
 
+  const GLfloat radian = (GLfloat)M_PI / 180.0f;
+
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
 
-  rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
-  rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
-  rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
+  const GLfloat radiansX = rotation[0] * radian;
+  const GLfloat radiansY = rotation[1] * radian;
+  const GLfloat radiansZ = rotation[2] * radian;
+
+  rotatex (object->modelMatrix, object->modelMatrix, radiansX);
+  rotatey (object->modelMatrix, object->modelMatrix, radiansY);
+  rotatez (object->modelMatrix, object->modelMatrix, radiansZ);
 }
 
 void
