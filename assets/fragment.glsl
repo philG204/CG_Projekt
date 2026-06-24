@@ -8,5 +8,9 @@ out vec4 FragColor;
 
 void main()
 {
-    FragColor = texture(screenTexture, TexCoord);
+    vec4 color = texture(screenTexture, TexCoord);
+
+    // invert sample
+    //FragColor = vec4(1.0 - color.rgb, color.a);
+    FragColor = color;
 }
