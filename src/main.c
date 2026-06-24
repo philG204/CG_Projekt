@@ -21,9 +21,7 @@ main (void)
 
   Window *window = window_create (1920, 1080, "CG1");
 
-  //CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 5.0f },
-  CameraSettings cameraSettings[] = { { .eye = { -4.0f, 1.4f, 0.0f },
-
+  CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 0.0f },
                                         .center = { 0.0f, 0.0f, 0.0f },
                                         .up = { 0.0f, 1.0f, 0.0f } },
                                       { .eye = { 3.0f, 4.0f, 5.0f },
