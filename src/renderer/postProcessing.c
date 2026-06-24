@@ -24,8 +24,6 @@ render_scene (Scene *scene, Window *window)
   glActiveTexture (GL_TEXTURE0);
   glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
 
-  glUniform1f (glGetUniformLocation (window->screen_shader, "time"), time);
-
   glBindVertexArray (window->vertex_array);
   glDrawArrays (GL_TRIANGLES, 0, 6);
 }
