@@ -2,12 +2,19 @@
 
 #define MAX_LIGHTS 16
 
+struct Light
+{
+    vec3 position;
+    vec4 diffuse;
+    vec4 specular;
+};
+
 in vec3 Position;
 in vec3 Normal;
 in vec2 tex;
 
 uniform int lightCount;
-uniform vec3 lightPos[MAX_LIGHTS];
+uniform Light lights[MAX_LIGHTS];
 
 uniform vec3 viewPos;
 
@@ -39,17 +46,17 @@ void main(){
 
     for (int i = 0; i < count; i++)
     {
-        vec3 L = normalize(lightPos[i] - Position);
+        vec3 L = normalize(lights[i].position - Position);
         vec3 H = normalize(L + V);
 
         float diff = max(dot(N, L), 0.0);
 
-        diffuseSum += diff * materialDiffuse * lightDiffuse;
+        diffuseSum += diff * materialDiffuse * lights[i].diffuse;
 
         if (diff > 0.0)
         {
             float spec = pow(max(dot(N, H), 0.0), materialShininess);
-            specularSum += spec * materialSpecular * lightSpecular;
+            specularSum += spec * materialSpecular * lights[i].specular;
         }
     }
 

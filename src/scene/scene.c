@@ -134,8 +134,8 @@ scene_init (char *meshDir, char *shaderDir, int mesh_count, int shader_count,
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
-  LightDirection **lights
-      = malloc (sizeof (LightDirection *) * MAX_LIGHT_OBJECTS);
+  LightSource **lights
+      = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
   Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
   ShaderObject **shaderObjects
       = malloc (sizeof (ShaderObject *) * MAX_SHADER_COUNT);
@@ -218,10 +218,20 @@ scene_add_object (Scene *scene, char *objDir)
 
   if (object->isLight == 1)
     {
-      LightDirection *lightObject = malloc (sizeof (LightDirection));
+      LightSource *lightObject = malloc (sizeof (LightSource));
       lightObject->x = object->transformation->translation[0];
       lightObject->y = object->transformation->translation[1];
       lightObject->z = object->transformation->translation[2];
+
+      lightObject->diffuse[0] = object->material->light->diffuse[0];
+      lightObject->diffuse[1] = object->material->light->diffuse[1];
+      lightObject->diffuse[2] = object->material->light->diffuse[2];
+      lightObject->diffuse[3] = object->material->light->diffuse[3];
+
+      lightObject->specular[0] = object->material->light->specular[0];
+      lightObject->specular[1] = object->material->light->specular[1];
+      lightObject->specular[2] = object->material->light->specular[2];
+      lightObject->specular[3] = object->material->light->specular[3];
       scene->lights[scene->lightCount] = lightObject;
       scene->lightCount++;
     }

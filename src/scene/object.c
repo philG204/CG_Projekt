@@ -227,14 +227,14 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 
 void
 object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
-             GLfloat *projMatrix, LightDirection **lightDirections,
+             GLfloat *projMatrix, LightSource **lightSources,
              int lightCounts, GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ)
 {
   assert (object != NULL);
   assert (viewProj != NULL);
   assert (viewMatrix != NULL);
   assert (projMatrix != NULL);
-  assert (lightDirections != NULL);
+  assert (lightSources != NULL);
 
   use_shader (object->material->shaderObject->shader);
 
@@ -266,50 +266,37 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
                                      "materialShininess"),
                object->material->light->shininess);
   
-  if(object->isLight == 1){
-    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
-                                     "lightAmbient"),
-               object->material->light->ambient[0],
-               object->material->light->ambient[1],
-               object->material->light->ambient[2],
-               object->material->light->ambient[3]);
-    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
-                                     "lightDiffuse"),
-               object->material->light->diffuse[0],
-               object->material->light->diffuse[1],
-               object->material->light->diffuse[2],
-               object->material->light->diffuse[3]);
-    glUniform4f (glGetUniformLocation (object->material->shaderObject->shader,
-                                     "lightSpecular"),
-               object->material->light->specular[0],
-               object->material->light->specular[1],
-               object->material->light->specular[2],
-               object->material->light->specular[3]);
-  }
+  char uniformName[32];
+  for (int i = 0; i < lightCounts; i++)
+    {
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].position", i + 1);
+        glUniform3f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
+            lightSources[i]->x,
+            lightSources[i]->y,
+            lightSources[i]->z
+        );
 
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].diffuse", i + 1);
+        glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
+            lightSources[i]->diffuse[0],
+            lightSources[i]->diffuse[1],
+            lightSources[i]->diffuse[2],
+            lightSources[i]->diffuse[3]
+        );
+
+        snprintf(uniformName, sizeof(uniformName), "lights[%d].specular", i + 1);
+        glUniform4f(glGetUniformLocation(object->material->shaderObject->shader, uniformName),
+            lightSources[i]->specular[0],
+            lightSources[i]->specular[1],
+            lightSources[i]->specular[2],
+            lightSources[i]->specular[3]
+        );
+        
+    }
 
   glUniform1i (glGetUniformLocation (object->material->shaderObject->shader,
                                      "lightCount"),
                                     lightCounts);
-
-  char uniformName[32];
-
-    for (int i = 0; i < lightCounts; i++)
-    {
-        snprintf(uniformName, sizeof(uniformName), "lightPos[%d]", i + 1);
-
-        GLint location = glGetUniformLocation(
-            object->material->shaderObject->shader,
-            uniformName
-        );
-
-        glUniform3f(
-            location,
-            lightDirections[i]->x,
-            lightDirections[i]->y,
-            lightDirections[i]->z
-        );
-    }
 
     glUniform3f (glGetUniformLocation (object->material->shaderObject->shader,
                                      "viewPos"),
@@ -329,9 +316,6 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
 
-  //glUniformMatrix4fv (
-  //    glGetUniformLocation (object->material->shaderObject->shader, "normalM"),
-  //    1, GL_FALSE, object->modelMatrix);
 
   glBindVertexArray (object->meshObject->mesh->vao);
 

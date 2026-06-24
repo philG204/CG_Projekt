@@ -23,7 +23,7 @@ typedef struct Scene
   ShaderObject **shaderObjects;
   int shader_count;
   Camera *camera;
-  LightDirection **lights;
+  LightSource **lights;
   int lightCount;
   char name[PATH_LENGTH];
 } Scene;

@@ -3,12 +3,15 @@
 
 #include <GL/glew.h>
 
-typedef struct LightDirection
+typedef struct LightSource
 {
   GLfloat x;
   GLfloat y;
   GLfloat z;
-} LightDirection;
+
+  float diffuse[4];
+  float specular[4];
+} LightSource;
 
 typedef struct MaterialLight
 {
