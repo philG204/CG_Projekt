@@ -14,10 +14,10 @@
 #include "../../headers/utilities/config.h"
 
 /**
-  @brief
+ *  @brief
   
-  @param object
-  @param configPath
+ *  @param object
+ *  @param configPath
 */
 static void
 object_load_config (Object *object, const char *configPath)
@@ -96,10 +96,10 @@ object_load_config (Object *object, const char *configPath)
 }
 
 /**
-  @brief
-
-  @param objDir
-  @return 
+ *  @brief
+ *
+ *  @param objDir
+ *  @return 
 */
 Object *
 object_init (char *objDir)
@@ -164,12 +164,12 @@ object_init (char *objDir)
 }
 
 /** 
-  @brief Translatiert, rotiert und skaliert ein Objekt.
-
-  @param object
-  @param translation
-  @param scaling
-  @param rotation
+ *  @brief Translatiert, rotiert und skaliert ein Objekt.
+ *
+ *  @param object
+ *  @param translation
+ *  @param scaling
+ *  @param rotation
 */
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
@@ -189,10 +189,10 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 }
 
 /**
-  @brief
+ *  @brief
   
-  @param object
-  @param cameraMatrix
+ *  @param object
+ *  @param cameraMatrix
 */
 void
 object_draw (Object *object, GLfloat *cameraMatrix)

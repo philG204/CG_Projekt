@@ -7,10 +7,10 @@
 #include "../../headers/renderer/shader.h"
 
 /**
-  @brief
-
-  @param objDir
-  @return
+ *  @brief
+ *
+ *  @param objDir
+ *  @return
 */
 GLuint
 shader_init (char *objDir)
@@ -89,9 +89,9 @@ shader_init (char *objDir)
 }
 
 /**
-  @brief
-
-  @param shaderProgram
+ *  @brief
+ *
+ *  @param shaderProgram
 */
 void
 use_shader (GLuint shaderProgram)

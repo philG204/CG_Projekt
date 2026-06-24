@@ -5,11 +5,11 @@
 #define EPSILON 0.00001f
 
 /**
-  @brief
-
-  @param a
-  @param b
-  @return
+ *  @brief
+ *
+ *  @param a
+ *  @param b
+ *  @return
 */
 int
 float_equal (GLfloat a, GLfloat b)
@@ -18,12 +18,12 @@ float_equal (GLfloat a, GLfloat b)
 }
 
 /**
-  @brief Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher liegen können wir einen Array-Vergleich ausführen
-
-  @param a
-  @param b
-  @param n
-  @return
+ *  @brief Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher liegen können wir einen Array-Vergleich ausführen
+ *
+ *  @param a
+ *  @param b
+ *  @param n
+ *  @return
 */ 
 static int
 array_equal (const GLfloat *a, const GLfloat *b, int n)
@@ -38,11 +38,11 @@ array_equal (const GLfloat *a, const GLfloat *b, int n)
 }
 
 /**
-  @brief
-
-  @param a
-  @param b
-  @return
+ *  @brief
+ *
+ *  @param a
+ *  @param b
+ *  @return
 */
 int
 vector_equal (const GLfloat *a, const GLfloat *b)
@@ -51,11 +51,11 @@ vector_equal (const GLfloat *a, const GLfloat *b)
 }
 
 /**
-  @brief
-
-  @param a
-  @param b
-  @return
+ *  @brief
+ *
+ *  @param a
+ *  @param b
+ *  @return
 */
 int
 matrix_equal (const GLfloat *a, const GLfloat *b)
@@ -64,10 +64,10 @@ matrix_equal (const GLfloat *a, const GLfloat *b)
 }
 
 /**
-  @brief
-
-  @param name
-  @param fn
+ *  @brief
+ *
+ *  @param name
+ *  @param fn
 */
 void
 run_test (const char *name, test_fn fn)

@@ -12,7 +12,7 @@ typedef struct Button
   GLfloat height;
 } Button;
 
-/*
+/**
  * @brief Processes input from the Keyboards and updates the active camera.
  *
  * @param *window        - GLFW window handle
@@ -21,7 +21,7 @@ typedef struct Button
  */
 void processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera);
 
-/*
+/**
  * @brief Processes input from the buttons on the screen and updates the active
  * camera.
  *

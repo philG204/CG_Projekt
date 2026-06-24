@@ -6,9 +6,9 @@
 #include "test_entries.h"
 
 /**
-  @brief
-
-  @return
+ *  @brief
+ *
+ *  @return
 */
 int
 test_normalize_vector (void)
@@ -23,9 +23,9 @@ test_normalize_vector (void)
 }
 
 /**
-  @brief
-
-  @return
+ *  @brief
+ *
+ *  @return
 */
 int
 test_normalize_zero_vector (void)
@@ -40,9 +40,9 @@ test_normalize_zero_vector (void)
 }
 
 /**
-  @brief test the cross product a × b
-
-  @return
+ *  @brief test the cross product a × b
+ *
+ *  @return
 */
 int
 test_cross_product (void)
@@ -59,9 +59,9 @@ test_cross_product (void)
 }
 
 /**
-  @brief test the dot function(Skalarprodukt)
-
-  @return
+ *  @brief test the dot function(Skalarprodukt)
+ *
+ *  @return
 */
 int
 test_dot_product (void)
@@ -73,9 +73,9 @@ test_dot_product (void)
 }
 
 /**
-  @brief test the identity function
-
-  @return
+ *  @brief test the identity function
+ *
+ *  @return
 */
 int
 test_identity (void)
@@ -90,9 +90,9 @@ test_identity (void)
 }
 
 /**
-  @brief
-
-  @return
+ *  @brief
+ *
+ *  @return
 */
 int
 test_multiply_identity (void)
@@ -110,9 +110,9 @@ test_multiply_identity (void)
 }
 
 /**
-  @brief
-
-  @return
+ *  @brief
+ *
+ *  @return
 */
 int
 test_multiply_alias_output_left_operand (void)
@@ -131,9 +131,9 @@ test_multiply_alias_output_left_operand (void)
 }
 
 /**
-  @brief 
-
-  @return
+ *  @brief 
+ *
+ *  @return
 */
 int
 test_multiply_alias_output_right_operand (void)
@@ -152,9 +152,9 @@ test_multiply_alias_output_right_operand (void)
 }
 
 /**
-  @brief
-
-  @return
+ *  @brief
+ *
+ *  @return
 */
 int
 test_translate_identity (void)
@@ -172,9 +172,9 @@ test_translate_identity (void)
 }
 
 /**
-  @brief 
-
-  @return
+ *  @brief 
+ *
+ *  @return
 */
 int
 test_translate_in_place (void)
@@ -191,9 +191,9 @@ test_translate_in_place (void)
 }
 
 /**
-  @brief checks the rotateX function
-
-  @return
+ *  @brief checks the rotateX function
+ *
+ *  @return
 */
 int
 test_rotatex_90deg (void)
@@ -209,9 +209,9 @@ test_rotatex_90deg (void)
 }
 
 /**
-  @brief checks the rotatey function
-
-  @return
+ *  @brief checks the rotatey function
+ *
+ *  @return
 */
 int
 test_rotatey_90deg (void)
@@ -227,9 +227,9 @@ test_rotatey_90deg (void)
 }
 
 /**
-  @brief checks the rotatez function
-
-  @return
+ *  @brief checks the rotatez function
+ *
+ *  @return
 */
 int
 test_rotatez_90deg (void)
@@ -245,9 +245,9 @@ test_rotatez_90deg (void)
 }
 
 /**
-  @brief checks the scale function
-
-  @return
+ *  @brief checks the scale function
+ *
+ *  @return
 */
 int
 test_scale (void)
@@ -264,9 +264,9 @@ test_scale (void)
 }
 
 /**
-  @brief checks looksAt Methode
-
-  @return
+ *  @brief checks looksAt Methode
+ *
+ *  @return
 */
 int
 test_lookat_origin (void)
@@ -287,9 +287,9 @@ test_lookat_origin (void)
 }
 
 /**
-  @brief checks the the calculation for the perspective
-
-  @return
+ *  @brief checks the the calculation for the perspective
+ *
+ *  @return
 */
 int
 test_perspective_basic (void)
@@ -304,9 +304,9 @@ test_perspective_basic (void)
 }
 
 /**
-  @brief test all the Test one after the another
-
-  @return
+ *  @brief test all the Test one after the another
+ *
+ *  @return
 */
 void
 test_matrixTransormation (void)

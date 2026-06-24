@@ -2,10 +2,10 @@
 #include "../../headers/scene/scene.h"
 
 /**
-  @brief
-
-  @param scene
-  @param window
+ *  @brief
+ *
+ *  @param scene
+ *  @param window
 */
 void
 render_scene (Scene *scene, Window *window)

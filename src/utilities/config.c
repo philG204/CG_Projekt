@@ -7,10 +7,10 @@
 #include "../../headers/utilities/config.h"
 
 /**
-  @brief
-
-  @param str
-  @return
+ *  @brief
+ *
+ *  @param str
+ *  @return
 */
 char *
 config_trim (char *str)
@@ -39,10 +39,10 @@ config_trim (char *str)
 }
 
 /**
-  @brief
-
-  @param line
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @return
 */
 int
 config_is_data_line (char *line)
@@ -65,11 +65,11 @@ config_is_data_line (char *line)
 }
 
 /**
-  @brief
-
-  @param line
-  @param key
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @param key
+ *  @return
 */
 int
 config_line_has_key (const char *line, const char *key)
@@ -100,12 +100,12 @@ config_line_has_key (const char *line, const char *key)
 }
 
 /**
-  @brief
-
-  @param line
-  @param out
-  @param outSize
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @param out
+ *  @param outSize
+ *  @return
 */
 int
 config_parse_string_value (const char *line, char *out, size_t outSize)
@@ -174,11 +174,11 @@ config_parse_string_value (const char *line, char *out, size_t outSize)
 }
 
 /**
-  @brief
-
-  @param line
-  @param out
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @param out
+ *  @return
 */
 int
 config_parse_float_value (const char *line, float *out)
@@ -200,11 +200,11 @@ config_parse_float_value (const char *line, float *out)
 }
 
 /**
-  @brief
-
-  @param line
-  @param out
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @param out
+ *  @return
 */
 int
 config_parse_vec3_value (const char *line, float out[3])
@@ -250,12 +250,12 @@ config_parse_vec3_value (const char *line, float out[3])
 }
 
 /**
-  @brief
-
-  @param line
-  @param items
-  @param maxItems
-  @return
+ *  @brief
+ *
+ *  @param line
+ *  @param items
+ *  @param maxItems
+ *  @return
 */
 int
 config_parse_string_list_value (const char *line,
@@ -318,13 +318,13 @@ config_parse_string_list_value (const char *line,
 }
 
 /**
-  @brief
-
-  @param configPath
-  @param key
-  @param outLine
-  @param outLineSize
-  @return
+ *  @brief
+ *
+ *  @param configPath
+ *  @param key
+ *  @param outLine
+ *  @param outLineSize
+ *  @return
 */
 int
 config_find_line_by_key (const char *configPath, const char *key,

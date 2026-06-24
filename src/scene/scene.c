@@ -11,14 +11,14 @@
 #include "../../headers/utilities/fileOperations.h"
 
 /**
-  @brief
-
-  @param meshDir
-  @param mesh_count
-  @param scene_name
-  @param cameraSettings
-  @param projectionSettings
-  @return 
+ *  @brief
+ *
+ *  @param meshDir
+ *  @param mesh_count
+ *  @param scene_name
+ *  @param cameraSettings
+ *  @param projectionSettings
+ *  @return 
 */
 Scene *
 scene_init (char *meshDir, int mesh_count, char *scene_name,
@@ -118,10 +118,10 @@ scene_init (char *meshDir, int mesh_count, char *scene_name,
 }
 
 /**
-  @brief
-
-  @param scene
-  @param objDir
+ *  @brief
+ *
+ *  @param scene
+ *  @param objDir
 */
 void
 scene_add_object (Scene *scene, char *objDir)
@@ -198,9 +198,9 @@ scene_add_object (Scene *scene, char *objDir)
 }
 
 /**
-  @brief
-
-  @param scene
+ *  @brief
+ *
+ *  @param scene
 */
 void
 scene_update (Scene *scene)

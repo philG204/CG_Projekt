@@ -10,11 +10,11 @@
 #include "../../headers/renderer/mesh.h"
 
 /**
-  @brief
-
-  @param path
-  @param out
-  @param outSize
+ *  @brief
+ *
+ *  @param path
+ *  @param out
+ *  @param outSize
 */
 static void
 getNameWithoutExtension (const char *path, char *out, size_t outSize)
@@ -111,9 +111,9 @@ mesh_init (char *meshFile)
 }
 
 /**
-  @brief
-
-  @param mesh pointer to 
+ *  @brief
+ *
+ *  @param mesh pointer to 
 */
 void
 mesh_draw (Mesh *mesh)

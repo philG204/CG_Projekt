@@ -6,10 +6,10 @@
 #include "../../headers/scene/light.h"
 
 /** 
-  @brief Setzt die Beleuchtung nach dem Gouraud-Shading-Verfahren um.
-
-  @param lightDir
-  @param modelViewMatrix
+ *  @brief Setzt die Beleuchtung nach dem Gouraud-Shading-Verfahren um.
+ *
+ *  @param lightDir
+ *  @param modelViewMatrix
 */
 void
 gouraudLightning (const GLfloat *lightDir, const GLfloat *modelViewMatrix)
