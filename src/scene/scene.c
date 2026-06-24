@@ -130,13 +130,12 @@ scene_init (char *meshDir, char *shaderDir, int mesh_count, int shader_count,
   assert (meshDir != NULL);
   assert (scene_name != NULL);
   assert (projectionSettings != NULL);
-  assert(cameraSettings != NULL);
+  assert (cameraSettings != NULL);
 
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));
   Camera *camera;
-  LightSource **lights
-      = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
+  LightSource **lights = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
   Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
   ShaderObject **shaderObjects
       = malloc (sizeof (ShaderObject *) * MAX_SHADER_COUNT);
@@ -352,13 +351,14 @@ scene_update (Scene *scene)
         }
 
       identity (scene->objects[j]->modelMatrix);
-      
+
       object_transformation (scene->objects[j],
                              scene->objects[j]->transformation->translation,
                              scene->objects[j]->transformation->scaling,
                              scene->objects[j]->transformation->rotation);
       object_draw (scene->objects[j], scene->camera->viewProj,
                    scene->camera->view, scene->camera->projection,
-                   scene->lights, scene->lightCount, scene->camera->position.x, scene->camera->position.y, scene->camera->position.z);
+                   scene->lights, scene->lightCount, scene->camera->position.x,
+                   scene->camera->position.y, scene->camera->position.z);
     }
 }
