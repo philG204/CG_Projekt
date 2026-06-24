@@ -129,8 +129,8 @@ scene_init (char *meshDir, char *shaderDir,
   assert (shaderDir != NULL);
   assert (meshDir != NULL);
   assert (scene_name != NULL);
-  assert (projectionSettings != NULL);
   assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
 
   printf ("entering scene_init\n");
   Scene *scene = malloc (sizeof (Scene));

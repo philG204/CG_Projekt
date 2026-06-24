@@ -108,6 +108,8 @@ object_init (char *objDir)
 {
   assert (objDir != NULL);
 
+  // Used calloc instead of malloc, because
+  // malloc caused some memory problems durign runtime
   Object *object = calloc (1, sizeof (Object));
   Material *material = calloc (1, sizeof (Material));
   MaterialLight *materialLight = calloc (1, sizeof (MaterialLight));
@@ -176,8 +178,6 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-  // object->normalMatrix = malloc (16 * sizeof (GLfloat));
-  // inverse (object->normalMatrix, object->modelMatrix);
 
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
@@ -217,8 +217,6 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
   rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
   rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
-  // printf("rotaion x: %f, rotaion y: %f, rotation z: %f\n", rotation[0],
-  // rotation[1], rotation[2]);
 }
 
 void

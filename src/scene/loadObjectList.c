@@ -4,7 +4,6 @@
 #include <string.h>
 
 #include "../../headers/scene/loadObjectList.h"
-#include "../../headers/scene/scene.h"
 
 /**
  * Lädt aus übergebenen Datei die Objekte und fügt diese in eine Scene hinzu.
