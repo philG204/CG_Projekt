@@ -178,8 +178,8 @@ scene_update (Scene *scene)
 {
   assert (scene != NULL);
 
-  glBindFramebuffer(GL_FRAMEBUFFER, scene->framebuffer);
-  glEnable(GL_DEPTH_TEST);
+  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
+  glEnable (GL_DEPTH_TEST);
 
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -207,6 +207,6 @@ scene_update (Scene *scene)
       object_draw (object, scene->camera->viewProj);
     }
 
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  glDisable(GL_DEPTH_TEST);
+  glBindFramebuffer (GL_FRAMEBUFFER, 0);
+  glDisable (GL_DEPTH_TEST);
 }
