@@ -1,4 +1,3 @@
-room
 carpet
 window1
 window2
@@ -15,3 +14,4 @@ fancy_picture_frame_01_1k_1
 fancy_picture_frame_01_1k_2
 vintage_cabinet_01_1k_1
 vintage_cabinet_01_1k_2
+room

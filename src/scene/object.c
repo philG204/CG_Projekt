@@ -121,15 +121,24 @@ object_init (char *objDir)
 
   if (object == NULL || material == NULL || materialLight == NULL
       || textures == NULL || transformation == NULL || meshObject == NULL
-      || shaderObject == NULL)
+      || shaderObject == NULL || shaderProgram == 0)
     {
       printf ("object_init: malloc/calloc fehlgeschlagen\n");
       return NULL;
     }
 
+  GLuint shaderProgram = shader_init (objDir);
+
+
+  transformation->translation[0] = 0.0f;
+  transformation->translation[1] = 0.0f;
+  transformation->translation[2] = 0.0f;
   transformation->scaling[0] = 1.0f;
   transformation->scaling[1] = 1.0f;
   transformation->scaling[2] = 1.0f;
+  transformation->rotation[0] = 0.0f;
+  transformation->rotation[1] = 0.0f;
+  transformation->rotation[2] = 0.0f;
 
   materialLight->emissive[0] = 0.0f;
   materialLight->emissive[1] = 0.0f;
@@ -228,13 +237,13 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
 
-  rotation[0] += object->transformation->rotaionCircle[0];
-  rotation[1] += object->transformation->rotaionCircle[1];
-  rotation[2] += object->transformation->rotaionCircle[2];
+  const GLfloat radiansX = rotation[0] * radian;
+  const GLfloat radiansY = rotation[1] * radian;
+  const GLfloat radiansZ = rotation[2] * radian;
 
-  rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
-  rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
-  rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
+  rotatex (object->modelMatrix, object->modelMatrix, radiansX);
+  rotatey (object->modelMatrix, object->modelMatrix, radiansY);
+  rotatez (object->modelMatrix, object->modelMatrix, radiansZ);
 }
 
 void
