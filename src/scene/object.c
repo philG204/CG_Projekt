@@ -178,7 +178,6 @@ object_init (char *objDir)
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
-
   printf ("object_init loaded:\n");
   printf ("  name         = %s\n", object->name);
   printf ("  meshName     = %s\n", object->meshObject->meshName);
@@ -186,10 +185,26 @@ object_init (char *objDir)
           object->material->shaderObject->shaderName);
   printf ("  textures     = %d\n", object->material->texture_count);
   printf ("  transparency = %lf\n", object->material->transparency);
-  printf ("  emissive     = [%f, %f, %f, %f]\n", object->material->light->emissive[0], object->material->light->emissive[1], object->material->light->emissive[2], object->material->light->emissive[3]);
-  printf ("  ambient      = [%f, %f, %f, %f]\n", object->material->light->ambient[0], object->material->light->ambient[1], object->material->light->ambient[2], object->material->light->ambient[3]);
-  printf ("  diffuse      = [%f, %f, %f, %f]\n", object->material->light->diffuse[0], object->material->light->diffuse[1], object->material->light->diffuse[2], object->material->light->diffuse[3]);
-  printf ("  specular     = [%f, %f, %f, %f]\n", object->material->light->specular[0], object->material->light->specular[1], object->material->light->specular[2],object->material->light->specular[3]);
+  printf ("  emissive     = [%f, %f, %f, %f]\n",
+          object->material->light->emissive[0],
+          object->material->light->emissive[1],
+          object->material->light->emissive[2],
+          object->material->light->emissive[3]);
+  printf ("  ambient      = [%f, %f, %f, %f]\n",
+          object->material->light->ambient[0],
+          object->material->light->ambient[1],
+          object->material->light->ambient[2],
+          object->material->light->ambient[3]);
+  printf ("  diffuse      = [%f, %f, %f, %f]\n",
+          object->material->light->diffuse[0],
+          object->material->light->diffuse[1],
+          object->material->light->diffuse[2],
+          object->material->light->diffuse[3]);
+  printf ("  specular     = [%f, %f, %f, %f]\n",
+          object->material->light->specular[0],
+          object->material->light->specular[1],
+          object->material->light->specular[2],
+          object->material->light->specular[3]);
   printf ("  translation  = %f\n", object->transformation->translation[0]);
   printf ("  scaling      = %f\n", object->transformation->scaling[0]);
   printf ("  rotation     = %f\n", object->transformation->rotation[0]);
