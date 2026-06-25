@@ -8,13 +8,7 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
 
-/**
- *  @brief
- *
- *  @param cameraSettings A Pointer to a deklaration Variable of the struct Camerasettings
- *  @param projectionSettings A Pointer to a deklaration Variable of the struct Projections
- *  @return returns a struct of a Camera
-*/
+
 Camera *
 camera_init (CameraSettings *cameraSettings,
              ProjectionSettings *projectionSettings)
@@ -49,12 +43,7 @@ camera_init (CameraSettings *cameraSettings,
   return camera;
 }
 
-/**
- *  @brief Updates the Camera and updates the Matricies
-  Updates the Camera and when the something has change recalculates the Matricies
- *
- *  @param camera pointer to a Camera
-*/
+
 void
 camera_update (Camera *camera)
 {
@@ -85,12 +74,7 @@ camera_update (Camera *camera)
   camera->isDirty = 0;
 }
 
-/**
- *  @brief Set the entire Camera Settings at once
- *
- *  @param camera
- *  @param cameraSettings
-*/
+
 void
 camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings)
 {
@@ -104,12 +88,7 @@ camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings)
     }
 }
 
-/**
- *  @brief Set the entire Projections Settings at once
- *
- *  @param camera
- *  @param projectionSettings
-*/
+
 void
 camera_setProjectionSettings (Camera *camera,
                               ProjectionSettings *projectionSettings)
@@ -127,14 +106,7 @@ camera_setProjectionSettings (Camera *camera,
     }
 }
 
-/**
- *  @brief Set the Eye of the Camera
- *
- *  @param camera
- *  @param x
- *  @param y
- *  @param z
-*/
+
 void
 camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -146,14 +118,7 @@ camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Center of the Camera
- *
- *  @param camera
- *  @param x
- *  @param y
- *  @param z
-*/
+
 void
 camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -165,14 +130,7 @@ camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Up of the Camera
- *
- *  @param camera
- *  @param x
- *  @param y
- *  @param z
-*/
+
 void
 camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -184,12 +142,7 @@ camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Fovy of the Camera
- *
- *  @param camera
- *  @param fovy
-*/
+
 void
 camera_setFovy (Camera *camera, GLfloat fovy)
 {
@@ -199,12 +152,7 @@ camera_setFovy (Camera *camera, GLfloat fovy)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Aspect of the Camera
- *
- *  @param camera
- *  @param aspect
-*/
+
 void
 camera_setAspect (Camera *camera, GLfloat aspect)
 {
@@ -214,12 +162,7 @@ camera_setAspect (Camera *camera, GLfloat aspect)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Near Plane of the Camera
-  
- *  @param camera
- *  @param near_plane
-*/
+
 void
 camera_setNearPlane (Camera *camera, GLfloat near_plane)
 {
@@ -229,12 +172,7 @@ camera_setNearPlane (Camera *camera, GLfloat near_plane)
   camera->isDirty = 1;
 }
 
-/**
- *  @brief Set the Far Plane of the Camera
- *
- *  @param camera
- *  @param far_plane
-*/
+
 void
 camera_setFarPlane (Camera *camera, GLfloat far_plane)
 {

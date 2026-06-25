@@ -109,12 +109,7 @@ object_load_config (Object *object, const char *configPath)
     }
 }
 
-/**
- *  @brief
- *
- *  @param objDir
- *  @return 
-*/
+
 Object *
 object_init (char *objDir)
 {
@@ -224,14 +219,7 @@ object_init (char *objDir)
   return object;
 }
 
-/** 
- *  @brief Translatiert, rotiert und skaliert ein Objekt.
- *
- *  @param object
- *  @param translation
- *  @param scaling
- *  @param rotation
-*/
+
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)
@@ -253,12 +241,6 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
 }
 
-/**
- *  @brief
-  
- *  @param object
- *  @param cameraMatrix
-*/
 void
 object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
              GLfloat *projMatrix, LightSource **lightSources, int lightCounts,

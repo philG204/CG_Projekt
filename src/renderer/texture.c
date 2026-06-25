@@ -21,6 +21,13 @@ typedef struct TextureCacheEntry
 static TextureCacheEntry textureCache[MAX_CACHED_TEXTURES];
 static int textureCacheCount = 0;
 
+/**
+  @brief
+
+  @param texturePath
+  @param shader
+  @param textureName
+*/
 static Texture *
 texture_get_or_load (const char *texturePath, GLuint shader,
                      const char *textureName)

@@ -15,6 +15,12 @@ typedef struct ShaderPaths
   char fragmentPath[512];
 } ShaderPaths;
 
+/**
+  @brief
+
+  @param shaderDir
+  @param outPaths
+*/
 static int
 get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 {
@@ -102,12 +108,7 @@ get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
   return 1;
 }
 
-/**
- *  @brief
- *
- *  @param shaderDir
- *  @return
-*/
+
 GLuint
 shader_init (char *shaderDir)
 {
@@ -182,11 +183,7 @@ shader_init (char *shaderDir)
   return shaderProgramId;
 }
 
-/**
- *  @brief
- *
- *  @param shaderProgram
-*/
+
 void
 use_shader (GLuint shaderProgram)
 {

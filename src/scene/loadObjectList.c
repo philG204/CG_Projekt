@@ -4,12 +4,7 @@
 
 #include "../../headers/scene/loadObjectList.h"
 
-/**
- * @brief Lädt aus übergebenen Datei die Objekte und fügt diese in eine Scene hinzu.
- * 
- * @param filename
- * @param scene
- */
+
 int
 load_object_list (const char *filename, Scene *scene)
 {

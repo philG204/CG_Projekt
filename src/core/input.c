@@ -7,13 +7,7 @@
 int keyboardpressed_left = 0;
 int keyboardpressed_right = 0;
 int keyboardpressed_space = 0;
-/*
- * @brief Processes input from the Keyboards and updates the active camera.
- *
- * @param *window        - GLFW window handle
- * @param cameraCount   - number of available cameras
- * @param *activeCamera  - pointer to current camera index
- */
+
 void
 processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
                  int *processingEnabled)
@@ -39,7 +33,7 @@ processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
   keyboardpressed_space = space;
 }
 
-/*
+/**
  * @brief Checks if mouse is over the Button
  *
  * @param *window        - GLFW window handle
@@ -59,17 +53,7 @@ isMouseOverButton (GLFWwindow *window, const Button button)
 
 int leftMouseWasPressed = 0;
 
-/*
- * @brief Processes input from the buttons on the screen and updates the active
- * camera.
- *
- * @param *window        - GLFW window handle
- * @param button         - button
- * @param back           - 0 = advance to next camera | 1 = go to previous
- * camera
- * @param cameraCount    - number of available cameras
- * @param *activeCamera  - pointer to current camera index
- */
+
 void
 handleButtons (GLFWwindow *window, Button button, int back, int cameraCount,
                int *activeCamera)

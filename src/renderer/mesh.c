@@ -74,11 +74,7 @@ mesh_init (char *meshFile)
   return mesh;
 }
 
-/**
- *  @brief
- *
- *  @param mesh pointer to 
-*/
+
 void
 mesh_draw (Mesh *mesh)
 {

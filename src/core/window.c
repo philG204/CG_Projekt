@@ -24,14 +24,7 @@ framebuffer_size_callback (GLFWwindow *window, int width, int height)
   glViewport (0, 0, width, height);
 }
 
-/**
- *  @brief
- *
- *  @param width
- *  @param height
- *  @param title pointer to
- *  @return
-*/
+
 Window *
 window_create (int width, int height, const char *title)
 {

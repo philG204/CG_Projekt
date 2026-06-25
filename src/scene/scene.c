@@ -11,6 +11,11 @@
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
+/** 
+ *  @brief
+ *
+ *  @param
+*/
 static void
 loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
 {
@@ -121,16 +126,7 @@ loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
   closedir (dirShader);
 }
 
-/**
- *  @brief
- *
- *  @param meshDir
- *  @param shaderDir
- *  @param scene_name
- *  @param cameraSettings
- *  @param projectionSettings
- *  @return 
-*/
+
 Scene *
 scene_init (char *meshDir, char *shaderDir, char *scene_name,
             CameraSettings *cameraSettings,
@@ -235,12 +231,7 @@ scene_init (char *meshDir, char *shaderDir, char *scene_name,
   return scene;
 }
 
-/**
- *  @brief
- *
- *  @param scene
- *  @param objDir
-*/
+
 void
 scene_add_object (Scene *scene, char *objDir)
 {
@@ -369,11 +360,7 @@ scene_add_object (Scene *scene, char *objDir)
   printf ("shader program id: %d\n", object->material->shaderObject->shader);
 }
 
-/**
- *  @brief
- *
- *  @param scene
-*/
+
 void
 scene_update (Scene *scene)
 {

@@ -59,15 +59,6 @@ void identity (GLfloat *out);
 void translate (GLfloat *out, const GLfloat *in, GLfloat *v);
 
 /**
- *  @brief Applies a scaling transformation to a 4x4 matrix
- *
- *  @param out Pointer to the output 4x4 Matrix
- *  @param in Pointer to the input 4x4 Matrix
- *  @param v Scaling Factors for x, y, z
-*/
-void scale (GLfloat *out, const GLfloat *in, const GLfloat *v);
-
-/**
  *  @brief Rotates a 4x4 matrix around the X axis 
  *
  *  @param out Pointer to the output 4x4 Matrix
@@ -93,6 +84,15 @@ void rotatey (GLfloat *out, const GLfloat *in, GLfloat angle);
  *  @param angle Rotation angle in radians
 */
 void rotatez (GLfloat *out, const GLfloat *in, GLfloat angle);
+
+/**
+ *  @brief Applies a scaling transformation to a 4x4 matrix
+ *
+ *  @param out Pointer to the output 4x4 Matrix
+ *  @param in Pointer to the input 4x4 Matrix
+ *  @param v Scaling Factors for x, y, z
+*/
+void scale (GLfloat *out, const GLfloat *in, const GLfloat *v);
 
 /**
  *  @brief Creates a view matrix using eye, center and up

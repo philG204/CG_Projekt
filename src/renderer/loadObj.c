@@ -81,13 +81,7 @@ validIndex (int index, size_t count)
   return index > 0 && (size_t)index <= count;
 }
 
-/**
- *  @brief
- *
- *  @param location
- *  @param vertexCount
- *  @return
-*/
+
 float *
 loadObj (const char *location, size_t *vertexCount)
 {
