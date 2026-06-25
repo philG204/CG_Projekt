@@ -36,7 +36,7 @@ test_cross_product (void)
   GLfloat b[3] = { 0.0f, 1.0f, 0.0f };
   GLfloat out[3];
 
-  cross (a, b, out);
+  cross (out, a, b);
 
   GLfloat expected[3] = { 0.0f, 0.0f, 1.0f };
 

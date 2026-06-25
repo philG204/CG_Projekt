@@ -10,9 +10,32 @@ typedef struct Texture
   char shaderVariable[256];
 } Texture;
 
-Texture *texture_init (char *filename, GLuint shaderProgram,
-                       char *shaderVariable);
-void activate_texture (Texture **textures, int texture_count);
+/**
+ *  @brief
+ *
+ *  @param configPath
+ *  @param shader
+ *  @param textures
+ *  @param maxTextures
+ */
 int texture_init_from_config (const char *configPath, GLuint shader,
                               Texture **textures, int maxTextures);
+
+/**
+ *  @brief
+ *
+ *  @param filename
+ *  @param shaderProgram
+ *  @param shaderVariable
+ */
+Texture *texture_init (char *filename, GLuint shaderProgram,
+                       char *shaderVariable);
+
+/**
+ *  @brief
+ *
+ *  @param textures
+ *  @param texture_count
+ */
+void activate_texture (Texture **textures, int texture_count);
 #endif // TEXTURE_H

@@ -22,8 +22,13 @@ typedef struct MaterialLight
   float shininess;
 } MaterialLight;
 
-// Setzt die Beleuchtung nach dem Gouraud-Shading um.
 // void gouraudLightning(const vec3 lightDir, const MaterialLight material);
+/**
+ *  @brief Setzt die Beleuchtung nach dem Gouraud-Shading-Verfahren um.
+ *
+ *  @param lightDir
+ *  @param modelViewMatrix
+ */
 void gouraudLightning (const GLfloat *lightDir,
                        const GLfloat *modelViewMatrix);
 

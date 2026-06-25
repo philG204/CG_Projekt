@@ -14,6 +14,12 @@
 #include "../../headers/scene/object.h"
 #include "../../headers/utilities/config.h"
 
+/**
+ *  @brief
+
+ *  @param object
+ *  @param configPath
+*/
 static void
 object_load_config (Object *object, const char *configPath)
 {
@@ -109,15 +115,13 @@ object_init (char *objDir)
 {
   assert (objDir != NULL);
 
-  // Used calloc instead of malloc, because
-  // malloc caused some memory problems durign runtime
-  Object *object = calloc (1, sizeof (Object));
-  Material *material = calloc (1, sizeof (Material));
-  MaterialLight *materialLight = calloc (1, sizeof (MaterialLight));
-  Texture **textures = calloc (MAX_TEXTURES, sizeof (Texture *));
-  Transformation *transformation = calloc (1, sizeof (Transformation));
-  MeshObject *meshObject = calloc (1, sizeof (MeshObject));
-  ShaderObject *shaderObject = calloc (1, sizeof (ShaderObject));
+  Object *object = malloc (sizeof (Object));
+  Material *material = malloc (sizeof (Material));
+  MaterialLight *materialLight = malloc (sizeof (MaterialLight));
+  Texture **textures = malloc (MAX_TEXTURES * sizeof (Texture *));
+  Transformation *transformation = malloc (sizeof (Transformation));
+  MeshObject *meshObject = malloc (sizeof (MeshObject));
+  ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
 
   if (object == NULL || material == NULL || materialLight == NULL
       || textures == NULL || transformation == NULL || meshObject == NULL
@@ -127,9 +131,21 @@ object_init (char *objDir)
       return NULL;
     }
 
+  transformation->translation[0] = 0.0f;
+  transformation->translation[1] = 0.0f;
+  transformation->translation[2] = 0.0f;
+
   transformation->scaling[0] = 1.0f;
   transformation->scaling[1] = 1.0f;
   transformation->scaling[2] = 1.0f;
+
+  transformation->rotation[0] = 0.0f;
+  transformation->rotation[1] = 0.0f;
+  transformation->rotation[2] = 0.0f;
+
+  transformation->rotaionCircle[0] = 0.0f;
+  transformation->rotaionCircle[1] = 0.0f;
+  transformation->rotaionCircle[2] = 0.0f;
 
   materialLight->emissive[0] = 0.0f;
   materialLight->emissive[1] = 0.0f;
@@ -155,12 +171,12 @@ object_init (char *objDir)
 
   material->shaderObject = shaderObject;
   material->textures = textures;
-  material->texture_count = 0;
   material->light = materialLight;
 
   object->material = material;
   object->transformation = transformation;
   object->meshObject = meshObject;
+  object->modelMatrix = malloc (16 * sizeof (GLfloat));
 
   char configPath[512];
 
@@ -168,15 +184,10 @@ object_init (char *objDir)
 
   object_load_config (object, configPath);
 
-  object_load_config (object, configPath);
-
   material->texture_count
       = texture_init_from_config (objDir, material->shaderObject->shader,
                                   material->textures, MAX_TEXTURES);
 
-  object->material->light = materialLight;
-
-  object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
 
   printf ("object_init loaded:\n");
@@ -213,7 +224,6 @@ object_init (char *objDir)
   return object;
 }
 
-// Translatiert, rotiert und skaliert ein Objekt.
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)

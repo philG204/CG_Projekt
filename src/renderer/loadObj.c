@@ -7,6 +7,13 @@
 typedef float Vec2[2];
 typedef float Vec3[3];
 
+/**
+ *  @brief
+ *
+ *  @param v
+ *  @param vt
+ *  @param vn
+ */
 typedef struct FaceIndex
 {
   int v;
@@ -14,6 +21,13 @@ typedef struct FaceIndex
   int vn;
 } FaceIndex;
 
+/**
+ *  @brief
+ *
+ *  @param token
+ *  @param out
+ *  @return
+ */
 static int
 parseFaceToken (const char *token, FaceIndex *out)
 {
@@ -52,6 +66,13 @@ parseFaceToken (const char *token, FaceIndex *out)
   return 0;
 }
 
+/**
+ *  @brief
+ *
+ *  @param index
+ *  @param count
+ *  @return
+ */
 static int
 validIndex (int index, size_t count)
 {

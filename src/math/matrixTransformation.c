@@ -1,7 +1,5 @@
 #include <assert.h>
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <GL/glew.h>
 
@@ -20,7 +18,7 @@ normalize (GLfloat *v)
 }
 
 void
-cross (const GLfloat *a, const GLfloat *b, GLfloat *out)
+cross (GLfloat *out, const GLfloat *a, const GLfloat *b)
 {
   assert (a != NULL);
   assert (b != NULL);
@@ -47,6 +45,7 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
   assert (b != NULL);
   assert (out != NULL);
 
+  // in the special case where the input and output are the same variable
   GLfloat temp[16];
 
   for (int col = 0; col < 4; ++col)
@@ -193,11 +192,11 @@ lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
   normalize (f);
 
   GLfloat s[3];
-  cross (f, up, s);
+  cross (s, f, up);
   normalize (s);
 
   GLfloat u[3];
-  cross (s, f, u);
+  cross (u, s, f);
 
   out[0] = s[0];
   out[4] = s[1];

@@ -13,6 +13,14 @@ typedef struct
   int processingEnabled;
 } Window;
 
+/**
+ *  @brief
+ *
+ *  @param width
+ *  @param height
+ *  @param title pointer to
+ *  @return
+ */
 Window *window_create (int width, int height, const char *title);
 
 #endif // WINDOW_H
