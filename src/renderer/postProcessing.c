@@ -11,6 +11,11 @@ render_scene (Scene *scene, Window *window)
 
   glClear (GL_COLOR_BUFFER_BIT);
 
+  int width, height;
+  glfwGetWindowSize (window->window, &width, &height);
+
+  glViewport (0, 0, width, height);
+
   if (window->processingEnabled)
     {
       glUseProgram (window->processing_shader);
