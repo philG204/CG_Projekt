@@ -158,6 +158,8 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
       return NULL;
     }
 
+  stbi_set_flip_vertically_on_load (true);
+
   glGenTextures (1, &textureId);
   glBindTexture (GL_TEXTURE_2D, textureId);
 

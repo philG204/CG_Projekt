@@ -1,3 +1,4 @@
+room
 carpet
 window1
 window2
