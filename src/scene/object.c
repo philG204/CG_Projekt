@@ -49,9 +49,6 @@ activate_material_textures (Material *material)
                material->overlayTextureCount);
 }
 
-/**
- *  @brief
-
 static void
 activate_material_textures (Material *material)
 {
