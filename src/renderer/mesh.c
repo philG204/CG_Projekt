@@ -8,43 +8,7 @@
 
 #include "../../headers/renderer/loadObj.h"
 #include "../../headers/renderer/mesh.h"
-
-/**
- *  @brief
- *
- *  @param path
- *  @param out
- *  @param outSize
-*/
-static void
-getNameWithoutExtension (const char *path, char *out, size_t outSize)
-{
-  assert (path != NULL);
-  assert (out != NULL);
-
-  // letzten Slash suchen
-  const char *filename = strrchr (path, '/');
-
-  if (filename)
-    filename++; // Slash überspringen
-  else
-    filename = path;
-
-  // letzte Dateiendung suchen
-  const char *dot = strrchr (filename, '.');
-
-  size_t len;
-  if (dot)
-    len = dot - filename;
-  else
-    len = strlen (filename);
-
-  if (len >= outSize)
-    len = outSize - 1;
-
-  strncpy (out, filename, len);
-  out[len] = '\0';
-}
+#include "../../headers/utilities/fileOperations.h"
 
 Mesh *
 mesh_init (char *meshFile)

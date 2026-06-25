@@ -18,8 +18,10 @@ typedef struct Button
  * @param *window        - GLFW window handle
  * @param cameraCount   - number of available cameras
  * @param *activeCamera  - pointer to current camera index
+ * @param * processingEnabled - wether post-processing should be enabled
  */
-void processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera);
+void processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
+                      int *processingEnabled);
 
 /**
  * @brief Processes input from the buttons on the screen and updates the active

@@ -45,6 +45,7 @@ window_create (int width, int height, const char *title)
 
   Window *window = malloc (sizeof (Window));
 
+  window->processingEnabled = 1;
   window->window = glfwCreateWindow (width, height, title, NULL, NULL);
 
   if (!window->window)
@@ -66,6 +67,8 @@ window_create (int width, int height, const char *title)
 
   printf ("OpenGL Version: %s\n", glGetString (GL_VERSION));
 
+  GLint success;
+
   glEnable (GL_DEPTH_TEST);
   glDepthFunc (GL_LESS);
 
@@ -77,7 +80,6 @@ window_create (int width, int height, const char *title)
   glShaderSource (vertex_shader, 1, &vertex_shader_src, NULL);
   glCompileShader (vertex_shader);
 
-  GLint success;
   glGetShaderiv (vertex_shader, GL_COMPILE_STATUS, &success);
 
   if (!success)
@@ -116,8 +118,40 @@ window_create (int width, int height, const char *title)
       printf ("%s\n", log);
     }
 
+  window->processing_shader = glCreateProgram ();
+  glAttachShader (window->processing_shader, vertex_shader);
+
+  GLuint processing_shader = glCreateShader (GL_FRAGMENT_SHADER);
+  const GLchar *processing_shader_src
+      = loadShader ("assets/processingFragment.glsl");
+
+  glShaderSource (processing_shader, 1, &processing_shader_src, NULL);
+  glCompileShader (processing_shader);
+
+  glGetShaderiv (processing_shader, GL_COMPILE_STATUS, &success);
+
+  if (!success)
+    {
+      char log[512];
+      glGetShaderInfoLog (processing_shader, sizeof (log), NULL, log);
+      printf ("%s\n", log);
+    }
+
+  glAttachShader (window->processing_shader, processing_shader);
+
+  glLinkProgram (window->processing_shader);
+  glGetProgramiv (window->processing_shader, GL_LINK_STATUS, &success);
+
+  if (!success)
+    {
+      char log[512];
+      glGetProgramInfoLog (window->processing_shader, sizeof (log), NULL, log);
+      printf ("%s\n", log);
+    }
+
   glDeleteShader (vertex_shader);
   glDeleteShader (fragment_shader);
+  glDeleteShader (processing_shader);
 
   float quad_vertices[]
       = { -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,  -1.0f, 1.0f, 0.0f,

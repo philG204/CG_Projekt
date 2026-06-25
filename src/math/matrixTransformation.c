@@ -2,7 +2,6 @@
 #include <math.h>
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 /**
  *  @brief Normalizes a 3D vector in-place
@@ -91,6 +90,7 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
           temp[col * 4 + row] = sum;
         }
     }
+
   for (int i = 0; i < 16; ++i)
     {
       out[i] = temp[i];

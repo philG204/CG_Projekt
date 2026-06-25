@@ -3,21 +3,36 @@
 
 #include <GL/glew.h>
 
+#include "../renderer/mesh.h"
 #include "../renderer/texture.h"
 #include "light.h"
 
 #define PATH_LENGTH 256
+#define MAX_TEXTURES 10
+
+typedef struct MeshObject
+{
+  char meshName[PATH_LENGTH];
+  Mesh *mesh;
+} MeshObject;
+
+typedef struct ShaderObject
+{
+  char shaderName[PATH_LENGTH];
+  GLuint shader;
+} ShaderObject;
 
 typedef struct Transformation
 {
   GLfloat translation[3];
   GLfloat scaling[3];
   GLfloat rotation[3];
+  GLfloat rotaionCircle[3];
 } Transformation;
 
 typedef struct Material
 {
-  GLuint shader;
+  ShaderObject *shaderObject;
   Texture **textures;
   int texture_count;
   GLfloat rgb_values;
@@ -30,16 +45,20 @@ typedef struct Mesh Mesh;
 typedef struct Object
 {
   char name[PATH_LENGTH];
-  char meshName[PATH_LENGTH];
-  Mesh *mesh;
+  MeshObject *meshObject;
   Material *material;
   GLfloat *modelMatrix;
+  GLfloat *normalMatrix;
   Transformation *transformation;
+  int isLight;
 } Object;
 
 Object *object_init (char *objDir);
 void object_transformation (Object *object, GLfloat *translation,
                             GLfloat *scaling, GLfloat *rotation);
-void object_draw (Object *object, GLfloat *cameraMatrix);
+void object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
+                  GLfloat *projMatrix, LightSource **lightSources,
+                  int lightCounts, GLfloat cameraX, GLfloat cameraY,
+                  GLfloat cameraZ);
 
 #endif // OBJECT_H
