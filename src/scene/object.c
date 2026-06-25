@@ -299,7 +299,7 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   assert (scaling != NULL);
   assert (rotation != NULL);
   
-  const GLfloat radian = (GLfloat)M_PI / 180.0f;
+  const GLfloat radian = (GLfloat)3.14 / 180.0f;
 
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
