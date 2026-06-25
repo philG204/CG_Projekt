@@ -1,5 +1,6 @@
 *.o
 .vscode
+.idea
 demo
 compile_commands.json
 run_tests
