@@ -15,7 +15,7 @@
 
 /**
  *  @brief
-  
+
  *  @param object
  *  @param configPath
 */
@@ -108,7 +108,6 @@ object_load_config (Object *object, const char *configPath)
         }
     }
 }
-
 
 Object *
 object_init (char *objDir)
@@ -218,7 +217,6 @@ object_init (char *objDir)
 
   return object;
 }
-
 
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,

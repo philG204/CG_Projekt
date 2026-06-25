@@ -57,27 +57,27 @@ typedef struct Object
  *  @brief
  *
  *  @param objDir
- *  @return 
-*/
+ *  @return
+ */
 Object *object_init (char *objDir);
 
-/** 
+/**
  *  @brief Translatiert, rotiert und skaliert ein Objekt.
  *
  *  @param object
  *  @param translation
  *  @param scaling
  *  @param rotation
-*/
+ */
 void object_transformation (Object *object, GLfloat *translation,
                             GLfloat *scaling, GLfloat *rotation);
 
 /**
  *  @brief
-  
+
  *  @param object
  *  @param viewProj
- *  @param viewMatrix 
+ *  @param viewMatrix
  *  @param projMatrix
  *  @param lightSources
  *  @param lightCounts

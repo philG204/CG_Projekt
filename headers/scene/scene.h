@@ -38,8 +38,8 @@ typedef struct Scene
  *  @param scene_name
  *  @param cameraSettings
  *  @param projectionSettings
- *  @return 
-*/
+ *  @return
+ */
 Scene *scene_init (char *meshDir, char *shaderDir, char *scene_name,
                    CameraSettings *cameraSettings,
                    ProjectionSettings *projectionSettings);
@@ -49,14 +49,14 @@ Scene *scene_init (char *meshDir, char *shaderDir, char *scene_name,
  *
  *  @param scene
  *  @param objDir
-*/
+ */
 void scene_add_object (Scene *scene, char *object);
 
 /**
  *  @brief
  *
  *  @param scene
-*/
+ */
 void scene_update (Scene *scene);
 
 #endif // SCENE_H

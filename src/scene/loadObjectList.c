@@ -4,7 +4,6 @@
 
 #include "../../headers/scene/loadObjectList.h"
 
-
 int
 load_object_list (const char *filename, Scene *scene)
 {

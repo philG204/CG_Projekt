@@ -4,7 +4,6 @@
 
 #include "../../headers/utilities/fileOperations.h"
 
-
 void
 getNameWithoutExtension (const char *path, char *out, size_t outSize)
 {

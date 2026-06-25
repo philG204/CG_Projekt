@@ -1,13 +1,12 @@
 #include <assert.h>
 #include <complex.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <GL/glew.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
-
 
 Camera *
 camera_init (CameraSettings *cameraSettings,
@@ -43,7 +42,6 @@ camera_init (CameraSettings *cameraSettings,
   return camera;
 }
 
-
 void
 camera_update (Camera *camera)
 {
@@ -74,7 +72,6 @@ camera_update (Camera *camera)
   camera->isDirty = 0;
 }
 
-
 void
 camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings)
 {
@@ -87,7 +84,6 @@ camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings)
       camera->isDirty = 1;
     }
 }
-
 
 void
 camera_setProjectionSettings (Camera *camera,
@@ -106,7 +102,6 @@ camera_setProjectionSettings (Camera *camera,
     }
 }
 
-
 void
 camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -117,7 +112,6 @@ camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->settings.eye[2] = z;
   camera->isDirty = 1;
 }
-
 
 void
 camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
@@ -130,7 +124,6 @@ camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->isDirty = 1;
 }
 
-
 void
 camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
 {
@@ -142,7 +135,6 @@ camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z)
   camera->isDirty = 1;
 }
 
-
 void
 camera_setFovy (Camera *camera, GLfloat fovy)
 {
@@ -151,7 +143,6 @@ camera_setFovy (Camera *camera, GLfloat fovy)
   camera->projectSettings.fovy = fovy;
   camera->isDirty = 1;
 }
-
 
 void
 camera_setAspect (Camera *camera, GLfloat aspect)
@@ -162,7 +153,6 @@ camera_setAspect (Camera *camera, GLfloat aspect)
   camera->isDirty = 1;
 }
 
-
 void
 camera_setNearPlane (Camera *camera, GLfloat near_plane)
 {
@@ -171,7 +161,6 @@ camera_setNearPlane (Camera *camera, GLfloat near_plane)
   camera->projectSettings.near_plane = near_plane;
   camera->isDirty = 1;
 }
-
 
 void
 camera_setFarPlane (Camera *camera, GLfloat far_plane)

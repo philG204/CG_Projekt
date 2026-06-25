@@ -108,7 +108,6 @@ get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
   return 1;
 }
 
-
 GLuint
 shader_init (char *shaderDir)
 {
@@ -182,7 +181,6 @@ shader_init (char *shaderDir)
 
   return shaderProgramId;
 }
-
 
 void
 use_shader (GLuint shaderProgram)

@@ -53,7 +53,6 @@ isMouseOverButton (GLFWwindow *window, const Button button)
 
 int leftMouseWasPressed = 0;
 
-
 void
 handleButtons (GLFWwindow *window, Button button, int back, int cameraCount,
                int *activeCamera)

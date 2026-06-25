@@ -34,10 +34,12 @@ typedef struct ProjectionSettings
 
   @param view         -  saves where the camera is and whats it looking at
   @param projection   -  saves how the camera project 3d to 2d
-  @param viewProj     -  for the shader gl_Position per matrix multiplication view and projection
+  @param viewProj     -  for the shader gl_Position per matrix multiplication
+  view and projection
 
-  @param settings saves the CameraSetings and Projectionsettings for recalculation
-  @param projectionSettings 
+  @param settings saves the CameraSetings and Projectionsettings for
+  recalculation
+  @param projectionSettings
 
   @param position     -  is the posiopn of the camera
   @param isDirty      -  check if recalculation is needed
@@ -58,16 +60,19 @@ typedef struct Camera
 /**
  *  @brief
  *
- *  @param cameraSettings A Pointer to a deklaration Variable of the struct Camerasettings
- *  @param projectionSettings A Pointer to a deklaration Variable of the struct Projections
+ *  @param cameraSettings A Pointer to a deklaration Variable of the struct
+ * Camerasettings
+ *  @param projectionSettings A Pointer to a deklaration Variable of the struct
+ * Projections
  *  @return returns a struct of a Camera
-*/
+ */
 Camera *camera_init (CameraSettings *cameraSettings,
                      ProjectionSettings *projectionSettings);
 
 /**
  *  @brief Updates the Camera and updates the Matricies
-  Updates the Camera and when the something has change recalculates the Matricies
+  Updates the Camera and when the something has change recalculates the
+ Matricies
  *
  *  @param camera pointer to a Camera
 */
@@ -78,7 +83,7 @@ void camera_update (Camera *camera);
  *
  *  @param camera
  *  @param cameraSettings
-*/
+ */
 void camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings);
 
 /**
@@ -86,7 +91,7 @@ void camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings);
  *
  *  @param camera
  *  @param projectionSettings
-*/
+ */
 void camera_setProjectionSettings (Camera *camera,
                                    ProjectionSettings *projectionSettings);
 
@@ -97,7 +102,7 @@ void camera_setProjectionSettings (Camera *camera,
  *  @param x
  *  @param y
  *  @param z
-*/
+ */
 void camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
 
 /**
@@ -107,7 +112,7 @@ void camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
  *  @param x
  *  @param y
  *  @param z
-*/
+ */
 void camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
 
 /**
@@ -117,7 +122,7 @@ void camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
  *  @param x
  *  @param y
  *  @param z
-*/
+ */
 void camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
 
 /**
@@ -125,7 +130,7 @@ void camera_setUp (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
  *
  *  @param camera
  *  @param fovy
-*/
+ */
 void camera_setFovy (Camera *camera, GLfloat fovy);
 
 /**
@@ -133,12 +138,12 @@ void camera_setFovy (Camera *camera, GLfloat fovy);
  *
  *  @param camera
  *  @param aspect
-*/
+ */
 void camera_setAspect (Camera *camera, GLfloat aspect);
 
 /**
  *  @brief Set the Near Plane of the Camera
-  
+
  *  @param camera
  *  @param near_plane
 */
@@ -149,7 +154,7 @@ void camera_setNearPlane (Camera *camera, GLfloat near_plane);
  *
  *  @param camera
  *  @param far_plane
-*/
+ */
 void camera_setFarPlane (Camera *camera, GLfloat far_plane);
 
 #endif // CAMERA_H

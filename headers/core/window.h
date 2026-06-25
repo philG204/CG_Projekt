@@ -20,7 +20,7 @@ typedef struct
  *  @param height
  *  @param title pointer to
  *  @return
-*/
+ */
 Window *window_create (int width, int height, const char *title);
 
 #endif // WINDOW_H

@@ -6,7 +6,7 @@
  *
  *  @param filename
  *  @return
-*/
+ */
 char *loadShader (const char *filename);
 
 #endif // LOAD_SHADER_H

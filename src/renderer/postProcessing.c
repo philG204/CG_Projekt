@@ -4,7 +4,6 @@
 #include "../../headers/core/window.h"
 #include "../../headers/scene/scene.h"
 
-
 void
 render_scene (Scene *scene, Window *window)
 {

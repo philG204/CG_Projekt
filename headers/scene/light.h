@@ -23,12 +23,12 @@ typedef struct MaterialLight
 } MaterialLight;
 
 // void gouraudLightning(const vec3 lightDir, const MaterialLight material);
-/** 
+/**
  *  @brief Setzt die Beleuchtung nach dem Gouraud-Shading-Verfahren um.
  *
  *  @param lightDir
  *  @param modelViewMatrix
-*/
+ */
 void gouraudLightning (const GLfloat *lightDir,
                        const GLfloat *modelViewMatrix);
 

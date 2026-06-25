@@ -3,7 +3,6 @@
 
 #include <GL/glew.h>
 
-
 void
 normalize (GLfloat *v)
 {
@@ -18,7 +17,6 @@ normalize (GLfloat *v)
     }
 }
 
-
 void
 cross (GLfloat *out, const GLfloat *a, const GLfloat *b)
 {
@@ -31,7 +29,6 @@ cross (GLfloat *out, const GLfloat *a, const GLfloat *b)
   out[2] = a[0] * b[1] - a[1] * b[0];
 }
 
-
 GLfloat
 dot (const GLfloat *a, const GLfloat *b)
 {
@@ -41,7 +38,6 @@ dot (const GLfloat *a, const GLfloat *b)
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
 
-
 void
 multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
 {
@@ -49,7 +45,7 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
   assert (b != NULL);
   assert (out != NULL);
 
-  //in the special case where the input and output are the same variable
+  // in the special case where the input and output are the same variable
   GLfloat temp[16];
 
   for (int col = 0; col < 4; ++col)
@@ -71,7 +67,6 @@ multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
     }
 }
 
-
 void
 identity (GLfloat *out)
 {
@@ -87,7 +82,6 @@ identity (GLfloat *out)
   out[10] = 1.0f;
   out[15] = 1.0f;
 }
-
 
 void
 translate (GLfloat *out, const GLfloat *in, GLfloat *v)
@@ -105,7 +99,6 @@ translate (GLfloat *out, const GLfloat *in, GLfloat *v)
 
   multiplyMatrices (out, in, t);
 }
-
 
 void
 rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
@@ -135,7 +128,6 @@ rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
   multiplyMatrices (out, in, r);
 }
 
-
 void
 rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
 {
@@ -155,7 +147,6 @@ rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
 
   multiplyMatrices (out, in, r);
 }
-
 
 void
 rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
@@ -177,7 +168,6 @@ rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
   multiplyMatrices (out, in, r);
 }
 
-
 void
 scale (GLfloat *out, GLfloat *in, const GLfloat *v)
 {
@@ -194,7 +184,6 @@ scale (GLfloat *out, GLfloat *in, const GLfloat *v)
 
   multiplyMatrices (out, in, s);
 }
-
 
 void
 lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
@@ -233,7 +222,6 @@ lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
   out[11] = 0.0f;
   out[15] = 1.0f;
 }
-
 
 void
 perspective (GLfloat *out, float fovy, float aspect, float near, float far)

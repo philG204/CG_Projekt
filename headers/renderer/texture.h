@@ -32,10 +32,10 @@ Texture *texture_init (char *filename, GLuint shaderProgram,
                        char *shaderVariable);
 
 /**
-  @brief 
-  
-  @param textures 
-  @param texture_count 
+  @brief
+
+  @param textures
+  @param texture_count
 */
 void activate_texture (Texture **textures, int texture_count);
 #endif // TEXTURE_H

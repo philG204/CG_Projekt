@@ -8,14 +8,14 @@
  *
  *  @param shaderDir
  *  @return
-*/
+ */
 GLuint shader_init (char *shaderDir);
 
 /**
  *  @brief
  *
  *  @param shaderProgram
-*/
+ */
 void use_shader (GLuint shaderProgram);
 
 #endif // SHADER_H

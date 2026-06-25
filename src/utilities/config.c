@@ -6,7 +6,6 @@
 
 #include "../../headers/utilities/config.h"
 
-
 char *
 config_trim (char *str)
 {
@@ -33,7 +32,6 @@ config_trim (char *str)
   return str;
 }
 
-
 int
 config_is_data_line (char *line)
 {
@@ -53,7 +51,6 @@ config_is_data_line (char *line)
 
   return 1;
 }
-
 
 int
 config_line_has_key (const char *line, const char *key)
@@ -82,7 +79,6 @@ config_line_has_key (const char *line, const char *key)
 
   return *line == '=';
 }
-
 
 int
 config_parse_string_value (const char *line, char *out, size_t outSize)
@@ -150,7 +146,6 @@ config_parse_string_value (const char *line, char *out, size_t outSize)
   return 1;
 }
 
-
 int
 config_parse_int_value (const char *line, int *out)
 {
@@ -185,7 +180,6 @@ config_parse_float_value (const char *line, float *out)
 
   return 1;
 }
-
 
 int
 config_parse_vec3_value (const char *line, float out[3])
@@ -230,7 +224,6 @@ config_parse_vec3_value (const char *line, float out[3])
   return 1;
 }
 
-
 int
 config_parse_vec4_value (const char *line, float out[4])
 {
@@ -271,7 +264,6 @@ config_parse_vec4_value (const char *line, float out[4])
 
   return 1;
 }
-
 
 int
 config_parse_string_list_value (const char *line,
@@ -332,7 +324,6 @@ config_parse_string_list_value (const char *line,
 
   return count;
 }
-
 
 int
 config_find_line_by_key (const char *configPath, const char *key,

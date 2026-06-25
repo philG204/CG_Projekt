@@ -10,7 +10,7 @@
  *  @param a
  *  @param b
  *  @return
-*/
+ */
 int
 float_equal (GLfloat a, GLfloat b)
 {
@@ -18,13 +18,14 @@ float_equal (GLfloat a, GLfloat b)
 }
 
 /**
- *  @brief Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher liegen können wir einen Array-Vergleich ausführen
+ *  @brief Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher
+ * liegen können wir einen Array-Vergleich ausführen
  *
  *  @param a
  *  @param b
  *  @param n
  *  @return
-*/ 
+ */
 static int
 array_equal (const GLfloat *a, const GLfloat *b, int n)
 {
@@ -43,7 +44,7 @@ array_equal (const GLfloat *a, const GLfloat *b, int n)
  *  @param a
  *  @param b
  *  @return
-*/
+ */
 int
 vector_equal (const GLfloat *a, const GLfloat *b)
 {
@@ -56,7 +57,7 @@ vector_equal (const GLfloat *a, const GLfloat *b)
  *  @param a
  *  @param b
  *  @return
-*/
+ */
 int
 matrix_equal (const GLfloat *a, const GLfloat *b)
 {
@@ -68,7 +69,7 @@ matrix_equal (const GLfloat *a, const GLfloat *b)
  *
  *  @param name
  *  @param fn
-*/
+ */
 void
 run_test (const char *name, test_fn fn)
 {

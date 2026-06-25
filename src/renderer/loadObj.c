@@ -13,9 +13,9 @@ typedef float Vec3[3];
  *  @brief
  *
  *  @param v
- *  @param vt 
+ *  @param vt
  *  @param vn
-*/
+ */
 typedef struct FaceIndex
 {
   int v;
@@ -28,8 +28,8 @@ typedef struct FaceIndex
  *
  *  @param token
  *  @param out
- *  @return 
-*/
+ *  @return
+ */
 static int
 parseFaceToken (const char *token, FaceIndex *out)
 {
@@ -74,13 +74,12 @@ parseFaceToken (const char *token, FaceIndex *out)
  *  @param index
  *  @param count
  *  @return
-*/
+ */
 static int
 validIndex (int index, size_t count)
 {
   return index > 0 && (size_t)index <= count;
 }
-
 
 float *
 loadObj (const char *location, size_t *vertexCount)

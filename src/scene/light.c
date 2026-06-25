@@ -5,7 +5,6 @@
 #include "../../headers/renderer/shader.h"
 #include "../../headers/scene/light.h"
 
-
 void
 gouraudLightning (const GLfloat *lightDir, const GLfloat *modelViewMatrix)
 {

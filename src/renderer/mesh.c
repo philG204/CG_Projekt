@@ -74,7 +74,6 @@ mesh_init (char *meshFile)
   return mesh;
 }
 
-
 void
 mesh_draw (Mesh *mesh)
 {
