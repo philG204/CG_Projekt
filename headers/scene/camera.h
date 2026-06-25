@@ -14,7 +14,7 @@ typedef struct Pos
  *  @param eye     position
  *  @param center  ziel
  *  @param up      normalvektor
-*/
+ */
 typedef struct CameraSettings
 {
   GLfloat eye[3];
@@ -43,7 +43,7 @@ typedef struct ProjectionSettings
  *
  *  @param position     is the position of the camera
  *  @param isDirty      check if recalculation is needed
-*/
+ */
 typedef struct Camera
 {
   GLfloat view[16];
@@ -75,7 +75,7 @@ Camera *camera_init (CameraSettings *cameraSettings,
  *  Matricies
  *
  *  @param camera pointer to a Camera
-*/
+ */
 void camera_update (Camera *camera);
 
 /**
@@ -146,7 +146,7 @@ void camera_setAspect (Camera *camera, GLfloat aspect);
  *
  *  @param camera
  *  @param near_plane
-*/
+ */
 void camera_setNearPlane (Camera *camera, GLfloat near_plane);
 
 /**

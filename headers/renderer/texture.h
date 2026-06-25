@@ -17,7 +17,7 @@ typedef struct Texture
  *  @param shader
  *  @param textures
  *  @param maxTextures
-*/
+ */
 int texture_init_from_config (const char *configPath, GLuint shader,
                               Texture **textures, int maxTextures);
 
@@ -27,7 +27,7 @@ int texture_init_from_config (const char *configPath, GLuint shader,
  *  @param filename
  *  @param shaderProgram
  *  @param shaderVariable
-*/
+ */
 Texture *texture_init (char *filename, GLuint shaderProgram,
                        char *shaderVariable);
 
@@ -36,6 +36,6 @@ Texture *texture_init (char *filename, GLuint shaderProgram,
  *
  *  @param textures
  *  @param texture_count
-*/
+ */
 void activate_texture (Texture **textures, int texture_count);
 #endif // TEXTURE_H

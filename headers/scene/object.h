@@ -84,7 +84,7 @@ void object_transformation (Object *object, GLfloat *translation,
  *  @param cameraX
  *  @param cameraY
  *  @param cameraZ
-*/
+ */
 void object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
                   GLfloat *projMatrix, LightSource **lightSources,
                   int lightCounts, GLfloat cameraX, GLfloat cameraY,

@@ -5,7 +5,6 @@
 #include "framework.h"
 #include "test_entries.h"
 
-
 int
 test_normalize_vector (void)
 {
@@ -18,7 +17,6 @@ test_normalize_vector (void)
   return vector_equal (v, expected);
 }
 
-
 int
 test_normalize_zero_vector (void)
 {
@@ -30,7 +28,6 @@ test_normalize_zero_vector (void)
 
   return vector_equal (v, expected);
 }
-
 
 int
 test_cross_product (void)
@@ -46,7 +43,6 @@ test_cross_product (void)
   return vector_equal (out, expected);
 }
 
-
 int
 test_dot_product (void)
 {
@@ -55,7 +51,6 @@ test_dot_product (void)
 
   return float_equal (dot (a, b), 32.0f);
 }
-
 
 int
 test_identity (void)
@@ -68,7 +63,6 @@ test_identity (void)
 
   return matrix_equal (m, expected);
 }
-
 
 int
 test_multiply_identity (void)
@@ -84,7 +78,6 @@ test_multiply_identity (void)
 
   return matrix_equal (out, a);
 }
-
 
 int
 test_multiply_alias_output_left_operand (void)
@@ -102,7 +95,6 @@ test_multiply_alias_output_left_operand (void)
   return float_equal (a[12], 3.0f);
 }
 
-
 int
 test_multiply_alias_output_right_operand (void)
 {
@@ -119,7 +111,6 @@ test_multiply_alias_output_right_operand (void)
   return float_equal (b[12], 7.0f);
 }
 
-
 int
 test_translate_identity (void)
 {
@@ -135,7 +126,6 @@ test_translate_identity (void)
          && float_equal (out[14], 3.0f) && float_equal (out[15], 1.0f);
 }
 
-
 int
 test_translate_in_place (void)
 {
@@ -150,7 +140,6 @@ test_translate_in_place (void)
          && float_equal (m[14], 7.0f);
 }
 
-
 int
 test_rotatex_90deg (void)
 {
@@ -163,7 +152,6 @@ test_rotatex_90deg (void)
   return float_equal (m[5], 0.0f) && float_equal (m[6], 1.0f)
          && float_equal (m[9], -1.0f) && float_equal (m[10], 0.0f);
 }
-
 
 int
 test_rotatey_90deg (void)
@@ -178,7 +166,6 @@ test_rotatey_90deg (void)
          && float_equal (m[8], 1.0f) && float_equal (m[10], 0.0f);
 }
 
-
 int
 test_rotatez_90deg (void)
 {
@@ -191,7 +178,6 @@ test_rotatez_90deg (void)
   return float_equal (m[0], 0.0f) && float_equal (m[1], 1.0f)
          && float_equal (m[4], -1.0f) && float_equal (m[5], 0.0f);
 }
-
 
 int
 test_scale (void)
@@ -236,7 +222,6 @@ test_perspective_basic (void)
          && float_equal (m[11], -1.0f) && float_equal (m[10], -101.0f / 99.0f)
          && float_equal (m[14], -200.0f / 99.0f);
 }
-
 
 void
 test_matrixTransormation (void)
