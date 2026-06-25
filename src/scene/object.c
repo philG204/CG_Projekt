@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 #include <GL/glew.h>
 
@@ -13,6 +13,12 @@
 #include "../../headers/scene/object.h"
 #include "../../headers/utilities/config.h"
 
+/**
+ *  @brief
+
+ *  @param object
+ *  @param configPath
+*/
 static void
 object_load_config (Object *object, const char *configPath)
 {
@@ -217,7 +223,6 @@ object_init (char *objDir)
   return object;
 }
 
-// Translatiert, rotiert und skaliert ein Objekt.
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)

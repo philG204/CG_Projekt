@@ -12,7 +12,6 @@
 #include "../headers/renderer/postProcessing.h"
 #include "../headers/scene/camera.h"
 #include "../headers/scene/loadObjectList.h"
-#include "../headers/scene/object.h"
 #include "../headers/scene/scene.h"
 
 int

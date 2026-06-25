@@ -1,13 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "../../headers/scene/loadObjectList.h"
 
-/**
- * Lädt aus übergebenen Datei die Objekte und fügt diese in eine Scene hinzu.
- */
 int
 load_object_list (const char *filename, Scene *scene)
 {

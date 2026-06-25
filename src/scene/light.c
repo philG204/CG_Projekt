@@ -1,12 +1,10 @@
 #include <assert.h>
-#include <stdio.h>
 
 #include <GL/glew.h>
 
 #include "../../headers/renderer/shader.h"
 #include "../../headers/scene/light.h"
 
-// Setzt die Beleuchtung nach dem Gouraud-Shading-Verfahren um.
 void
 gouraudLightning (const GLfloat *lightDir, const GLfloat *modelViewMatrix)
 {

@@ -15,6 +15,12 @@ typedef struct ShaderPaths
   char fragmentPath[512];
 } ShaderPaths;
 
+/**
+  @brief
+
+  @param shaderDir
+  @param outPaths
+*/
 static int
 get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 {

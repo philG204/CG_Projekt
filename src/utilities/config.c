@@ -182,47 +182,6 @@ config_parse_float_value (const char *line, float *out)
 }
 
 int
-config_parse_vec4_value (const char *line, float out[4])
-{
-  const char *start = strchr (line, '[');
-  const char *end = strchr (line, ']');
-
-  if (start == NULL || end == NULL || end <= start || out == NULL)
-    {
-      return 0;
-    }
-
-  char buffer[256];
-
-  size_t len = end - start - 1;
-
-  if (len >= sizeof (buffer))
-    {
-      len = sizeof (buffer) - 1;
-    }
-
-  strncpy (buffer, start + 1, len);
-  buffer[len] = '\0';
-
-  char *token = strtok (buffer, ",");
-
-  for (int i = 0; i < 4; i++)
-    {
-      if (token == NULL)
-        {
-          return 0;
-        }
-
-      token = config_trim (token);
-      out[i] = strtof (token, NULL);
-
-      token = strtok (NULL, ",");
-    }
-
-  return 1;
-}
-
-int
 config_parse_vec3_value (const char *line, float out[3])
 {
   assert (line != NULL);
@@ -250,6 +209,47 @@ config_parse_vec3_value (const char *line, float out[3])
   char *token = strtok (buffer, ",");
 
   for (int i = 0; i < 3; i++)
+    {
+      if (token == NULL)
+        {
+          return 0;
+        }
+
+      token = config_trim (token);
+      out[i] = strtof (token, NULL);
+
+      token = strtok (NULL, ",");
+    }
+
+  return 1;
+}
+
+int
+config_parse_vec4_value (const char *line, float out[4])
+{
+  const char *start = strchr (line, '[');
+  const char *end = strchr (line, ']');
+
+  if (start == NULL || end == NULL || end <= start || out == NULL)
+    {
+      return 0;
+    }
+
+  char buffer[256];
+
+  size_t len = end - start - 1;
+
+  if (len >= sizeof (buffer))
+    {
+      len = sizeof (buffer) - 1;
+    }
+
+  strncpy (buffer, start + 1, len);
+  buffer[len] = '\0';
+
+  char *token = strtok (buffer, ",");
+
+  for (int i = 0; i < 4; i++)
     {
       if (token == NULL)
         {
