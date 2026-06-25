@@ -49,6 +49,42 @@ activate_material_textures (Material *material)
                material->overlayTextureCount);
 }
 
+/**
+ *  @brief
+
+static void
+activate_material_textures (Material *material)
+{
+  assert (material != NULL);
+
+  GLuint shader = material->shaderObject->shader;
+
+  if (material->baseTexture != NULL)
+    {
+      glActiveTexture (GL_TEXTURE0);
+      glBindTexture (GL_TEXTURE_2D, material->baseTexture->textureId);
+
+      glUniform1i (glGetUniformLocation (shader, "baseTexture"), 0);
+    }
+
+  for (int i = 0; i < material->overlayTextureCount; i++)
+    {
+      glActiveTexture (GL_TEXTURE1 + i);
+      glBindTexture (GL_TEXTURE_2D,
+                     material->overlayTextures[i]->textureId);
+
+      char uniformName[64];
+
+      snprintf (uniformName, sizeof (uniformName),
+                "overlayTextures[%d]", i);
+
+      glUniform1i (glGetUniformLocation (shader, uniformName), 1 + i);
+    }
+
+  glUniform1i (glGetUniformLocation (shader, "overlayTextureCount"),
+               material->overlayTextureCount);
+}
+
 static void
 object_load_config (Object *object, const char *configPath)
 {
@@ -215,7 +251,19 @@ object_init (char *objDir)
 
   object_load_config (object, configPath);
 
-  object->material->light = materialLight;
+  object_load_config (object, configPath);
+
+material->baseTexture =
+    texture_init_single_from_config (objDir,
+                                     material->shaderObject->shader,
+                                     "baseTexture");
+
+material->overlayTextureCount =
+    texture_init_list_from_config (objDir,
+                                   material->shaderObject->shader,
+                                   "overlayTextures",
+                                   material->overlayTextures,
+                                   MAX_OVERLAY_TEXTURES);
 
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
