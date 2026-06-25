@@ -251,19 +251,7 @@ object_init (char *objDir)
 
   object_load_config (object, configPath);
 
-  object_load_config (object, configPath);
-
-material->baseTexture =
-    texture_init_single_from_config (objDir,
-                                     material->shaderObject->shader,
-                                     "baseTexture");
-
-material->overlayTextureCount =
-    texture_init_list_from_config (objDir,
-                                   material->shaderObject->shader,
-                                   "overlayTextures",
-                                   material->overlayTextures,
-                                   MAX_OVERLAY_TEXTURES);
+  object->material->light = materialLight;
 
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
   identity (object->modelMatrix);
