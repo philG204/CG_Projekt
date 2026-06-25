@@ -23,12 +23,16 @@ main (void)
   CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 0.0f },
                                         .center = { 0.0f, 0.0f, 0.0f },
                                         .up = { 0.0f, 1.0f, 0.0f } },
-                                      { .eye = { 3.0f, 4.0f, 5.0f },
+                                      { .eye = { 3.0f, 2.6f, 1.8f },
+                                        .center = { 0.7f, 1.0f, 0.0f },
+                                        .up = { 0.0f, 1.0f, 0.0f } },
+                                      { .eye = { -3.5f, 2.5f, -2.0f },
                                         .center = { 0.0f, 0.0f, 0.0f },
                                         .up = { 0.0f, 1.0f, 0.0f } },
-                                      { .eye = { -6.0f, 4.0f, 5.0f },
-                                        .center = { 0.0f, 0.0f, 0.0f },
-                                        .up = { 0.0f, 1.0f, 0.0f } } };
+                                      { .eye = { 0.0f, 1.5f, -2.0f },
+                                        .center = { 0.0f, 1.0f, 0.0f },
+                                        .up = { 0.0f, 1.0f, 0.0f } }
+                                      };
 
   int activeCamera = 0;
   int cameraCount = sizeof (cameraSettings) / sizeof (CameraSettings);
