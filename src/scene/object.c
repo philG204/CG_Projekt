@@ -153,7 +153,7 @@ object_init (char *objDir)
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  Texture **overlayTextures = calloc (MAX_OVERLAY_TEXTURES, sizeof (Texture *));
+  Texture **overlayTextures = malloc (MAX_OVERLAY_TEXTURES * sizeof (Texture *));
   Transformation *transformation = malloc (sizeof (Transformation));
   MeshObject *meshObject = malloc (sizeof (MeshObject));
   ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
@@ -162,7 +162,7 @@ object_init (char *objDir)
       || overlayTextures == NULL || transformation == NULL || meshObject == NULL
       || shaderObject == NULL)
     {
-      printf ("object_init: malloc/calloc fehlgeschlagen\n");
+      printf ("object_init: malloc fehlgeschlagen\n");
       return NULL;
     }
 

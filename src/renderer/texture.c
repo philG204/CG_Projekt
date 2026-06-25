@@ -142,13 +142,8 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   assert (filename != NULL);
   assert (shaderVariable != NULL);
 
-  Texture *texture = calloc (1, sizeof (Texture));
-
-  if (texture == NULL)
-    {
-      printf ("texture_init: calloc fehlgeschlagen\n");
-      return NULL;
-    }
+  Texture *texture = malloc (sizeof (Texture));
+  assert (texture != NULL);
 
   GLuint textureId;
 
