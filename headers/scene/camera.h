@@ -10,10 +10,10 @@ typedef struct Pos
   GLfloat z;
 } Pos;
 
-/*
-    eye     position
-    center  ziel
-    up      normalvektor
+/**
+ *  @param eye     position
+ *  @param center  ziel
+ *  @param up      normalvektor
 */
 typedef struct CameraSettings
 {
@@ -143,7 +143,7 @@ void camera_setAspect (Camera *camera, GLfloat aspect);
 
 /**
  *  @brief Set the Near Plane of the Camera
-
+ *
  *  @param camera
  *  @param near_plane
 */

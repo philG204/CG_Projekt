@@ -74,7 +74,7 @@ void object_transformation (Object *object, GLfloat *translation,
 
 /**
  *  @brief
-
+ *
  *  @param object
  *  @param viewProj
  *  @param viewMatrix

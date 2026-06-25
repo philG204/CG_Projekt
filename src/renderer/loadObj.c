@@ -4,9 +4,7 @@
 
 #include "../../headers/renderer/loadObj.h"
 
-/** @brief */
 typedef float Vec2[2];
-/** @brief */
 typedef float Vec3[3];
 
 /**

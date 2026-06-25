@@ -14,16 +14,16 @@ typedef struct Mesh
 } Mesh;
 
 /**
-  @brief
-
-  @param objDir
+ *  @brief
+ *
+ *  @param objDir
 */
 Mesh *mesh_init (char *objDir);
 
 /**
-  @brief
-
-  @param
+ *  @brief
+ *
+ *  @param
 */
 void mesh_draw (Mesh *mesh);
 
