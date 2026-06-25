@@ -15,4 +15,15 @@ Texture *texture_init (char *filename, GLuint shaderProgram,
 void activate_texture (Texture **textures, int texture_count);
 int texture_init_from_config (const char *configPath, GLuint shader,
                               Texture **textures, int maxTextures);
+
+Texture *texture_init_single_from_config (const char *objDir,
+                                          GLuint shader,
+                                          const char *configKey);
+
+int texture_init_list_from_config (const char *objDir,
+                                   GLuint shader,
+                                   const char *configKey,
+                                   Texture **textures,
+                                   int maxTextures);
+
 #endif // TEXTURE_H

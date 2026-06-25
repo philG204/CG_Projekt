@@ -9,6 +9,7 @@
 
 #define PATH_LENGTH 256
 #define MAX_TEXTURES 10
+#define MAX_OVERLAY_TEXTURES 8
 
 typedef struct MeshObject
 {
@@ -33,7 +34,9 @@ typedef struct Transformation
 typedef struct Material
 {
   ShaderObject *shaderObject;
-  Texture **textures;
+  Texture *baseTexture;
+  Texture **overlayTextures;
+  int overlayTextureCount;
   int texture_count;
   GLfloat rgb_values;
   GLfloat transparency;

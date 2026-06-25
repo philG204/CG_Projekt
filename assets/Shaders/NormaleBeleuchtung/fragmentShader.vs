@@ -1,6 +1,7 @@
 #version 330 core
 
 #define MAX_LIGHTS 16
+#define MAX_OVERLAY_TEXTURES 8
 
 struct Light
 {
@@ -28,7 +29,9 @@ uniform vec4 lightAmbient;
 uniform vec4 lightDiffuse;
 uniform vec4 lightSpecular;
 
-uniform sampler2D crateTex;
+uniform sampler2D baseTexture;
+uniform sampler2D overlayTextures[MAX_OVERLAY_TEXTURES];
+uniform int overlayTextureCount;
 
 out vec4 FragColor;
 
@@ -60,7 +63,16 @@ void main(){
         }
     }
 
-    vec4 baseColor = texture(crateTex, tex);
+    vec4 baseColor = texture(baseTexture, tex);
+
+    for (int i = 0; i < overlayTextureCount; i++)
+    {
+        vec4 overlayColor = texture(overlayTextures[i], tex);
+
+        baseColor.rgb = mix(baseColor.rgb,
+                            overlayColor.rgb,
+                            overlayColor.a);
+    }
 
     //FragColor = vec4(1.0, 1.0, 0.0, 1.0);
     FragColor = emissiv + (ambient * baseColor) + (diffuseSum * baseColor) + specularSum;
