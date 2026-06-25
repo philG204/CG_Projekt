@@ -121,13 +121,13 @@ object_init (char *objDir)
 
   if (object == NULL || material == NULL || materialLight == NULL
       || textures == NULL || transformation == NULL || meshObject == NULL
-      || shaderObject == NULL || shaderProgram == 0)
+      || shaderObject == NULL)// || shaderProgram == 0)
     {
       printf ("object_init: malloc/calloc fehlgeschlagen\n");
       return NULL;
     }
 
-  GLuint shaderProgram = shader_init (objDir);
+  //GLuint shaderProgram = shader_init (objDir);
 
 
   transformation->translation[0] = 0.0f;
