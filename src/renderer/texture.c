@@ -143,6 +143,8 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   assert (shaderVariable != NULL);
 
   Texture *texture = malloc (sizeof (Texture));
+  assert (texture != NULL);
+
   GLuint textureId;
 
   int width = 0;
@@ -150,11 +152,12 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   int channels = 0;
 
   unsigned char *image = stbi_load (filename, &width, &height, &channels, 4);
-  // printf("loaded file %s image %s\n", filename, image);
+
   if (image == NULL)
     {
-      // printf(stderr, "Fehler beim Laden der Textur %s: %s\n", filename,
-      // stbi_failure_reason());
+      printf ("texture_init: Fehler beim Laden der Textur %s: %s\n", filename,
+              stbi_failure_reason ());
+      free (texture);
       return NULL;
     }
 
@@ -179,21 +182,16 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 
   glBindTexture (GL_TEXTURE_2D, 0);
 
-  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
-          textureId, width, height, channels);
-
-  char realShaderVariable[256];
-
-  getNameWithoutExtension (shaderVariable, realShaderVariable,
-                           sizeof (realShaderVariable));
-
   texture->textureId = textureId;
   texture->shaderProgramId = shaderProgram;
 
-  strncpy (texture->shaderVariable, realShaderVariable,
+  strncpy (texture->shaderVariable, shaderVariable,
            sizeof (texture->shaderVariable) - 1);
 
   texture->shaderVariable[sizeof (texture->shaderVariable) - 1] = '\0';
+
+  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
+          textureId, width, height, channels);
 
   return texture;
 }
@@ -218,4 +216,117 @@ activate_texture (Texture **textures, int texture_count)
           textures[i]->shaderVariable /*"baseTexture"*/);
       glUniform1i (location, i);
     }
+}
+
+Texture *
+texture_init_base_from_config (const char *objDir, GLuint shader)
+{
+  assert (objDir != NULL);
+
+  char textureLine[512];
+  char completeConfigPath[512];
+
+  snprintf (completeConfigPath, sizeof (completeConfigPath),
+            "assets/%s/object.cfg", objDir);
+
+  if (!config_find_line_by_key (completeConfigPath, "baseTexture", textureLine,
+                                sizeof (textureLine)))
+    {
+      printf (
+          "texture_init_base_from_config: keine baseTexture gefunden in %s\n",
+          completeConfigPath);
+      return NULL;
+    }
+
+  char textureName[CONFIG_MAX_STRING_LENGTH];
+
+  if (!config_parse_string_value (textureLine, textureName,
+                                  sizeof (textureName)))
+    {
+      printf ("texture_init_base_from_config: baseTexture konnte nicht "
+              "gelesen werden in %s\n",
+              completeConfigPath);
+      return NULL;
+    }
+
+  char completeTexturePath[512];
+
+  snprintf (completeTexturePath, sizeof (completeTexturePath),
+            "assets/Textures/%s", textureName);
+
+  Texture *texture
+      = texture_get_or_load (completeTexturePath, shader, "baseTexture");
+
+  if (texture == NULL)
+    {
+      printf ("texture_init_base_from_config: Textur konnte nicht geladen "
+              "werden: %s\n",
+              completeTexturePath);
+      return NULL;
+    }
+
+  printf ("BaseTexture geladen: %s\n", completeTexturePath);
+
+  return texture;
+}
+
+int
+texture_init_overlays_from_config (const char *objDir, GLuint shader,
+                                   Texture **textures, int maxTextures)
+{
+  assert (objDir != NULL);
+  assert (textures != NULL);
+
+  char textureLine[512];
+  char completeConfigPath[512];
+
+  snprintf (completeConfigPath, sizeof (completeConfigPath),
+            "assets/%s/object.cfg", objDir);
+
+  if (!config_find_line_by_key (completeConfigPath, "overlayTextures",
+                                textureLine, sizeof (textureLine)))
+    {
+      printf ("texture_init_overlays_from_config: keine overlayTextures "
+              "gefunden in %s\n",
+              completeConfigPath);
+      return 0;
+    }
+
+  char textureNames[CONFIG_MAX_LIST_ITEMS][CONFIG_MAX_STRING_LENGTH];
+
+  if (maxTextures > CONFIG_MAX_LIST_ITEMS)
+    {
+      maxTextures = CONFIG_MAX_LIST_ITEMS;
+    }
+
+  int textureCount = config_parse_string_list_value (textureLine, textureNames,
+                                                     maxTextures);
+
+  int loadedCount = 0;
+
+  for (int i = 0; i < textureCount; i++)
+    {
+      char completeTexturePath[512];
+
+      snprintf (completeTexturePath, sizeof (completeTexturePath),
+                "assets/Textures/%s", textureNames[i]);
+
+      Texture *texture
+          = texture_get_or_load (completeTexturePath, shader, textureNames[i]);
+
+      if (texture == NULL)
+        {
+          printf ("texture_init_overlays_from_config: Overlay konnte nicht "
+                  "geladen werden: %s\n",
+                  completeTexturePath);
+          continue;
+        }
+
+      textures[loadedCount] = texture;
+      loadedCount++;
+
+      printf ("OverlayTexture geladen: %s\n", completeTexturePath);
+    }
+
+  return loadedCount;
 }

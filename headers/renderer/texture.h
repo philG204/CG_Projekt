@@ -38,4 +38,24 @@ Texture *texture_init (char *filename, GLuint shaderProgram,
  *  @param texture_count
  */
 void activate_texture (Texture **textures, int texture_count);
+
+/**
+ * @brief
+ *
+ * @param objDir
+ * @return Texture
+ */
+Texture *texture_init_base_from_config (const char *objDir, GLuint shader);
+
+/**
+ * @brief
+ *
+ * @param objDir
+ * @param shader
+ * @param textures
+ * @param maxTextures
+ * @return int
+ */
+int texture_init_overlays_from_config (const char *objDir, GLuint shader,
+                                       Texture **textures, int maxTextures);
 #endif // TEXTURE_H
