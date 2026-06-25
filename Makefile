@@ -55,6 +55,8 @@ TEST_OBJ = $(TEST_SRC:.c=.o)
 TARGET = demo
 TEST_TARGET = run_tests
 
+.PHONY: all run test clean format docs_gen docs_open
+
 all: $(TARGET)
 
 run: $(TARGET)
@@ -77,3 +79,9 @@ $(TEST_TARGET): $(TEST_OBJ)
 
 clean:
 	rm -f $(OBJ) $(TARGET) $(TEST_OBJ) $(TEST_TARGET)
+
+docs_gen:
+	doxygen Doxyfile
+
+docs_open:
+	xdg-open docs/html/index.html
