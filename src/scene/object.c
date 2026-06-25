@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <dirent.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 #include <GL/glew.h>
 
@@ -145,7 +145,7 @@ object_init (char *objDir)
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  Texture **textures = malloc (MAX_TEXTURES * sizeof (Texture *));
+  Texture **overlayTextures = malloc (MAX_TEXTURES * sizeof (Texture *));
   Transformation *transformation = malloc (sizeof (Transformation));
   MeshObject *meshObject = malloc (sizeof (MeshObject));
   ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
@@ -252,7 +252,6 @@ object_init (char *objDir)
   return object;
 }
 
-// Translatiert, rotiert und skaliert ein Objekt.
 void
 object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
                        GLfloat *rotation)

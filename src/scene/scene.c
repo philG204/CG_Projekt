@@ -11,6 +11,11 @@
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
 
+/**
+ *  @brief
+ *
+ *  @param
+ */
 static void
 loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
 {
