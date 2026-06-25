@@ -11,9 +11,9 @@ typedef struct Pos
 } Pos;
 
 /*
-    eye     - position
-    center  - ziel
-    up      - normalvektor
+    eye     position
+    center  ziel
+    up      normalvektor
 */
 typedef struct CameraSettings
 {
@@ -31,18 +31,18 @@ typedef struct ProjectionSettings
 } ProjectionSettings;
 
 /**
-
-  @param view         -  saves where the camera is and whats it looking at
-  @param projection   -  saves how the camera project 3d to 2d
-  @param viewProj     -  for the shader gl_Position per matrix multiplication
-  view and projection
-
-  @param settings saves the CameraSetings and Projectionsettings for
-  recalculation
-  @param projectionSettings
-
-  @param position     -  is the posiopn of the camera
-  @param isDirty      -  check if recalculation is needed
+ *
+ *  @param view         saves where the camera is and whats it looking at
+ *  @param projection   saves how the camera project 3d to 2d
+ *  @param viewProj     for the shader gl_Position per matrix multiplication
+ *  view and projection
+ *
+ *  @param settings saves the CameraSetings and Projectionsettings for
+ *  recalculation
+ *  @param projectionSettings
+ *
+ *  @param position     is the position of the camera
+ *  @param isDirty      check if recalculation is needed
 */
 typedef struct Camera
 {
@@ -61,9 +61,9 @@ typedef struct Camera
  *  @brief
  *
  *  @param cameraSettings A Pointer to a deklaration Variable of the struct
- * Camerasettings
+ *  Camerasettings
  *  @param projectionSettings A Pointer to a deklaration Variable of the struct
- * Projections
+ *  Projections
  *  @return returns a struct of a Camera
  */
 Camera *camera_init (CameraSettings *cameraSettings,
@@ -71,8 +71,8 @@ Camera *camera_init (CameraSettings *cameraSettings,
 
 /**
  *  @brief Updates the Camera and updates the Matricies
-  Updates the Camera and when the something has change recalculates the
- Matricies
+ *  Updates the Camera and when the something has change recalculates the
+ *  Matricies
  *
  *  @param camera pointer to a Camera
 */

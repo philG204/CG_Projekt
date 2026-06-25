@@ -19,7 +19,7 @@ float_equal (GLfloat a, GLfloat b)
 
 /**
  *  @brief Da sowohl Vektoren als auch Matrizen kontinuierlich im Speicher
- * liegen können wir einen Array-Vergleich ausführen
+ *  liegen können wir einen Array-Vergleich ausführen
  *
  *  @param a
  *  @param b
