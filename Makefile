@@ -55,7 +55,7 @@ TEST_OBJ = $(TEST_SRC:.c=.o)
 TARGET = demo
 TEST_TARGET = run_tests
 
-.PHONY: all run test clean format docs docs_open
+.PHONY: all run test clean format docs_gen docs_open
 
 all: $(TARGET)
 
