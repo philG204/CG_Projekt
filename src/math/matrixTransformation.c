@@ -111,14 +111,14 @@ rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
   GLfloat c = cosf (angle);
   GLfloat s = sinf (angle);
 
-  identity(r);
+  identity (r);
 
   r[5] = c;
   r[6] = s;
   r[9] = -s;
   r[10] = c;
 
-  multiplyMatrices(out, in, r);
+  multiplyMatrices (out, in, r);
 }
 
 void

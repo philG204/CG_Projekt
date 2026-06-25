@@ -1,9 +1,9 @@
 #include <assert.h>
 #include <dirent.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include <GL/glew.h>
 
@@ -14,7 +14,6 @@
 #include "../../headers/scene/light.h"
 #include "../../headers/scene/object.h"
 #include "../../headers/utilities/config.h"
-
 
 static void
 activate_material_textures (Material *material)
@@ -34,13 +33,11 @@ activate_material_textures (Material *material)
   for (int i = 0; i < material->overlayTextureCount; i++)
     {
       glActiveTexture (GL_TEXTURE1 + i);
-      glBindTexture (GL_TEXTURE_2D,
-                     material->overlayTextures[i]->textureId);
+      glBindTexture (GL_TEXTURE_2D, material->overlayTextures[i]->textureId);
 
       char uniformName[64];
 
-      snprintf (uniformName, sizeof (uniformName),
-                "overlayTextures[%d]", i);
+      snprintf (uniformName, sizeof (uniformName), "overlayTextures[%d]", i);
 
       glUniform1i (glGetUniformLocation (shader, uniformName), 1 + i);
     }
@@ -153,14 +150,15 @@ object_init (char *objDir)
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
   MaterialLight *materialLight = malloc (sizeof (MaterialLight));
-  Texture **overlayTextures = malloc (MAX_OVERLAY_TEXTURES * sizeof (Texture *));
+  Texture **overlayTextures
+      = malloc (MAX_OVERLAY_TEXTURES * sizeof (Texture *));
   Transformation *transformation = malloc (sizeof (Transformation));
   MeshObject *meshObject = malloc (sizeof (MeshObject));
   ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
 
   if (object == NULL || material == NULL || materialLight == NULL
-      || overlayTextures == NULL || transformation == NULL || meshObject == NULL
-      || shaderObject == NULL)
+      || overlayTextures == NULL || transformation == NULL
+      || meshObject == NULL || shaderObject == NULL)
     {
       printf ("object_init: malloc fehlgeschlagen\n");
       return NULL;
@@ -221,15 +219,12 @@ object_init (char *objDir)
 
   object_load_config (object, configPath);
 
-  material->baseTexture =
-    texture_init_base_from_config (objDir,
-                                     material->shaderObject->shader);
+  material->baseTexture
+      = texture_init_base_from_config (objDir, material->shaderObject->shader);
 
-  material->overlayTextureCount =
-    texture_init_overlays_from_config (objDir,
-                                   material->shaderObject->shader,
-                                   material->overlayTextures,
-                                   material->overlayTextureCount);
+  material->overlayTextureCount = texture_init_overlays_from_config (
+      objDir, material->shaderObject->shader, material->overlayTextures,
+      material->overlayTextureCount);
 
   identity (object->modelMatrix);
 
@@ -275,7 +270,7 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   assert (translation != NULL);
   assert (scaling != NULL);
   assert (rotation != NULL);
-  
+
   const GLfloat radian = (GLfloat)M_PI / 180.0f;
 
   translate (object->modelMatrix, object->modelMatrix, translation);
@@ -377,5 +372,5 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   activate_material_textures (object->material);
 
   glDrawArrays (GL_TRIANGLES, 0,
-              (GLsizei)object->meshObject->mesh->vertexCount);
+                (GLsizei)object->meshObject->mesh->vertexCount);
 }

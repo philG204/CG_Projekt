@@ -41,7 +41,7 @@ void activate_texture (Texture **textures, int texture_count);
 
 /**
  * @brief
- * 
+ *
  * @param objDir
  * @return Texture
  */
@@ -49,7 +49,7 @@ Texture *texture_init_base_from_config (const char *objDir, GLuint shader);
 
 /**
  * @brief
- * 
+ *
  * @param objDir
  * @param shader
  * @param textures

@@ -155,8 +155,8 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 
   if (image == NULL)
     {
-      printf ("texture_init: Fehler beim Laden der Textur %s: %s\n",
-              filename, stbi_failure_reason ());
+      printf ("texture_init: Fehler beim Laden der Textur %s: %s\n", filename,
+              stbi_failure_reason ());
       free (texture);
       return NULL;
     }
@@ -190,8 +190,8 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 
   texture->shaderVariable[sizeof (texture->shaderVariable) - 1] = '\0';
 
-  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n",
-          filename, textureId, width, height, channels);
+  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
+          textureId, width, height, channels);
 
   return texture;
 }
@@ -229,11 +229,12 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
   snprintf (completeConfigPath, sizeof (completeConfigPath),
             "assets/%s/object.cfg", objDir);
 
-  if (!config_find_line_by_key (completeConfigPath, "baseTexture",
-                                textureLine, sizeof (textureLine)))
+  if (!config_find_line_by_key (completeConfigPath, "baseTexture", textureLine,
+                                sizeof (textureLine)))
     {
-      printf ("texture_init_base_from_config: keine baseTexture gefunden in %s\n",
-              completeConfigPath);
+      printf (
+          "texture_init_base_from_config: keine baseTexture gefunden in %s\n",
+          completeConfigPath);
       return NULL;
     }
 
@@ -242,7 +243,8 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
   if (!config_parse_string_value (textureLine, textureName,
                                   sizeof (textureName)))
     {
-      printf ("texture_init_base_from_config: baseTexture konnte nicht gelesen werden in %s\n",
+      printf ("texture_init_base_from_config: baseTexture konnte nicht "
+              "gelesen werden in %s\n",
               completeConfigPath);
       return NULL;
     }
@@ -252,13 +254,13 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
   snprintf (completeTexturePath, sizeof (completeTexturePath),
             "assets/Textures/%s", textureName);
 
-  Texture *texture = texture_get_or_load (completeTexturePath,
-                                          shader,
-                                          "baseTexture");
+  Texture *texture
+      = texture_get_or_load (completeTexturePath, shader, "baseTexture");
 
   if (texture == NULL)
     {
-      printf ("texture_init_base_from_config: Textur konnte nicht geladen werden: %s\n",
+      printf ("texture_init_base_from_config: Textur konnte nicht geladen "
+              "werden: %s\n",
               completeTexturePath);
       return NULL;
     }
@@ -284,7 +286,8 @@ texture_init_overlays_from_config (const char *objDir, GLuint shader,
   if (!config_find_line_by_key (completeConfigPath, "overlayTextures",
                                 textureLine, sizeof (textureLine)))
     {
-      printf ("texture_init_overlays_from_config: keine overlayTextures gefunden in %s\n",
+      printf ("texture_init_overlays_from_config: keine overlayTextures "
+              "gefunden in %s\n",
               completeConfigPath);
       return 0;
     }
@@ -308,12 +311,13 @@ texture_init_overlays_from_config (const char *objDir, GLuint shader,
       snprintf (completeTexturePath, sizeof (completeTexturePath),
                 "assets/Textures/%s", textureNames[i]);
 
-      Texture *texture =
-          texture_get_or_load (completeTexturePath, shader, textureNames[i]);
+      Texture *texture
+          = texture_get_or_load (completeTexturePath, shader, textureNames[i]);
 
       if (texture == NULL)
         {
-          printf ("texture_init_overlays_from_config: Overlay konnte nicht geladen werden: %s\n",
+          printf ("texture_init_overlays_from_config: Overlay konnte nicht "
+                  "geladen werden: %s\n",
                   completeTexturePath);
           continue;
         }
