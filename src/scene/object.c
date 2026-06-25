@@ -14,7 +14,8 @@
 #include "../../headers/utilities/config.h"
 
 
-void activate_material_textures (Material *material)
+static void
+activate_material_textures (Material *material)
 {
   assert (material != NULL);
 
@@ -24,6 +25,7 @@ void activate_material_textures (Material *material)
     {
       glActiveTexture (GL_TEXTURE0);
       glBindTexture (GL_TEXTURE_2D, material->baseTexture->textureId);
+
       glUniform1i (glGetUniformLocation (shader, "baseTexture"), 0);
     }
 
@@ -188,6 +190,7 @@ object_init (char *objDir)
   material->baseTexture = NULL;
   material->overlayTextures = overlayTextures;
   material->overlayTextureCount = 0;
+  material->light = materialLight;
 
   object->material = material;
   object->transformation = transformation;
@@ -198,20 +201,6 @@ object_init (char *objDir)
   snprintf (configPath, sizeof (configPath), "assets/%s/object.cfg", objDir);
 
   object_load_config (object, configPath);
-
-  object_load_config (object, configPath);
-
-material->baseTexture =
-    texture_init_single_from_config (objDir,
-                                     material->shaderObject->shader,
-                                     "baseTexture");
-
-material->overlayTextureCount =
-    texture_init_list_from_config (objDir,
-                                   material->shaderObject->shader,
-                                   "overlayTextures",
-                                   material->overlayTextures,
-                                   MAX_OVERLAY_TEXTURES);
 
   object->material->light = materialLight;
 
@@ -361,5 +350,5 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
   activate_material_textures (object->material);
 
   glDrawArrays (GL_TRIANGLES, 0,
-                (GLsizei)object->meshObject->mesh->vertexCount);
+              (GLsizei)object->meshObject->mesh->vertexCount);
 }

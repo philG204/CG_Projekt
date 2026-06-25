@@ -347,6 +347,21 @@ scene_add_object (Scene *scene, char *objDir)
               object->name, meshNameWithoutExtension);
       return;
     }
+  object->material->baseTexture =
+    texture_init_base_from_config (objDir,
+                                   object->material->shaderObject->shader);
+
+  object->material->overlayTextureCount =
+    texture_init_overlays_from_config (objDir,
+                                       object->material->shaderObject->shader,
+                                       object->material->overlayTextures,
+                                       MAX_OVERLAY_TEXTURES);
+
+  printf ("scene_add_object: baseTexture = %s\n",
+        object->material->baseTexture != NULL ? "geladen" : "NULL");
+
+  printf ("scene_add_object: overlays = %d\n",
+        object->material->overlayTextureCount);
 
   scene->objects[scene->object_count] = object;
   scene->object_count++;

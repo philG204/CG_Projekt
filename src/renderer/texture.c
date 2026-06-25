@@ -39,7 +39,7 @@ texture_get_or_load (const char *texturePath, GLuint shader,
     }
 
   Texture *texture
-      = texture_init ((char *)texturePath, shader, (char *)textureName);
+      = texture_init ((char *)texturePath);
 
   if (texture == NULL)
     {
@@ -131,12 +131,18 @@ texture_init_from_config (const char *configPath, GLuint shader,
 }
 
 Texture *
-texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
+texture_init (char *filename)
 {
   assert (filename != NULL);
-  assert (shaderVariable != NULL);
 
-  Texture *texture = malloc (sizeof (Texture));
+  Texture *texture = calloc (1, sizeof (Texture));
+
+  if (texture == NULL)
+    {
+      printf ("texture_init: calloc fehlgeschlagen\n");
+      return NULL;
+    }
+
   GLuint textureId;
 
   int width = 0;
@@ -144,11 +150,12 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
   int channels = 0;
 
   unsigned char *image = stbi_load (filename, &width, &height, &channels, 4);
-  // printf("loaded file %s image %s\n", filename, image);
+
   if (image == NULL)
     {
-      // printf(stderr, "Fehler beim Laden der Textur %s: %s\n", filename,
-      // stbi_failure_reason());
+      printf ("texture_init: Fehler beim Laden der Textur %s: %s\n",
+              filename, stbi_failure_reason ());
+      free (texture);
       return NULL;
     }
 
@@ -171,21 +178,10 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
 
   glBindTexture (GL_TEXTURE_2D, 0);
 
-  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n", filename,
-          textureId, width, height, channels);
-
-  char realShaderVariable[256];
-
-  getNameWithoutExtension (shaderVariable, realShaderVariable,
-                           sizeof (realShaderVariable));
-
   texture->textureId = textureId;
-  texture->shaderProgramId = shaderProgram;
 
-  strncpy (texture->shaderVariable, realShaderVariable,
-           sizeof (texture->shaderVariable) - 1);
-
-  texture->shaderVariable[sizeof (texture->shaderVariable) - 1] = '\0';
+  printf ("Textur geladen: %s, ID=%u, Größe=%dx%d, Kanäle=%d\n",
+          filename, textureId, width, height, channels);
 
   return texture;
 }

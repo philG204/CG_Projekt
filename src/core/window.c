@@ -133,7 +133,7 @@ window_create (int width, int height, const char *title)
       glGetProgramInfoLog (window->processing_shader, sizeof (log), NULL, log);
       printf ("%s\n", log);
     }
-
+  
   glDeleteShader (vertex_shader);
   glDeleteShader (fragment_shader);
   glDeleteShader (processing_shader);

@@ -10,20 +10,17 @@ typedef struct Texture
   char shaderVariable[256];
 } Texture;
 
-Texture *texture_init (char *filename, GLuint shaderProgram,
-                       char *shaderVariable);
+
+Texture *texture_init (char *filename);
+
 void activate_texture (Texture **textures, int texture_count);
+
 int texture_init_from_config (const char *configPath, GLuint shader,
                               Texture **textures, int maxTextures);
 
-Texture *texture_init_single_from_config (const char *objDir,
-                                          GLuint shader,
-                                          const char *configKey);
+Texture *texture_init_base_from_config (const char *objDir, GLuint shader);
 
-int texture_init_list_from_config (const char *objDir,
-                                   GLuint shader,
-                                   const char *configKey,
-                                   Texture **textures,
-                                   int maxTextures);
+int texture_init_overlays_from_config (const char *objDir, GLuint shader,
+                                       Texture **textures, int maxTextures);
 
 #endif // TEXTURE_H
