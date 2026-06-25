@@ -142,15 +142,13 @@ object_init (char *objDir)
 {
   assert (objDir != NULL);
 
-  // Used calloc instead of malloc, because
-  // malloc caused some memory problems durign runtime
-  Object *object = calloc (1, sizeof (Object));
-  Material *material = calloc (1, sizeof (Material));
-  MaterialLight *materialLight = calloc (1, sizeof (MaterialLight));
-  Texture **overlayTextures = calloc (MAX_OVERLAY_TEXTURES, sizeof (Texture *));
-  Transformation *transformation = calloc (1, sizeof (Transformation));
-  MeshObject *meshObject = calloc (1, sizeof (MeshObject));
-  ShaderObject *shaderObject = calloc (1, sizeof (ShaderObject));
+  Object *object = malloc (sizeof (Object));
+  Material *material = malloc (sizeof (Material));
+  MaterialLight *materialLight = malloc (sizeof (MaterialLight));
+  Texture **textures = malloc (MAX_TEXTURES * sizeof (Texture *));
+  Transformation *transformation = malloc (sizeof (Transformation));
+  MeshObject *meshObject = malloc (sizeof (MeshObject));
+  ShaderObject *shaderObject = malloc (sizeof (ShaderObject));
 
   if (object == NULL || material == NULL || materialLight == NULL
       || overlayTextures == NULL || transformation == NULL || meshObject == NULL
@@ -160,9 +158,21 @@ object_init (char *objDir)
       return NULL;
     }
 
+  transformation->translation[0] = 0.0f;
+  transformation->translation[1] = 0.0f;
+  transformation->translation[2] = 0.0f;
+
   transformation->scaling[0] = 1.0f;
   transformation->scaling[1] = 1.0f;
   transformation->scaling[2] = 1.0f;
+
+  transformation->rotation[0] = 0.0f;
+  transformation->rotation[1] = 0.0f;
+  transformation->rotation[2] = 0.0f;
+
+  transformation->rotaionCircle[0] = 0.0f;
+  transformation->rotaionCircle[1] = 0.0f;
+  transformation->rotaionCircle[2] = 0.0f;
 
   materialLight->emissive[0] = 0.0f;
   materialLight->emissive[1] = 0.0f;
@@ -195,6 +205,7 @@ object_init (char *objDir)
   object->material = material;
   object->transformation = transformation;
   object->meshObject = meshObject;
+  object->modelMatrix = malloc (16 * sizeof (GLfloat));
 
   char configPath[512];
 
