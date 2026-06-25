@@ -2,6 +2,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #include <GL/glew.h>
 
@@ -221,17 +222,19 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
   assert (translation != NULL);
   assert (scaling != NULL);
   assert (rotation != NULL);
+  
+  const GLfloat radian = (GLfloat)M_PI / 180.0f;
 
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
 
-  rotation[0] += object->transformation->rotaionCircle[0];
-  rotation[1] += object->transformation->rotaionCircle[1];
-  rotation[2] += object->transformation->rotaionCircle[2];
+  const GLfloat radiansX = rotation[0] * radian;
+  const GLfloat radiansY = rotation[1] * radian;
+  const GLfloat radiansZ = rotation[2] * radian;
 
-  rotatex (object->modelMatrix, object->modelMatrix, rotation[0]);
-  rotatey (object->modelMatrix, object->modelMatrix, rotation[1]);
-  rotatez (object->modelMatrix, object->modelMatrix, rotation[2]);
+  rotatex (object->modelMatrix, object->modelMatrix, radiansX);
+  rotatey (object->modelMatrix, object->modelMatrix, radiansY);
+  rotatez (object->modelMatrix, object->modelMatrix, radiansZ);
 }
 
 void
