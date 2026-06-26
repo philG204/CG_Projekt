@@ -93,5 +93,5 @@ void main()
                + diffuseSum * baseColor
                + specularSum;
 
-    FragColor = vec4(color.rgb, baseColor.a);
+    FragColor = vec4(color.rgb, baseColor.a * materialDiffuse.a);
 }
