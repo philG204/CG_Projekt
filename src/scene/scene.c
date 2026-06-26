@@ -14,9 +14,14 @@
 #include <GLFW/glfw3.h>
 
 /**
- *  @brief
+ * @brief Load all shader directories and initialize shader objects
  *
- *  @param
+ * Scans a shader directory for subdirectories containing vertex and fragment
+ * shaders, compiles each shader pair into a program, and adds them to the
+ * scene.
+ *
+ * @param scene Pointer to Scene structure to store shaders
+ * @param shaderDir Path to the main shader directory
  */
 static void
 loadShaderDirectoryStructure (Scene *scene, const char *shaderDir)

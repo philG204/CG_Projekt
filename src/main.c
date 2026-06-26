@@ -1,3 +1,12 @@
+/**
+ * @file main.c
+ * @brief Main entry point and application loop for the CG1 rendering engine
+ *
+ * This file contains the main application loop that initializes the window,
+ * scene, and camera, then runs the render loop processing input and updating
+ * the scene with multiple camera viewpoints.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -13,6 +22,17 @@
 #include "../headers/scene/camera.h"
 #include "../headers/scene/scene.h"
 
+/**
+ * @brief Main application entry point
+ *
+ * Initializes the window, scene, and camera with predefined settings,
+ * then runs the main render loop. The application features multiple camera
+ * views that can be switched via keyboard input (1-4 keys) and supports
+ * toggling post-processing effects (P key). The loop continues until
+ * the window is closed.
+ *
+ * @return 0 on successful completion, non-zero on error
+ */
 int
 main (void)
 {

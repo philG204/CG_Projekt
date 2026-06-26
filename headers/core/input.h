@@ -1,9 +1,29 @@
+/**
+ * @file input.h
+ * @brief Input handling for keyboard and UI button interactions
+ *
+ * This module handles user input through keyboard and on-screen button clicks,
+ * managing camera switching and post-processing effects.
+ */
+
 #ifndef INPUT_H
 #define INPUT_H
 
 #include <GLFW/glfw3.h>
 
-// TODO THIS IS HERE TO EXISTS BECAUSE I NEED IT FOR THE BUTTONS INPUT CHECK
+/**
+ * @struct Button
+ * @brief Represents a clickable button on the screen
+ *
+ * @var Button::x
+ *      X coordinate of the button's left edge (normalized -1 to 1)
+ * @var Button::y
+ *      Y coordinate of the button's bottom edge (normalized -1 to 1)
+ * @var Button::width
+ *      Width of the button in normalized coordinates
+ * @var Button::height
+ *      Height of the button in normalized coordinates
+ */
 typedef struct Button
 {
   GLfloat x;

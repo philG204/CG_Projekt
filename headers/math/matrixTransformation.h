@@ -1,3 +1,10 @@
+/**
+ * @file matrixTransformation.h
+ * @brief Matrix transformation functions
+ *
+ * Provides functionality to perform common matrix operations.
+ */
+
 #ifndef MATRIX_TRANSFORMATION_H
 #define MATRIX_TRANSFORMATION_H
 

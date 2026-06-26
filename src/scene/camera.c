@@ -1,3 +1,11 @@
+/**
+ * @file camera.c
+ * @brief Camera initialization and management
+ *
+ * This file implements camera creation with view and projection matrices,
+ * camera updates, and settings modifications.
+ */
+
 #include <assert.h>
 #include <complex.h>
 #include <stdlib.h>
@@ -8,6 +16,19 @@
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/scene/camera.h"
 
+/**
+ * @brief Initialize a camera with view and projection matrices
+ *
+ * Creates a camera with the specified view parameters (eye position, target
+ * center, up vector) and projection parameters (FOV, aspect ratio, near/far
+ * planes).
+ *
+ * @param cameraSettings Pointer to CameraSettings structure with eye, center,
+ * and up vectors
+ * @param projectionSettings Pointer to ProjectionSettings structure with FOV,
+ * aspect, and clipping planes
+ * @return Pointer to initialized Camera structure
+ */
 Camera *
 camera_init (const CameraSettings *cameraSettings,
              const ProjectionSettings *projectionSettings)

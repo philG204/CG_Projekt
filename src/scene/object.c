@@ -14,6 +14,14 @@
 #include "../../headers/scene/object.h"
 #include "../../headers/utilities/config.h"
 
+/**
+ * @brief Activate and bind material textures to shader units
+ *
+ * Binds all textures from a material to the appropriate texture units
+ * and sets their uniform locations in the shader.
+ *
+ * @param material Pointer to Material structure with textures to activate
+ */
 static void
 activate_material_textures (const Material *material)
 {
@@ -129,8 +137,7 @@ object_load_config (Object *object, const char *configPath)
       config_parse_vec3_value (line, object->transformation->rotationCircle);
     }
 
-  if (config_find_line_by_key (configPath, "shininess", line,
-                               sizeof (line)))
+  if (config_find_line_by_key (configPath, "shininess", line, sizeof (line)))
     {
       config_parse_float_value (line, &object->material->light->shininess);
     }

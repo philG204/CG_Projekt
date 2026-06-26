@@ -5,10 +5,10 @@
 #include "../scene/scene.h"
 
 /**
- *  @brief
+ *  @brief Appply post processing effects
  *
- *  @param scene
- *  @param window
+ *  @param scene The scene
+ *  @param window The window
  */
 void render_scene (const Scene *scene, const Window *window);
 

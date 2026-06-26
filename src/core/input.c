@@ -4,8 +4,13 @@
 
 #include "../../headers/core/input.h"
 
+/** @brief State tracking for left arrow key press */
 int keyboardpressed_left = 0;
+
+/** @brief State tracking for right arrow key press */
 int keyboardpressed_right = 0;
+
+/** @brief State tracking for space key press */
 int keyboardpressed_space = 0;
 
 void
@@ -34,12 +39,16 @@ processKeyInput (GLFWwindow *window, const int cameraCount, int *activeCamera,
 }
 
 /**
- * @brief Checks if mouse is over the Button
+ * @brief Check if the mouse cursor is over a button
  *
- * @param window GLFW window handle
- * @param button button
+ * Compares the current mouse position with the button's bounding box
+ * to determine if the cursor is hovering over it.
+ *
+ * @param window Pointer to GLFW window handle
+ * @param button Button structure with position and dimensions
+ * @return 1 if mouse is over button, 0 otherwise
  */
-int
+static int
 isMouseOverButton (GLFWwindow *window, const Button button)
 {
   assert (window != NULL);
@@ -51,6 +60,8 @@ isMouseOverButton (GLFWwindow *window, const Button button)
          && mouseY >= button.y && mouseY <= button.y + button.height;
 }
 
+/** @brief State tracking for left mouse button press to avoid repeated
+ * triggers */
 int leftMouseWasPressed = 0;
 
 void

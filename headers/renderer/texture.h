@@ -11,49 +11,39 @@ typedef struct Texture
 } Texture;
 
 /**
- *  @brief
+ *  @brief Init a texture
  *
- *  @param configPath
- *  @param shader
- *  @param textures
- *  @param maxTextures
- */
-int texture_init_from_config (const char *configPath, GLuint shader,
-                              Texture **textures, int maxTextures);
-
-/**
- *  @brief
- *
- *  @param filename
- *  @param shaderProgram
- *  @param shaderVariable
+ *  @param filename The path of the texture
+ *  @param shaderProgram The programm handle
+ *  @param shaderVariable The name of the shader variable
  */
 Texture *texture_init (char *filename, GLuint shaderProgram,
                        const char *shaderVariable);
 
 /**
- *  @brief
+ *  @brief Activate a Texture
  *
- *  @param textures
- *  @param texture_count
+ *  @param textures Out parameter for textures
+ *  @param texture_count Number of textures
  */
 void activate_texture (Texture **textures, int texture_count);
 
 /**
- * @brief
+ * @brief Initialize base texture from config
  *
  * @param objDir
+ * @param shader The programm handle
  * @return Texture
  */
 Texture *texture_init_base_from_config (const char *objDir, GLuint shader);
 
 /**
- * @brief
+ * @brief Initialize overlay textures from config
  *
  * @param objDir
- * @param shader
- * @param textures
- * @param maxTextures
+ * @param shader The programm handle
+ * @param textures Out parameter for textures
+ * @param maxTextures Number of textures
  * @return int
  */
 int texture_init_overlays_from_config (const char *objDir, GLuint shader,

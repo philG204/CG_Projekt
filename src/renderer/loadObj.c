@@ -66,13 +66,6 @@ parseFaceToken (const char *token, FaceIndex *out)
   return 0;
 }
 
-/**
- *  @brief
- *
- *  @param index
- *  @param count
- *  @return
- */
 static int
 validIndex (int index, size_t count)
 {
