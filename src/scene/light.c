@@ -11,11 +11,11 @@ gouraudLightning (const GLfloat *lightDir, const GLfloat *modelViewMatrix)
   assert (lightDir != NULL);
   assert (modelViewMatrix != NULL);
 
-  GLuint shaderProg = shader_init ("v_lightning.glsl");
+  const GLuint shaderProg = shader_init ("v_lightning.glsl");
 
-  int modelViewMatrixLoc
-      = glGetUniformLocation (shaderProg, "modelViewMatrix"),
-      lightPosLoc = glGetUniformLocation (shaderProg, "lightPos");
+  const int modelViewMatrixLoc
+      = glGetUniformLocation (shaderProg, "modelViewMatrix");
+  const int lightPosLoc = glGetUniformLocation (shaderProg, "lightPos");
 
   glUniformMatrix4fv (modelViewMatrixLoc, 1, GL_FALSE,
                       (GLfloat *)modelViewMatrix);

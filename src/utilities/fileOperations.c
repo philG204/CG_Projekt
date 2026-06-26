@@ -5,7 +5,7 @@
 #include "../../headers/utilities/fileOperations.h"
 
 void
-getNameWithoutExtension (const char *path, char *out, size_t outSize)
+getNameWithoutExtension (const char *path, char *out, const size_t outSize)
 {
   assert (path != NULL);
   assert (out != NULL);

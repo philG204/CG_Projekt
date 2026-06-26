@@ -10,6 +10,6 @@
  *  @param scene
  *  @param window
  */
-void render_scene (Scene *scene, Window *window);
+void render_scene (const Scene *scene, const Window *window);
 
 #endif // POST_PROCESSING_H

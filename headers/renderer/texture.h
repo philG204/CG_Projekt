@@ -29,7 +29,7 @@ int texture_init_from_config (const char *configPath, GLuint shader,
  *  @param shaderVariable
  */
 Texture *texture_init (char *filename, GLuint shaderProgram,
-                       char *shaderVariable);
+                       const char *shaderVariable);
 
 /**
  *  @brief

@@ -1,8 +1,6 @@
 #ifndef LOAD_OBJ_H
 #define LOAD_OBJ_H
 
-#include <stddef.h>
-
 /**
  *  @brief
  *

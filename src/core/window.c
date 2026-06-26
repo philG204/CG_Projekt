@@ -10,7 +10,7 @@
 
 
 Window *
-window_create (int width, int height, const char *title)
+window_create (const int width, const int height, const char *title)
 {
   assert (title != NULL);
 
@@ -23,25 +23,25 @@ window_create (int width, int height, const char *title)
   Window *window = malloc (sizeof (Window));
 
   window->processingEnabled = 1;
-  window->window = glfwCreateWindow (width, height, title, NULL, NULL);
+  window->window = glfwCreateWindow (width, height, title, nullptr, nullptr);
 
   if (!window->window)
     {
       printf ("Failed to create window\n");
       glfwTerminate ();
-      return NULL;
+      return nullptr;
     }
 
   glfwMakeContextCurrent (window->window);
 
-  GLenum err = glewInit ();
+  const GLenum err = glewInit ();
   if (err != GLEW_OK)
     {
-      printf ("GLEW error: %s\n", glewGetErrorString (err));
-      return 0;
+      printf ("GLEW error: %p\n", glewGetErrorString (err));
+      return nullptr;
     }
 
-  printf ("OpenGL Version: %s\n", glGetString (GL_VERSION));
+  printf ("OpenGL Version: %p\n", glGetString (GL_VERSION));
 
   GLint success;
 
@@ -56,7 +56,7 @@ window_create (int width, int height, const char *title)
   GLuint vertex_shader = glCreateShader (GL_VERTEX_SHADER);
   const GLchar *vertex_shader_src = loadShader ("assets/vertex.glsl");
 
-  glShaderSource (vertex_shader, 1, &vertex_shader_src, NULL);
+  glShaderSource (vertex_shader, 1, &vertex_shader_src, nullptr);
   glCompileShader (vertex_shader);
 
   glGetShaderiv (vertex_shader, GL_COMPILE_STATUS, &success);
@@ -64,7 +64,7 @@ window_create (int width, int height, const char *title)
   if (!success)
     {
       char log[512];
-      glGetShaderInfoLog (vertex_shader, sizeof (log), NULL, log);
+      glGetShaderInfoLog (vertex_shader, sizeof (log), nullptr, log);
       printf ("%s\n", log);
     }
 
@@ -73,7 +73,7 @@ window_create (int width, int height, const char *title)
   GLuint fragment_shader = glCreateShader (GL_FRAGMENT_SHADER);
   const GLchar *fragment_shader_src = loadShader ("assets/fragment.glsl");
 
-  glShaderSource (fragment_shader, 1, &fragment_shader_src, NULL);
+  glShaderSource (fragment_shader, 1, &fragment_shader_src, nullptr);
   glCompileShader (fragment_shader);
 
   glGetShaderiv (fragment_shader, GL_COMPILE_STATUS, &success);
@@ -81,7 +81,7 @@ window_create (int width, int height, const char *title)
   if (!success)
     {
       char log[512];
-      glGetShaderInfoLog (fragment_shader, sizeof (log), NULL, log);
+      glGetShaderInfoLog (fragment_shader, sizeof (log), nullptr, log);
       printf ("%s\n", log);
     }
 
@@ -93,7 +93,7 @@ window_create (int width, int height, const char *title)
   if (!success)
     {
       char log[512];
-      glGetProgramInfoLog (window->screen_shader, sizeof (log), NULL, log);
+      glGetProgramInfoLog (window->screen_shader, sizeof (log), nullptr, log);
       printf ("%s\n", log);
     }
 
@@ -104,7 +104,7 @@ window_create (int width, int height, const char *title)
   const GLchar *processing_shader_src
       = loadShader ("assets/processingFragment.glsl");
 
-  glShaderSource (processing_shader, 1, &processing_shader_src, NULL);
+  glShaderSource (processing_shader, 1, &processing_shader_src, nullptr);
   glCompileShader (processing_shader);
 
   glGetShaderiv (processing_shader, GL_COMPILE_STATUS, &success);
@@ -112,7 +112,7 @@ window_create (int width, int height, const char *title)
   if (!success)
     {
       char log[512];
-      glGetShaderInfoLog (processing_shader, sizeof (log), NULL, log);
+      glGetShaderInfoLog (processing_shader, sizeof (log), nullptr, log);
       printf ("%s\n", log);
     }
 
@@ -124,7 +124,8 @@ window_create (int width, int height, const char *title)
   if (!success)
     {
       char log[512];
-      glGetProgramInfoLog (window->processing_shader, sizeof (log), NULL, log);
+      glGetProgramInfoLog (window->processing_shader, sizeof (log), nullptr,
+                           log);
       printf ("%s\n", log);
     }
 
@@ -132,7 +133,7 @@ window_create (int width, int height, const char *title)
   glDeleteShader (fragment_shader);
   glDeleteShader (processing_shader);
 
-  float quad_vertices[]
+  constexpr float quad_vertices[]
       = { -1.0f, -1.0f, 0.0f, 0.0f, 1.0f,  -1.0f, 1.0f, 0.0f,
           1.0f,  1.0f,  1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 0.0f,
           1.0f,  1.0f,  1.0f, 1.0f, -1.0f, 1.0f,  0.0f, 1.0f };
@@ -149,7 +150,7 @@ window_create (int width, int height, const char *title)
                 GL_STATIC_DRAW);
 
   glVertexAttribPointer (0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof (float),
-                         (void *)0);
+                         nullptr);
   glEnableVertexAttribArray (0);
 
   glVertexAttribPointer (1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof (float),

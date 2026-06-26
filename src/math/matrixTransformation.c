@@ -8,7 +8,7 @@ normalize (GLfloat *v)
 {
   assert (v != NULL);
 
-  GLfloat len = sqrtf (v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+  const GLfloat len = sqrtf (v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
   if (len > 0.0f)
     {
       v[0] /= len;
@@ -39,7 +39,7 @@ dot (const GLfloat *a, const GLfloat *b)
 }
 
 void
-multiplyMatrices (GLfloat *out, const GLfloat *a, GLfloat *b)
+multiplyMatrices (GLfloat *out, const GLfloat *a, const GLfloat *b)
 {
   assert (a != NULL);
   assert (b != NULL);
@@ -84,7 +84,7 @@ identity (GLfloat *out)
 }
 
 void
-translate (GLfloat *out, const GLfloat *in, GLfloat *v)
+translate (GLfloat *out, const GLfloat *in, const GLfloat *v)
 {
   assert (out != NULL);
   assert (in != NULL);
@@ -101,15 +101,15 @@ translate (GLfloat *out, const GLfloat *in, GLfloat *v)
 }
 
 void
-rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
+rotatex (GLfloat *out, const GLfloat *in, const GLfloat angle)
 {
   assert (out != NULL);
   assert (in != NULL);
 
   GLfloat r[16];
 
-  GLfloat c = cosf (angle);
-  GLfloat s = sinf (angle);
+  const GLfloat c = cosf (angle);
+  const GLfloat s = sinf (angle);
 
   identity (r);
 
@@ -122,15 +122,15 @@ rotatex (GLfloat *out, const GLfloat *in, GLfloat angle)
 }
 
 void
-rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
+rotatey (GLfloat *out, const GLfloat *in, const GLfloat angle)
 {
   assert (out != NULL);
   assert (in != NULL);
 
   GLfloat r[16];
 
-  GLfloat c = cosf (angle);
-  GLfloat s = sinf (angle);
+  const GLfloat c = cosf (angle);
+  const GLfloat s = sinf (angle);
 
   identity (r);
   r[0] = c;
@@ -142,15 +142,15 @@ rotatey (GLfloat *out, const GLfloat *in, GLfloat angle)
 }
 
 void
-rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
+rotatez (GLfloat *out, const GLfloat *in, const GLfloat angle)
 {
   assert (out != NULL);
   assert (in != NULL);
 
   GLfloat r[16];
 
-  GLfloat c = cosf (angle);
-  GLfloat s = sinf (angle);
+  const GLfloat c = cosf (angle);
+  const GLfloat s = sinf (angle);
 
   identity (r);
   r[0] = c;
@@ -162,7 +162,7 @@ rotatez (GLfloat *out, const GLfloat *in, GLfloat angle)
 }
 
 void
-scale (GLfloat *out, GLfloat *in, const GLfloat *v)
+scale (GLfloat *out, const GLfloat *in, const GLfloat *v)
 {
   assert (out != NULL);
   assert (in != NULL);
@@ -217,7 +217,8 @@ lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
 }
 
 void
-perspective (GLfloat *out, float fovy, float aspect, float near, float far)
+perspective (GLfloat *out, const GLfloat fovy, const GLfloat aspect,
+             const GLfloat near, const GLfloat far)
 {
   assert (out != NULL);
 
@@ -226,7 +227,7 @@ perspective (GLfloat *out, float fovy, float aspect, float near, float far)
       out[i] = 0.0f;
     }
 
-  GLfloat tanHalfFovy = tanf (fovy / 2.0f);
+  const GLfloat tanHalfFovy = tanf (fovy / 2.0f);
 
   out[0] = 1.0f / (aspect * tanHalfFovy);
   out[5] = 1.0f / tanHalfFovy;

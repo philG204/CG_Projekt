@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 
 #include <GL/glew.h>
 
@@ -32,7 +31,7 @@ mesh_init (char *meshFile)
       vao = 0;
       vbo = 0;
 
-      return NULL;
+      return nullptr;
     }
 
   glGenVertexArrays (1, &vao);
@@ -45,7 +44,7 @@ mesh_init (char *meshFile)
                 GL_STATIC_DRAW);
 
   glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (float),
-                         (void *)0);
+                         nullptr);
   glEnableVertexAttribArray (0);
 
   glVertexAttribPointer (1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (float),
@@ -75,9 +74,9 @@ mesh_init (char *meshFile)
 }
 
 void
-mesh_draw (Mesh *mesh)
+mesh_draw (const Mesh *mesh)
 {
   assert (mesh != NULL);
 
-  glDrawArrays (GL_TRIANGLES, 0, (GLsizei)mesh->vertexCount);
+  glDrawArrays (GL_TRIANGLES, 0, mesh->vertexCount);
 }

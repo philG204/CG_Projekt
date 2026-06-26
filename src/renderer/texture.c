@@ -8,7 +8,6 @@
 #include "../../headers/renderer/texture.h"
 #include "../../headers/stb_image.h"
 #include "../../headers/utilities/config.h"
-#include "../../headers/utilities/fileOperations.h"
 
 #define MAX_CACHED_TEXTURES 128
 
@@ -51,7 +50,7 @@ texture_get_or_load (const char *texturePath, GLuint shader,
     {
       printf ("texture_get_or_load: konnte Texture nicht laden: %s\n",
               texturePath);
-      return NULL;
+      return nullptr;
     }
 
   if (textureCacheCount >= MAX_CACHED_TEXTURES)
@@ -76,68 +75,9 @@ texture_get_or_load (const char *texturePath, GLuint shader,
   return texture;
 }
 
-int
-texture_init_from_config (const char *configPath, GLuint shader,
-                          Texture **textures, int maxTextures)
-{
-  assert (configPath != NULL);
-  assert (textures != NULL);
-
-  char textureLine[512];
-  char completeConfigPath[512];
-  snprintf (completeConfigPath, sizeof (completeConfigPath),
-            "assets/%s/object.cfg", configPath);
-  printf ("open file: %s\n", completeConfigPath);
-
-  printf ("texture_init_from_config: %s\n", completeConfigPath);
-  if (!config_find_line_by_key (completeConfigPath, "textures", textureLine,
-                                sizeof (textureLine)))
-    {
-      printf (
-          "texture_init_from_config: keine textures-Zeile gefunden in %s\n",
-          completeConfigPath);
-      return 0;
-    }
-
-  char textureNames[CONFIG_MAX_LIST_ITEMS][CONFIG_MAX_STRING_LENGTH];
-
-  if (maxTextures > CONFIG_MAX_LIST_ITEMS)
-    {
-      maxTextures = CONFIG_MAX_LIST_ITEMS;
-    }
-
-  int textureCount = config_parse_string_list_value (textureLine, textureNames,
-                                                     maxTextures);
-
-  int loadedCount = 0;
-
-  for (int i = 0; i < textureCount; i++)
-    {
-      char completeTexturePath[512];
-      printf ("texture index: %d\n", i);
-      snprintf (completeTexturePath, sizeof (completeTexturePath),
-                "assets/Textures/%s", textureNames[i]);
-
-      Texture *texture
-          = texture_get_or_load (completeTexturePath, shader, textureNames[i]);
-      printf ("texture loaded: %s\n", completeTexturePath);
-      if (texture == NULL)
-        {
-          printf ("texture_init_from_config: texture konnte nicht geladen "
-                  "werden: %s\n",
-                  completeTexturePath);
-          continue;
-        }
-
-      textures[loadedCount] = texture;
-      loadedCount++;
-    }
-
-  return loadedCount;
-}
-
 Texture *
-texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
+texture_init (char *filename, const GLuint shaderProgram,
+              const char *shaderVariable)
 {
   assert (filename != NULL);
   assert (shaderVariable != NULL);
@@ -158,7 +98,7 @@ texture_init (char *filename, GLuint shaderProgram, char *shaderVariable)
       printf ("texture_init: Fehler beim Laden der Textur %s: %s\n", filename,
               stbi_failure_reason ());
       free (texture);
-      return NULL;
+      return nullptr;
     }
 
   stbi_set_flip_vertically_on_load (1);
@@ -203,7 +143,7 @@ activate_texture (Texture **textures, int texture_count)
 
   for (int i = 0; i < texture_count; i++)
     {
-      Texture *texture = textures[i];
+      const Texture *texture = textures[i];
 
       assert (texture != NULL);
 
@@ -219,23 +159,19 @@ activate_texture (Texture **textures, int texture_count)
 }
 
 Texture *
-texture_init_base_from_config (const char *objDir, GLuint shader)
+texture_init_base_from_config (const char *configPath, GLuint shader)
 {
-  assert (objDir != NULL);
+  assert (configPath != NULL);
 
   char textureLine[512];
-  char completeConfigPath[512];
 
-  snprintf (completeConfigPath, sizeof (completeConfigPath),
-            "assets/%s/object.cfg", objDir);
-
-  if (!config_find_line_by_key (completeConfigPath, "baseTexture", textureLine,
+  if (!config_find_line_by_key (configPath, "baseTexture", textureLine,
                                 sizeof (textureLine)))
     {
       printf (
           "texture_init_base_from_config: keine baseTexture gefunden in %s\n",
-          completeConfigPath);
-      return NULL;
+          configPath);
+      return nullptr;
     }
 
   char textureName[CONFIG_MAX_STRING_LENGTH];
@@ -245,8 +181,8 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
     {
       printf ("texture_init_base_from_config: baseTexture konnte nicht "
               "gelesen werden in %s\n",
-              completeConfigPath);
-      return NULL;
+              configPath);
+      return nullptr;
     }
 
   char completeTexturePath[512];
@@ -262,7 +198,7 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
       printf ("texture_init_base_from_config: Textur konnte nicht geladen "
               "werden: %s\n",
               completeTexturePath);
-      return NULL;
+      return nullptr;
     }
 
   printf ("BaseTexture geladen: %s\n", completeTexturePath);
@@ -271,24 +207,20 @@ texture_init_base_from_config (const char *objDir, GLuint shader)
 }
 
 int
-texture_init_overlays_from_config (const char *objDir, GLuint shader,
+texture_init_overlays_from_config (const char *configPath, GLuint shader,
                                    Texture **textures, int maxTextures)
 {
-  assert (objDir != NULL);
+  assert (configPath != NULL);
   assert (textures != NULL);
 
   char textureLine[512];
-  char completeConfigPath[512];
 
-  snprintf (completeConfigPath, sizeof (completeConfigPath),
-            "assets/%s/object.cfg", objDir);
-
-  if (!config_find_line_by_key (completeConfigPath, "overlayTextures",
-                                textureLine, sizeof (textureLine)))
+  if (!config_find_line_by_key (configPath, "overlayTextures", textureLine,
+                                sizeof (textureLine)))
     {
       printf ("texture_init_overlays_from_config: keine overlayTextures "
               "gefunden in %s\n",
-              completeConfigPath);
+              configPath);
       return 0;
     }
 
@@ -299,8 +231,8 @@ texture_init_overlays_from_config (const char *objDir, GLuint shader,
       maxTextures = CONFIG_MAX_LIST_ITEMS;
     }
 
-  int textureCount = config_parse_string_list_value (textureLine, textureNames,
-                                                     maxTextures);
+  const int textureCount = config_parse_string_list_value (
+      textureLine, textureNames, maxTextures);
 
   int loadedCount = 0;
 
