@@ -29,13 +29,13 @@ Kapselt die Fensterverwaltung mit GLFW. Dazu gehören das Initialisieren von GLF
 
 Kapselt die Eingabeverarbeitung. Hier werden Tastatur- und gegebenenfalls Mauseingaben abgefragt und für die Kamera- oder Objektsteuerung bereitgestellt.
 
-## src/geometry/
-
-Enthält Code zum Laden oder Erzeugen von Geometriedaten.
-
-### obj_loader.c / obj_loader.h
+### loadObj.c / loadObj.h
 
 Lädt Geometriedaten aus separaten .obj-Dateien. Die geladenen Daten bestehen zum Beispiel aus Positionen, Normalen, Texturkoordinaten und Indizes. Diese Daten werden anschließend an den Renderer weitergegeben.
+
+### loadShader.c / loadShader.h
+
+Lädt Shaderprogramme aus separaten .glsl-Dateien. Die geladenen Shader können von den Objekten in der Scene angewendet werwden
 
 ## src/renderer/
 
@@ -73,35 +73,23 @@ Verwaltet die Kamera. Dazu gehören Position, Blickrichtung, Bewegung und die Be
 
 Beschreibt Lichtquellen in der Szene. Dazu können zum Beispiel Richtungslicht, Punktlicht oder Spotlicht gehören. Die Lichtdaten werden beim Rendern an die Shader übergeben.
 
-## shaders/
+## assets/Shaders/
 
 Enthält die GLSL-Shaderprogramme, die auf der Grafikkarte ausgeführt werden.
 
-### standard.vert
+## assets/Shaders/NormaleBeleuchtung
 
-Vertex-Shader für normale 3D-Objekte. Transformiert die Vertexpositionen mit Model-, View- und Projection-Matrix und gibt weitere Daten wie Normalen oder Texturkoordinaten an den Fragment-Shader weiter.
-
-### standard.frag
-
-Fragment-Shader für normale 3D-Objekte. Berechnet die sichtbare Farbe eines Pixels, zum Beispiel anhand von Textur, Licht und Materialeigenschaften.
-
-### fog.vert
-
-Vertex-Shader für Objekte, bei denen Nebel verwendet wird. Gibt zusätzlich Informationen weiter, die für die entfernungsabhängige Nebelberechnung benötigt werden.
-
-### fog.frag
-
-Fragment-Shader mit Nebelberechnung. Entfernte Fragmente werden abhängig von ihrer Distanz zur Kamera mit einer Nebelfarbe überblendet.
+Enthält das Shader Programm für normale Beleuchtung mit mehreren möglichen Lichtquellen
 
 ## assets/
 
 Enthält externe Dateien, die vom Programm zur Laufzeit geladen werden. Dazu gehören Modelle, Texturen und eventuell weitere Ressourcen.
 
-### assets/models/
+### assets/Meshes/
 
 Enthält 3D-Modelle, zum Beispiel im .obj-Format.
 
-### assets/textures/
+### assets/Textures/
 
 Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
 
