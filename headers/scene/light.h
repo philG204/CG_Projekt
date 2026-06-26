@@ -9,6 +9,7 @@ typedef struct LightSource
   GLfloat y;
   GLfloat z;
 
+  float ambient[4];
   float diffuse[4];
   float specular[4];
 } LightSource;

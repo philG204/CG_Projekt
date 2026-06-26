@@ -146,6 +146,11 @@ scene_add_object (Scene *scene, const char *configPath)
       lightObject->y = object->transformation->translation[1];
       lightObject->z = object->transformation->translation[2];
 
+      lightObject->ambient[0] = object->material->light->ambient[0];
+      lightObject->ambient[1] = object->material->light->ambient[1];
+      lightObject->ambient[2] = object->material->light->ambient[2];
+      lightObject->ambient[3] = object->material->light->ambient[3];
+
       lightObject->diffuse[0] = object->material->light->diffuse[0];
       lightObject->diffuse[1] = object->material->light->diffuse[1];
       lightObject->diffuse[2] = object->material->light->diffuse[2];
