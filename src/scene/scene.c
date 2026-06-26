@@ -431,13 +431,12 @@ scene_update (const Scene *scene)
         {
           float angle
               = sin (time * 2.0f) * 5.0f; // to make the rocking faster the
-                                           // 0.25f to a higher number
+                                          // 0.25f to a higher number
 
           if (strcmp (object->name, "Rockingchair_01_1k") == 0)
             {
               float rockFactor = 5.0f;
-              float angle
-                        = sin (time * 2.0f) * rockFactor;
+              float angle = sin (time * 2.0f) * rockFactor;
 
               object->transformation->rotation[0] = angle;
 
@@ -456,8 +455,8 @@ scene_update (const Scene *scene)
         }
     }
 
-    glDepthMask(GL_FALSE);
-    for (int j = 0; j < scene->object_count; j++)
+  glDepthMask (GL_FALSE);
+  for (int j = 0; j < scene->object_count; j++)
     {
       object = scene->objects[j];
       if (object == NULL)
@@ -472,13 +471,12 @@ scene_update (const Scene *scene)
         }
 
       if (object->isTransparent == 1)
-        { 
+        {
 
           if (strcmp (object->name, "Rockingchair_01_1k") == 0)
             {
               float rockFactor = 5.0f;
-              float angle
-                        = sin (time * 2.0f) * rockFactor;
+              float angle = sin (time * 2.0f) * rockFactor;
 
               object->transformation->rotation[0] = angle;
 
@@ -490,7 +488,7 @@ scene_update (const Scene *scene)
           object_transformation (object, object->transformation->translation,
                                  object->transformation->scaling,
                                  object->transformation->rotation);
-                                 
+
           object_draw (object, scene->camera->viewProj, scene->camera->view,
                        scene->camera->projection, scene->lights,
                        scene->lightCount, scene->camera->position.x,
