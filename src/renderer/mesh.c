@@ -31,7 +31,7 @@ mesh_init (char *meshFile)
       vao = 0;
       vbo = 0;
 
-      return nullptr;
+      return NULL;
     }
 
   glGenVertexArrays (1, &vao);
