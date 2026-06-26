@@ -3,8 +3,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/mesh.h"
@@ -381,6 +383,13 @@ object_draw (const Object *object, const GLfloat *viewProj,
   glUniformMatrix4fv (
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
+
+  if (strcmp (object->name, "candleSmoke") == 0)
+    {
+      glUniform1f (glGetUniformLocation (
+                       object->material->shaderObject->shader, "time"),
+                   (GLfloat)glfwGetTime ());
+    }
 
   glBindVertexArray (object->meshObject->mesh->vao);
 
