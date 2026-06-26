@@ -427,13 +427,56 @@ scene_update (const Scene *scene)
           continue;
         }
 
-      identity (object->modelMatrix);
+      if(object->isTransparent == 0){
+        identity (object->modelMatrix);
 
-      if (strcmp (object->name, "Rockingchair_01_1k") == 0)
+        if (strcmp (object->name, "rocking_chair") == 0)
         {
+          float rockFactor = 5.0;
           const float angle
-              = sin (time * 2.0f) * 0.25; // to make the rocking faster the
+              = sin (time * 2.0f) * rockFactor; // to make the rocking faster the
                                           // 0.25f to a higher number
+
+          object->transformation->rotation[0] = angle;
+
+          object->transformation->rotationCircle[0] = 0.0f;
+          object->transformation->rotationCircle[1] = -0.6f;
+          object->transformation->rotationCircle[2] = 0.0f;
+        }
+
+        object_transformation (object, object->transformation->translation,
+                             object->transformation->scaling,
+                             object->transformation->rotation);
+        object_draw (object, scene->camera->viewProj, scene->camera->view,
+                   scene->camera->projection, scene->lights, scene->lightCount,
+                   scene->camera->position.x, scene->camera->position.y,
+                   scene->camera->position.z);
+      }
+    }
+
+    glDepthMask(GL_FALSE); // Disable depth writing for transparent objects
+    for (int j = 0; j < scene->object_count; j++)
+    {
+      const Object *object = scene->objects[j];
+      if (object == NULL)
+        {
+          continue;
+        }
+
+      if (object->meshObject->mesh == NULL)
+        {
+          printf ("mesh from object %d in scene is NULL!!!\n", j);
+          continue;
+        }
+
+      if(object->isTransparent == 1){
+        identity (object->modelMatrix);
+
+        if (strcmp (object->name, "rocking_chair") == 0)
+        {
+          float rockFactor = 5.0;
+          const float angle
+              = sin (time * 2.0f) * rockFactor;
 
           object->transformation->rotation[0] = angle;
 
@@ -449,7 +492,9 @@ scene_update (const Scene *scene)
                    scene->camera->projection, scene->lights, scene->lightCount,
                    scene->camera->position.x, scene->camera->position.y,
                    scene->camera->position.z);
+      }
     }
+    glDepthMask(GL_TRUE); // Re-enable depth writing after rendering transparent objects
 
   glBindFramebuffer (GL_FRAMEBUFFER, 0);
   glDisable (GL_DEPTH_TEST);
