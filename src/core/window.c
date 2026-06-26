@@ -22,7 +22,7 @@ window_create (const int width, const int height, const char *title)
 
   Window *window = malloc (sizeof (Window));
 
-  window->processingEnabled = 0;
+  window->processingEnabled = 1;
   window->window = glfwCreateWindow (width, height, title, NULL, NULL);
 
   if (!window->window)
