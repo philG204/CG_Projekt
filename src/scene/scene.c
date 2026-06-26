@@ -417,9 +417,46 @@ scene_update (const Scene *scene)
     {
       const Object *object = scene->objects[j];
       if (object == NULL)
+        continue;
+
+      if (object->meshObject->mesh == NULL)
         {
+          printf ("mesh from object %d in scene is NULL!!!\n", j);
           continue;
         }
+
+      if (strcmp (object->name, "rocking_chair") == 0)
+        {
+          float rockFactor = 5.0f;
+          float angle = sin (time * 2.0f) * rockFactor;
+
+          object->transformation->rotation[0] = angle;
+
+          object->transformation->rotationCircle[0] = 0.0f;
+          object->transformation->rotationCircle[1] = -0.6f;
+          object->transformation->rotationCircle[2] = 0.0f;
+        }
+
+      identity (object->modelMatrix);
+      object_transformation (object, object->transformation->translation,
+                             object->transformation->scaling,
+                             object->transformation->rotation);
+
+      if (object->isTransparent == 1)
+        continue;
+
+      object_draw (object, scene->camera->viewProj, scene->camera->view,
+                   scene->camera->projection, scene->lights, scene->lightCount,
+                   scene->camera->position.x, scene->camera->position.y,
+                   scene->camera->position.z);
+    }
+
+  glDepthMask (GL_FALSE);
+  for (int j = 0; j < scene->object_count; j++)
+    {
+      const Object *object = scene->objects[j];
+      if (object == NULL)
+        continue;
 
       if (object->meshObject->mesh == NULL)
         {
@@ -428,72 +465,12 @@ scene_update (const Scene *scene)
         }
 
       if (object->isTransparent == 0)
-        {
-          float angle
-              = sin (time * 2.0f) * 5.0f; // to make the rocking faster the
-                                          // 0.25f to a higher number
+        continue;
 
-          if (strcmp (object->name, "Rockingchair_01_1k") == 0)
-            {
-              float rockFactor = 5.0f;
-              float angle = sin (time * 2.0f) * rockFactor;
-
-              object->transformation->rotation[0] = angle;
-
-              object->transformation->rotaionCircle[0] = 0.0f;
-              object->transformation->rotaionCircle[1] = -0.6f;
-              object->transformation->rotaionCircle[2] = 0.0f;
-            }
-
-          object_transformation (object, object->transformation->translation,
-                                 object->transformation->scaling,
-                                 object->transformation->rotation);
-          object_draw (object, scene->camera->viewProj, scene->camera->view,
-                       scene->camera->projection, scene->lights,
-                       scene->lightCount, scene->camera->position.x,
-                       scene->camera->position.y, scene->camera->position.z);
-        }
-    }
-
-  glDepthMask (GL_FALSE);
-  for (int j = 0; j < scene->object_count; j++)
-    {
-      object = scene->objects[j];
-      if (object == NULL)
-        {
-          continue;
-        }
-
-      if (object->meshObject->mesh == NULL)
-        {
-          printf ("mesh from object %d in scene is NULL!!!\n", j);
-          continue;
-        }
-
-      if (object->isTransparent == 1)
-        {
-
-          if (strcmp (object->name, "Rockingchair_01_1k") == 0)
-            {
-              float rockFactor = 5.0f;
-              float angle = sin (time * 2.0f) * rockFactor;
-
-              object->transformation->rotation[0] = angle;
-
-              object->transformation->rotaionCircle[0] = 0.0f;
-              object->transformation->rotaionCircle[1] = -0.6f;
-              object->transformation->rotaionCircle[2] = 0.0f;
-            }
-
-          object_transformation (object, object->transformation->translation,
-                                 object->transformation->scaling,
-                                 object->transformation->rotation);
-
-          object_draw (object, scene->camera->viewProj, scene->camera->view,
-                       scene->camera->projection, scene->lights,
-                       scene->lightCount, scene->camera->position.x,
-                       scene->camera->position.y, scene->camera->position.z);
-        }
+      object_draw (object, scene->camera->viewProj, scene->camera->view,
+                   scene->camera->projection, scene->lights, scene->lightCount,
+                   scene->camera->position.x, scene->camera->position.y,
+                   scene->camera->position.z);
     }
   glDepthMask (GL_TRUE);
 

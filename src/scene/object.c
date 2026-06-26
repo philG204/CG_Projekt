@@ -108,16 +108,6 @@ object_load_config (Object *object, const char *configPath)
       config_parse_vec4_value (line, object->material->light->specular);
     }
 
-  if (object->transformation != NULL)
-    {
-      config_parse_vec3_value (line, object->transformation->translation);
-    }
-
-  if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
-    {
-      config_parse_vec3_value (line, object->transformation->scaling);
-    }
-
   if (config_find_line_by_key (configPath, "translation", line, sizeof (line)))
     {
       config_parse_vec3_value (line, object->transformation->translation);
