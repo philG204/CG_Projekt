@@ -398,13 +398,15 @@ scene_update (Scene *scene)
 
       if (object->isTransparent == 0)
         {
-          identity (object->modelMatrix);
+          float angle
+              = sin (time * 2.0f) * 5.0f; // to make the rocking faster the
+                                           // 0.25f to a higher number
 
           if (strcmp (object->name, "Rockingchair_01_1k") == 0)
             {
+              float rockFactor = 5.0f;
               float angle
-                  = sin (time * 2.0f) * 0.25f; // to make the rocking faster
-                                               // the 0.25f to a higher number
+                        = sin (time * 2.0f) * rockFactor;
 
               object->transformation->rotation[0] = angle;
 
@@ -422,10 +424,9 @@ scene_update (Scene *scene)
                        scene->camera->position.y, scene->camera->position.z);
         }
     }
-  glEnable (GL_DEPTH_TEST);
-  glDepthMask (GL_FALSE);
 
-  for (int j = 0; j < scene->object_count; j++)
+    glDepthMask(GL_FALSE);
+    for (int j = 0; j < scene->object_count; j++)
     {
       object = scene->objects[j];
       if (object == NULL)
@@ -440,14 +441,13 @@ scene_update (Scene *scene)
         }
 
       if (object->isTransparent == 1)
-        {
-          identity (object->modelMatrix);
+        { 
 
           if (strcmp (object->name, "Rockingchair_01_1k") == 0)
             {
+              float rockFactor = 5.0f;
               float angle
-                  = sin (time * 2.0f) * 0.25f; // to make the rocking faster
-                                               // the 0.25f to a higher number
+                        = sin (time * 2.0f) * rockFactor;
 
               object->transformation->rotation[0] = angle;
 
@@ -459,6 +459,7 @@ scene_update (Scene *scene)
           object_transformation (object, object->transformation->translation,
                                  object->transformation->scaling,
                                  object->transformation->rotation);
+                                 
           object_draw (object, scene->camera->viewProj, scene->camera->view,
                        scene->camera->projection, scene->lights,
                        scene->lightCount, scene->camera->position.x,

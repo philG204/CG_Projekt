@@ -10,6 +10,7 @@ modern_wooden_cabinet_1k
 Television_01_2k
 boombox_1k
 Chandelier_02_1k
+Chandelier_02_1k2
 Rockingchair_01_1k
 gamepad_1k
 fancy_picture_frame_01_1k_1
