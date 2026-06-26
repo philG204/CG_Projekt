@@ -2,7 +2,6 @@
 #define MATRIX_TRANSFORMATION_H
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 /**
  *  @brief Normalizes a 3D vector in-place
@@ -57,7 +56,7 @@ void identity (GLfloat *out);
  *  @param in Pointer to the input 4x4 matrix
  *  @param v Pointer to a 3-component translation vector
  */
-void translate (GLfloat *out, const GLfloat *in, GLfloat *v);
+void translate (GLfloat *out, const GLfloat *in, const GLfloat *v);
 
 /**
  *  @brief Rotates a 4x4 matrix around the X axis
@@ -115,7 +114,7 @@ void lookAt (GLfloat *out, const GLfloat *eye, const GLfloat *center,
  *  @param near Near clipping plane
  *  @param far Far clipping plane
  */
-void perspective (GLfloat *out, float fovy, float aspect, float near,
-                  float far);
+void perspective (GLfloat *out, GLfloat fovy, GLfloat aspect, GLfloat near,
+                  GLfloat far);
 
 #endif // MATRIX_TRANSFORMATION_H

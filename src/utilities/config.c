@@ -81,17 +81,15 @@ config_line_has_key (const char *line, const char *key)
 }
 
 int
-config_parse_string_value (const char *line, char *out, size_t outSize)
+config_parse_string_value (const char *line, char *out, const size_t outSize)
 {
   assert (line != NULL);
   assert (out != NULL);
 
   const char *equal = strchr (line, '=');
 
-  if (equal == NULL || out == NULL || outSize == 0)
-    {
-      return 0;
-    }
+  if (equal == NULL || outSize == 0)
+    return 0;
 
   equal++;
 
@@ -157,7 +155,7 @@ config_parse_int_value (const char *line, int *out)
       return 0;
     }
 
-  *out = strtof (equal + 1, NULL);
+  *out = strtof (equal + 1, nullptr);
 
   return 1;
 }
@@ -171,18 +169,16 @@ config_parse_float_value (const char *line, float *out)
   printf ("entering config_find_line_by_key\n");
   const char *equal = strchr (line, '=');
 
-  if (equal == NULL || out == NULL)
-    {
-      return 0;
-    }
+  if (equal == NULL)
+    return 0;
 
-  *out = strtof (equal + 1, NULL);
+  *out = strtof (equal + 1, nullptr);
 
   return 1;
 }
 
 int
-config_parse_vec3_value (const char *line, float out[3])
+config_parse_vec3_value (const char *line, float *out)
 {
   assert (line != NULL);
 
@@ -216,16 +212,16 @@ config_parse_vec3_value (const char *line, float out[3])
         }
 
       token = config_trim (token);
-      out[i] = strtof (token, NULL);
+      out[i] = strtof (token, nullptr);
 
-      token = strtok (NULL, ",");
+      token = strtok (nullptr, ",");
     }
 
   return 1;
 }
 
 int
-config_parse_vec4_value (const char *line, float out[4])
+config_parse_vec4_value (const char *line, float *out)
 {
   const char *start = strchr (line, '[');
   const char *end = strchr (line, ']');
@@ -257,9 +253,9 @@ config_parse_vec4_value (const char *line, float out[4])
         }
 
       token = config_trim (token);
-      out[i] = strtof (token, NULL);
+      out[i] = strtof (token, nullptr);
 
-      token = strtok (NULL, ",");
+      token = strtok (nullptr, ",");
     }
 
   return 1;
@@ -268,7 +264,7 @@ config_parse_vec4_value (const char *line, float out[4])
 int
 config_parse_string_list_value (const char *line,
                                 char items[][CONFIG_MAX_STRING_LENGTH],
-                                int maxItems)
+                                const int maxItems)
 {
   assert (line != NULL);
 
@@ -319,7 +315,7 @@ config_parse_string_list_value (const char *line,
           count++;
         }
 
-      token = strtok (NULL, ",");
+      token = strtok (nullptr, ",");
     }
 
   return count;
@@ -327,7 +323,7 @@ config_parse_string_list_value (const char *line,
 
 int
 config_find_line_by_key (const char *configPath, const char *key,
-                         char *outLine, size_t outLineSize)
+                         char *outLine, const size_t outLineSize)
 {
   assert (configPath != NULL);
   assert (key != NULL);

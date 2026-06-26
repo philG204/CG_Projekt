@@ -85,7 +85,7 @@ loadObj (const char *location, size_t *vertexCount)
   if (vertexCount == NULL)
     {
       fprintf (stderr, "loadObj: vertexCount ist NULL\n");
-      return NULL;
+      return nullptr;
     }
 
   *vertexCount = 0;
@@ -93,14 +93,14 @@ loadObj (const char *location, size_t *vertexCount)
   if (location == NULL)
     {
       fprintf (stderr, "loadObj: location ist NULL\n");
-      return NULL;
+      return nullptr;
     }
 
   FILE *file = fopen (location, "r");
   if (file == NULL)
     {
       perror ("fopen");
-      return NULL;
+      return nullptr;
     }
 
   printf ("OBJ-Datei geoeffnet: %s\n", location);
@@ -140,12 +140,12 @@ loadObj (const char *location, size_t *vertexCount)
     {
       fprintf (stderr, "OBJ enthaelt keine Vertices oder Faces\n");
       fclose (file);
-      return NULL;
+      return nullptr;
     }
 
   Vec3 *positions = malloc (vCount * sizeof (Vec3));
-  Vec2 *texCoords = NULL;
-  Vec3 *normals = NULL;
+  Vec2 *texCoords = nullptr;
+  Vec3 *normals = nullptr;
 
   if (vtCount > 0)
     {
@@ -164,7 +164,7 @@ loadObj (const char *location, size_t *vertexCount)
       free (texCoords);
       free (normals);
       fclose (file);
-      return NULL;
+      return nullptr;
     }
 
   // 8 floats pro Vertex: x y z, u v, nx ny nz
@@ -178,7 +178,7 @@ loadObj (const char *location, size_t *vertexCount)
       free (texCoords);
       free (normals);
       fclose (file);
-      return NULL;
+      return nullptr;
     }
 
   rewind (file);
@@ -324,7 +324,7 @@ loadObj (const char *location, size_t *vertexCount)
     {
       fprintf (stderr, "Keine gueltigen Dreiecke geladen\n");
       free (output);
-      return NULL;
+      return nullptr;
     }
 
   *vertexCount = realVertexCount;

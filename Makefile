@@ -21,7 +21,6 @@ SRC = \
 	src/scene/light.c \
 	src/scene/object.c \
 	src/scene/scene.c \
-	src/scene/loadObjectList.c \
 	src/main.c
 
 HEADERS = \
@@ -36,7 +35,6 @@ HEADERS = \
 	headers/renderer/texture.h \
 	headers/scene/camera.h \
 	headers/scene/light.h \
-	headers/scene/loadObjectList.h \
 	headers/scene/object.h \
 	headers/scene/scene.h \
 	headers/utilities/config.h \

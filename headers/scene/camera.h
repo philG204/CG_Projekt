@@ -32,12 +32,12 @@ typedef struct ProjectionSettings
 
 /**
  *
- *  @param view         saves where the camera is and whats it looking at
+ *  @param view         saves where the camera is and what's it looking at
  *  @param projection   saves how the camera project 3d to 2d
  *  @param viewProj     for the shader gl_Position per matrix multiplication
  *  view and projection
  *
- *  @param settings saves the CameraSetings and Projectionsettings for
+ *  @param settings saves the CameraSettings and ProjectionSettings for
  *  recalculation
  *  @param projectionSettings
  *
@@ -61,18 +61,18 @@ typedef struct Camera
  *  @brief
  *
  *  @param cameraSettings A Pointer to a deklaration Variable of the struct
- *  Camerasettings
+ *  CameraSettings
  *  @param projectionSettings A Pointer to a deklaration Variable of the struct
  *  Projections
  *  @return returns a struct of a Camera
  */
-Camera *camera_init (CameraSettings *cameraSettings,
-                     ProjectionSettings *projectionSettings);
+Camera *camera_init (const CameraSettings *cameraSettings,
+                     const ProjectionSettings *projectionSettings);
 
 /**
- *  @brief Updates the Camera and updates the Matricies
+ *  @brief Updates the Camera and updates the Matrices
  *  Updates the Camera and when the something has change recalculates the
- *  Matricies
+ *  Matrices
  *
  *  @param camera pointer to a Camera
  */
@@ -84,7 +84,8 @@ void camera_update (Camera *camera);
  *  @param camera
  *  @param cameraSettings
  */
-void camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings);
+void camera_setCameraSettings (Camera *camera,
+                               const CameraSettings *cameraSettings);
 
 /**
  *  @brief Set the entire Projections Settings at once
@@ -92,8 +93,9 @@ void camera_setCameraSettings (Camera *camera, CameraSettings *cameraSettings);
  *  @param camera
  *  @param projectionSettings
  */
-void camera_setProjectionSettings (Camera *camera,
-                                   ProjectionSettings *projectionSettings);
+void
+camera_setProjectionSettings (Camera *camera,
+                              const ProjectionSettings *projectionSettings);
 
 /**
  *  @brief Set the Eye of the Camera
@@ -116,7 +118,7 @@ void camera_setEye (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
 void camera_setCenter (Camera *camera, GLfloat x, GLfloat y, GLfloat z);
 
 /**
- *  @brief Set the Up/Normalvector of the Camera
+ *  @brief Set the Up/Normal vector of the Camera
  *
  *  @param camera
  *  @param x

@@ -9,7 +9,7 @@
  *  @param shaderDir
  *  @return
  */
-GLuint shader_init (char *shaderDir);
+GLuint shader_init (const char *shaderDir);
 
 /**
  *  @brief

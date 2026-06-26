@@ -11,7 +11,6 @@
 #include "../headers/core/window.h"
 #include "../headers/renderer/postProcessing.h"
 #include "../headers/scene/camera.h"
-#include "../headers/scene/loadObjectList.h"
 #include "../headers/scene/scene.h"
 
 int
@@ -20,21 +19,22 @@ main (void)
 
   Window *window = window_create (1920, 1080, "CG1");
 
-  CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 0.0f },
-                                        .center = { 0.0f, 0.0f, 0.0f },
-                                        .up = { 0.0f, 1.0f, 0.0f } },
-                                      { .eye = { 3.0f, 2.6f, 1.8f },
-                                        .center = { 0.7f, 1.0f, 0.0f },
-                                        .up = { 0.0f, 1.0f, 0.0f } },
-                                      { .eye = { -3.5f, 2.5f, -2.0f },
-                                        .center = { 0.0f, 0.0f, 0.0f },
-                                        .up = { 0.0f, 1.0f, 0.0f } },
-                                      { .eye = { 0.0f, 1.5f, -2.0f },
-                                        .center = { 0.0f, 1.0f, 0.0f },
-                                        .up = { 0.0f, 1.0f, 0.0f } } };
+  const CameraSettings cameraSettings[] = { { .eye = { 3.0f, 2.0f, 0.0f },
+                                              .center = { 0.0f, 0.0f, 0.0f },
+                                              .up = { 0.0f, 1.0f, 0.0f } },
+                                            { .eye = { 3.0f, 2.6f, 1.8f },
+                                              .center = { 0.7f, 1.0f, 0.0f },
+                                              .up = { 0.0f, 1.0f, 0.0f } },
+                                            { .eye = { -3.5f, 2.5f, -2.0f },
+                                              .center = { 0.0f, 0.0f, 0.0f },
+                                              .up = { 0.0f, 1.0f, 0.0f } },
+                                            { .eye = { 0.0f, 1.5f, -2.0f },
+                                              .center = { 0.0f, 1.0f, 0.0f },
+                                              .up = { 0.0f, 1.0f, 0.0f } } };
 
   int activeCamera = 0;
-  int cameraCount = sizeof (cameraSettings) / sizeof (CameraSettings);
+  constexpr int cameraCount
+      = sizeof (cameraSettings) / sizeof (CameraSettings);
   int lastactivecamera = activeCamera;
 
   ProjectionSettings projectionSettings = { .fovy = 100.0f * (3.14f / 270.0f),
@@ -42,11 +42,9 @@ main (void)
                                             .near_plane = 0.1f,
                                             .far_plane = 45.0f };
 
-  Scene *scene
-      = scene_init ("Meshes", "Shaders", "scene1",
-                    &cameraSettings[activeCamera], &projectionSettings);
-
-  load_object_list ("room.txt", scene);
+  const Scene *scene = scene_init (
+      "assets/Meshes", "assets/Shaders", "assets/Objects", "scene1",
+      &cameraSettings[activeCamera], &projectionSettings);
 
   while (!glfwWindowShouldClose (window->window))
     {
