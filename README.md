@@ -1,5 +1,11 @@
 # CG_Projekt
 
+## Mitglieder
+Philipp Gierenz,
+Christoph Kohnen,
+Bennet Kreth,
+Karl Kunze
+
 ## Bedienung
 Das Programm lässt sich durch einen einfachen Aufruf an `make` kompilieren.
 
@@ -9,12 +15,21 @@ Mit `make run` lässt sich das Programm auch direkt kompilieren und neu ausführ
 
 Eine Testsuite lässt sich mit `make test` ausführen.
 
-## src/
+Im laufenden Programm kann man mit den linken und rechten Pfeiltasten zwischen den 
+Kamerapositionen wechseln. Die Bildschirmeffekte (Alte Videokamera auf einem CRT wiedergegeben)
+lassen sich mit der Leertaste an und ausschalten.
 
-Enthält den gesamten C-Quellcode des Programms.
+## Scene
 
-### src/main.c
+Die Scene zeigt einen 80-er Jahre Raum, der durch die Linse einer sehr alten Kamera
+auf einem Röhrenbildmonitor angeschaut wird. Dabei wird der Gourand-Lichtalgorithmus zur 
+Beleuchtung verwendet. Zur Simulation der alten Kamera auf einem CRT wird die Scene zunächst
+auf einen off-screen Framebuffer gerendert, welcher anschließend mit einem post-processing shader
+auf den Bildschirm gerendert wird.
 
+## Code responsibility
+
+### src/main.c:
 Startpunkt des Programms. Initialisiert das Fenster, lädt die Szene und enthält die Hauptschleife. In der Hauptschleife werden Eingaben verarbeitet, die Szene aktualisiert und anschließend gerendert.
 
 ## src/core/
@@ -93,8 +108,6 @@ Enthält 3D-Modelle, zum Beispiel im .obj-Format.
 
 Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
 
-#
-
 ## Quellen von den Objekten und Texturen
 
 ### Objekte
@@ -113,4 +126,4 @@ Enthält Bilddateien für Texturen, zum Beispiel .png oder .jpg.
 ### Texturen
 - Bi Stretch; https://polyhaven.com/a/bi_stretch
 - Wood Floor; https://polyhaven.com/a/wood_floor
-- Crepe Satin; https://polyhaven.com/a/crepe_satin
+- Crépe Satin; https://polyhaven.com/a/crepe_satin
