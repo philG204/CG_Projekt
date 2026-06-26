@@ -13,7 +13,12 @@ window_create (const int width, const int height, const char *title)
 {
   assert (title != NULL);
 
-  glfwInitHint (GLFW_PLATFORM, GLFW_PLATFORM_X11);
+  int major, minor, rev;
+  glfwGetVersion (&major, &minor, &rev);
+
+  if (major > 3 || (major == 3 && minor >= 3))
+    glfwInitHint (GLFW_PLATFORM, GLFW_PLATFORM_X11);
+
   glfwInit ();
   glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 3);
