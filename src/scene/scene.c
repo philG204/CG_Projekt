@@ -426,6 +426,9 @@ scene_update (const Scene *scene)
           printf ("mesh from object %d in scene is NULL!!!\n", j);
           continue;
         }
+      
+      if(object->isTransparent == 0){
+        identity (object->modelMatrix);
 
       if (object->isTransparent == 0)
         {
