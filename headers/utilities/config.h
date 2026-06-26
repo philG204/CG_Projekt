@@ -1,6 +1,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <stddef.h>
+
 #define CONFIG_MAX_LIST_ITEMS 128
 #define CONFIG_MAX_STRING_LENGTH 256
 
