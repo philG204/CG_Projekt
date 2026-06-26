@@ -16,11 +16,15 @@ typedef struct ShaderPaths
 } ShaderPaths;
 
 /**
-  @brief
-
-  @param shaderDir
-  @param outPaths
-*/
+ * @brief Find and extract vertex and fragment shader paths from a directory
+ *
+ * Searches a directory for shader files containing "vertex" or "fragment"
+ * in their names and extracts the full file paths.
+ *
+ * @param shaderDir Directory path to search for shader files
+ * @param outPaths Pointer to ShaderPaths structure to store found paths
+ * @return 1 if both shaders found, 0 otherwise
+ */
 static int
 get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 {

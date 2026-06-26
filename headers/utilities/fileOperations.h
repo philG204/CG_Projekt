@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 /**
- *  @brief
+ *  @brief Get the filename of a file without extension
  *
  *  @param path
  *  @param out

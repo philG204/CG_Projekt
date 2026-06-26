@@ -21,12 +21,17 @@ static TextureCacheEntry textureCache[MAX_CACHED_TEXTURES];
 static int textureCacheCount = 0;
 
 /**
-  @brief
-
-  @param texturePath
-  @param shader
-  @param textureName
-*/
+ * @brief Get or load a texture with caching
+ *
+ * Checks if a texture is already loaded in the cache. If found,
+ * returns the cached version. Otherwise, loads the texture and adds it to the
+ * cache.
+ *
+ * @param texturePath Path to the texture file
+ * @param shader OpenGL shader program handle
+ * @param textureName Name of the texture variable in the shader
+ * @return Pointer to Texture structure, or NULL if loading failed
+ */
 static Texture *
 texture_get_or_load (const char *texturePath, GLuint shader,
                      const char *textureName)

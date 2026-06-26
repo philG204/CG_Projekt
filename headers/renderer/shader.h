@@ -4,17 +4,17 @@
 #include <GL/glew.h>
 
 /**
- *  @brief
+ *  @brief Initialize a pair of vertex and fragment shaders
  *
- *  @param shaderDir
- *  @return
+ *  @param shaderDir Base directory of the shader pair
+ *  @return The programm handle
  */
 GLuint shader_init (const char *shaderDir);
 
 /**
- *  @brief
+ *  @brief Use a shader
  *
- *  @param shaderProgram
+ *  @param shaderProgram The programm handle
  */
 void use_shader (GLuint shaderProgram);
 
