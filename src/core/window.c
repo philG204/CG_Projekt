@@ -14,7 +14,7 @@ window_create (const int width, const int height, const char *title)
   assert (title != NULL);
 
 #if GLFW_VERSION_MAJOR > 3                                                    \
-    || (GLFW_VERSION_MAJOR == 3 && GLFW_VERSION_MINOR >= 3)
+    || (GLFW_VERSION_MAJOR == 3 && GLFW_VERSION_MINOR >= 4)
   glfwInitHint (GLFW_PLATFORM, GLFW_PLATFORM_X11);
 #endif
 
