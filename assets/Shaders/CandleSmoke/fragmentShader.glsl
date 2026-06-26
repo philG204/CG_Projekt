@@ -34,12 +34,12 @@ void main()
     vec2 uv = TexCoord;
 
     // aufsteigende Bewegung
-    uv.y -= time * 0.35;
+    uv.y -= time * 0.5;
 
     // leichtes seitliches Flackern / Wabern
     uv.x += sin(TexCoord.y * 10.0 + time * 2.0) * 0.05;
 
-    float n1 = noise(uv * 4.0);
+    float n1 = noise(uv * 2.0);
     float n2 = noise(uv * 8.0 + vec2(2.3, 0.7));
     float smoke = mix(n1, n2, 0.5);
 

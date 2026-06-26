@@ -376,7 +376,7 @@ object_draw (const Object *object, const GLfloat *viewProj,
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
 
-  if (strcmp (object->name, "teapot") == 0)
+  if (strcmp (object->name, "candleSmoke") == 0)
     {
       glUniform1f (glGetUniformLocation (
                        object->material->shaderObject->shader, "time"),
