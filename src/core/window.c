@@ -8,22 +8,6 @@
 #include "../../headers/core/window.h"
 #include "../../headers/renderer/loadShader.h"
 
-/**
- *  @brief
- *
- *  @param window pointer to the window
- *  @param width
- *  @param height
- */
-static void
-framebuffer_size_callback (GLFWwindow *window, int width, int height)
-{
-  assert (window != NULL);
-
-  (void)window;
-  glViewport (0, 0, width, height);
-}
-
 Window *
 window_create (int width, int height, const char *title)
 {
@@ -47,7 +31,6 @@ window_create (int width, int height, const char *title)
       return NULL;
     }
 
-  glfwSetFramebufferSizeCallback (window->window, framebuffer_size_callback);
   glfwMakeContextCurrent (window->window);
 
   GLenum err = glewInit ();

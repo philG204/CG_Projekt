@@ -375,6 +375,8 @@ scene_update (Scene *scene)
 
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+  glViewport (0, 0, 1920, 1080);
+
   Object *object = NULL;
 
   for (int j = 0; j < scene->object_count; j++)
