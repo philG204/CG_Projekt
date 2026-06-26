@@ -71,6 +71,11 @@ object_load_config (Object *object, const char *configPath)
                                  sizeof (object->meshObject->meshName));
     }
 
+  if (config_find_line_by_key (configPath, "isTransparent", line, sizeof (line)))
+    {
+      config_parse_int_value (line, &object->isTransparent);
+    }
+
   if (config_find_line_by_key (configPath, "shader", line, sizeof (line)))
     {
       config_parse_string_value (
@@ -101,17 +106,6 @@ object_load_config (Object *object, const char *configPath)
   if (config_find_line_by_key (configPath, "specular", line, sizeof (line)))
     {
       config_parse_vec4_value (line, object->material->light->specular);
-    }
-
-  if (config_find_line_by_key (configPath, "transparency", line,
-                               sizeof (line)))
-    {
-      float transparencyValue = 0.0f;
-
-      if (config_parse_float_value (line, &transparencyValue))
-        {
-          object->material->transparency = (int)transparencyValue;
-        }
     }
 
   if (object->transformation != NULL)
@@ -163,6 +157,16 @@ object_init (char *objDir)
       printf ("object_init: malloc fehlgeschlagen\n");
       return NULL;
     }
+
+  object->isTransparent = 0;
+  object->isLight = 0;
+
+  object->name[0] = '\0';
+  meshObject->meshName[0] = '\0';
+  meshObject->mesh = NULL;
+
+  shaderObject->shaderName[0] = '\0';
+  shaderObject->shader = 0;
 
   transformation->translation[0] = 0.0f;
   transformation->translation[1] = 0.0f;
@@ -234,7 +238,7 @@ object_init (char *objDir)
   printf ("  shaderName     = %s\n",
           object->material->shaderObject->shaderName);
   printf ("  textures     = %d\n", object->material->overlayTextureCount);
-  printf ("  transparency = %lf\n", object->material->transparency);
+  printf ("  transparency = %d\n", object->isTransparent);
   printf ("  emissive     = [%f, %f, %f, %f]\n",
           object->material->light->emissive[0],
           object->material->light->emissive[1],

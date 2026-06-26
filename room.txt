@@ -1,4 +1,5 @@
 room
+teapot
 carpet
 window1
 window2

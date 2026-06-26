@@ -38,7 +38,6 @@ typedef struct Material
   Texture **overlayTextures;
   int overlayTextureCount;
   GLfloat rgb_values;
-  GLfloat transparency;
   MaterialLight *light;
 } Material;
 
@@ -52,6 +51,7 @@ typedef struct Object
   GLfloat *modelMatrix;
   GLfloat *normalMatrix;
   Transformation *transformation;
+  int isTransparent;
   int isLight;
 } Object;
 

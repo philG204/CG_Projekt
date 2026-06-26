@@ -21,7 +21,7 @@ window_create (int width, int height, const char *title)
 
   Window *window = malloc (sizeof (Window));
 
-  window->processingEnabled = 1;
+  window->processingEnabled = 0;
   window->window = glfwCreateWindow (width, height, title, NULL, NULL);
 
   if (!window->window)
@@ -46,6 +46,9 @@ window_create (int width, int height, const char *title)
 
   glEnable (GL_DEPTH_TEST);
   glDepthFunc (GL_LESS);
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   window->screen_shader = glCreateProgram ();
 
