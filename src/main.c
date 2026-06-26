@@ -36,10 +36,11 @@ main (void)
   const int cameraCount = sizeof (cameraSettings) / sizeof (CameraSettings);
   int lastactivecamera = activeCamera;
 
-  ProjectionSettings projectionSettings = { .fovy = 100.0f * (3.14f / 270.0f),
-                                            .aspect = 1920.0f / 1080.0f,
-                                            .near_plane = 0.1f,
-                                            .far_plane = 45.0f };
+  const ProjectionSettings projectionSettings
+      = { .fovy = 100.0f * (3.14f / 270.0f),
+          .aspect = 1920.0f / 1080.0f,
+          .near_plane = 0.1f,
+          .far_plane = 45.0f };
 
   const Scene *scene = scene_init (
       "assets/Meshes", "assets/Shaders", "assets/Objects", "scene1",
