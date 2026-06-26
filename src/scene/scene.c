@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <dirent.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -370,6 +371,8 @@ scene_update (Scene *scene)
 {
   assert (scene != NULL);
 
+  float time = glfwGetTime ();
+
   glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
   glEnable (GL_DEPTH_TEST);
 
@@ -394,6 +397,19 @@ scene_update (Scene *scene)
         }
 
       identity (object->modelMatrix);
+
+      if (strcmp (object->name, "Rockingchair_01_1k") == 0)
+        {
+          float angle
+              = sin (time * 2.0f) * 0.25f; // to make the rocking faster the
+                                           // 0.25f to a higher number
+
+          object->transformation->rotation[0] = angle;
+
+          object->transformation->rotaionCircle[0] = 0.0f;
+          object->transformation->rotaionCircle[1] = -0.6f;
+          object->transformation->rotaionCircle[2] = 0.0f;
+        }
 
       object_transformation (object, object->transformation->translation,
                              object->transformation->scaling,
