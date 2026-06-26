@@ -35,6 +35,9 @@ out vec4 FragColor;
 
 void main()
 {
+    float fogStart = ;
+    float fogEnd = ;
+
     vec4 baseColor = texture(baseTexture, tex);
 
     if (overlayTextureCount > 0)
