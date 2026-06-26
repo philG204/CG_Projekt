@@ -8,6 +8,7 @@
 #include "../../headers/core/window.h"
 #include "../../headers/renderer/loadShader.h"
 
+
 Window *
 window_create (int width, int height, const char *title)
 {
