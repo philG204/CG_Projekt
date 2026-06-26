@@ -113,7 +113,7 @@ shader_init (const char *shaderDir)
 
   const char *vertexShaderText = loadShader (shaderPath.vertexPath);
   GLuint vertexShader = glCreateShader (GL_VERTEX_SHADER);
-  glShaderSource (vertexShader, 1, &vertexShaderText, nullptr);
+  glShaderSource (vertexShader, 1, &vertexShaderText, NULL);
   glCompileShader (vertexShader);
 
   glGetShaderiv (vertexShader, GL_COMPILE_STATUS, &status);
@@ -122,7 +122,7 @@ shader_init (const char *shaderDir)
     {
       printf ("Error compiling vertex shader: ");
       GLchar infoLog[1024];
-      glGetShaderInfoLog (vertexShader, 1024, nullptr, infoLog);
+      glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
       printf ("%s\n", infoLog);
     }
   printf ("loaded vertex shader\n");
@@ -130,7 +130,7 @@ shader_init (const char *shaderDir)
   const char *fragmentShaderText = loadShader (shaderPath.fragmentPath);
 
   const GLuint fragmentShader = glCreateShader (GL_FRAGMENT_SHADER);
-  glShaderSource (fragmentShader, 1, &fragmentShaderText, nullptr);
+  glShaderSource (fragmentShader, 1, &fragmentShaderText, NULL);
   glCompileShader (fragmentShader);
 
   glGetShaderiv (fragmentShader, GL_COMPILE_STATUS, &status);
@@ -139,7 +139,7 @@ shader_init (const char *shaderDir)
     {
       printf ("Error compiling fragment shader: ");
       GLchar infoLog[1024];
-      glGetShaderInfoLog (fragmentShader, 1024, nullptr, infoLog);
+      glGetShaderInfoLog (fragmentShader, 1024, NULL, infoLog);
       printf ("%s\n", infoLog);
     }
 
@@ -154,7 +154,7 @@ shader_init (const char *shaderDir)
     {
       printf ("Error linking program: ");
       GLchar infoLog[1024];
-      glGetProgramInfoLog (shaderProgramId, 1024, nullptr, infoLog);
+      glGetProgramInfoLog (shaderProgramId, 1024, NULL, infoLog);
       printf ("%s\n", infoLog);
     }
   glValidateProgram (shaderProgramId);
@@ -164,7 +164,7 @@ shader_init (const char *shaderDir)
     {
       printf ("Error validating program: ");
       GLchar infoLog[1024];
-      glGetProgramInfoLog (shaderProgramId, 1024, nullptr, infoLog);
+      glGetProgramInfoLog (shaderProgramId, 1024, NULL, infoLog);
       printf ("%s\n", infoLog);
     }
   glValidateProgram (shaderProgramId);

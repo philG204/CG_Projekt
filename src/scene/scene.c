@@ -179,7 +179,7 @@ scene_add_object (Scene *scene, const char *configPath)
   printf ("scene_add_object: mesh without extension = %s\n",
           meshNameWithoutExtension);
 
-  object->meshObject->mesh = nullptr;
+  object->meshObject->mesh = NULL;
 
   for (int i = 0; i < scene->mesh_count; i++)
     {
@@ -338,7 +338,7 @@ scene_init (const char *meshDir, const char *shaderDir, const char *objectDir,
   if (dirMesh == NULL)
     {
       printf ("Ordner konnte nicht geöffnet werden.\n");
-      return nullptr;
+      return NULL;
     }
 
   struct dirent *entryMesh;
@@ -370,7 +370,7 @@ scene_init (const char *meshDir, const char *shaderDir, const char *objectDir,
   glGenTextures (1, &scene->texturebuffer);
   glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
   glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
-                GL_UNSIGNED_BYTE, nullptr);
+                GL_UNSIGNED_BYTE, NULL);
 
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

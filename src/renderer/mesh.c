@@ -31,7 +31,7 @@ mesh_init (char *meshFile)
       vao = 0;
       vbo = 0;
 
-      return nullptr;
+      return NULL;
     }
 
   glGenVertexArrays (1, &vao);
@@ -43,8 +43,7 @@ mesh_init (char *meshFile)
   glBufferData (GL_ARRAY_BUFFER, (vertexCount) * 8 * sizeof (float), vertices,
                 GL_STATIC_DRAW);
 
-  glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (float),
-                         nullptr);
+  glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof (float), NULL);
   glEnableVertexAttribArray (0);
 
   glVertexAttribPointer (1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof (float),

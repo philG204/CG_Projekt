@@ -33,8 +33,7 @@ main (void)
                                               .up = { 0.0f, 1.0f, 0.0f } } };
 
   int activeCamera = 0;
-  constexpr int cameraCount
-      = sizeof (cameraSettings) / sizeof (CameraSettings);
+  const int cameraCount = sizeof (cameraSettings) / sizeof (CameraSettings);
   int lastactivecamera = activeCamera;
 
   ProjectionSettings projectionSettings = { .fovy = 100.0f * (3.14f / 270.0f),
