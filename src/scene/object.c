@@ -3,8 +3,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/mesh.h"
