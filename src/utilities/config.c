@@ -155,7 +155,7 @@ config_parse_int_value (const char *line, int *out)
       return 0;
     }
 
-  *out = strtof (equal + 1, nullptr);
+  *out = strtof (equal + 1, NULL);
 
   return 1;
 }
@@ -172,7 +172,7 @@ config_parse_float_value (const char *line, float *out)
   if (equal == NULL)
     return 0;
 
-  *out = strtof (equal + 1, nullptr);
+  *out = strtof (equal + 1, NULL);
 
   return 1;
 }
@@ -212,9 +212,9 @@ config_parse_vec3_value (const char *line, float *out)
         }
 
       token = config_trim (token);
-      out[i] = strtof (token, nullptr);
+      out[i] = strtof (token, NULL);
 
-      token = strtok (nullptr, ",");
+      token = strtok (NULL, ",");
     }
 
   return 1;
@@ -253,9 +253,9 @@ config_parse_vec4_value (const char *line, float *out)
         }
 
       token = config_trim (token);
-      out[i] = strtof (token, nullptr);
+      out[i] = strtof (token, NULL);
 
-      token = strtok (nullptr, ",");
+      token = strtok (NULL, ",");
     }
 
   return 1;
@@ -315,7 +315,7 @@ config_parse_string_list_value (const char *line,
           count++;
         }
 
-      token = strtok (nullptr, ",");
+      token = strtok (NULL, ",");
     }
 
   return count;

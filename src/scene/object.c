@@ -154,7 +154,7 @@ object_init (const char *configPath)
       || meshObject == NULL || shaderObject == NULL)
     {
       printf ("object_init: malloc fehlgeschlagen\n");
-      return nullptr;
+      return NULL;
     }
 
   transformation->translation[0] = 0.0f;
@@ -196,7 +196,7 @@ object_init (const char *configPath)
   materialLight->shininess = 32.0f;
 
   material->shaderObject = shaderObject;
-  material->baseTexture = nullptr;
+  material->baseTexture = NULL;
   material->overlayTextures = overlayTextures;
   material->overlayTextureCount = 0;
   material->light = materialLight;
@@ -260,7 +260,7 @@ object_transformation (const Object *object, const GLfloat *translation,
   assert (scaling != NULL);
   assert (rotation != NULL);
 
-  constexpr GLfloat radian = (GLfloat)M_PI / 180.0f;
+  const GLfloat radian = (GLfloat)M_PI / 180.0f;
 
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
