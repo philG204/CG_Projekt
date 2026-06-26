@@ -128,6 +128,12 @@ object_load_config (Object *object, const char *configPath)
     {
       config_parse_vec3_value (line, object->transformation->rotationCircle);
     }
+
+  if (config_find_line_by_key (configPath, "shininess", line,
+                               sizeof (line)))
+    {
+      config_parse_float_value (line, &object->material->light->shininess);
+    }
 }
 
 Object *
