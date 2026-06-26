@@ -131,8 +131,7 @@ object_load_config (Object *object, const char *configPath)
       config_parse_vec3_value (line, object->transformation->rotationCircle);
     }
 
-  if (config_find_line_by_key (configPath, "shininess", line,
-                               sizeof (line)))
+  if (config_find_line_by_key (configPath, "shininess", line, sizeof (line)))
     {
       config_parse_float_value (line, &object->material->light->shininess);
     }
@@ -377,10 +376,11 @@ object_draw (const Object *object, const GLfloat *viewProj,
       glGetUniformLocation (object->material->shaderObject->shader, "model"),
       1, GL_FALSE, object->modelMatrix);
 
-  if(strcmp(object->name, "candleSmoke") == 0)
+  if (strcmp (object->name, "candleSmoke") == 0)
     {
-      glUniform1f (glGetUniformLocation (object->material->shaderObject->shader,
-                                         "time"), (GLfloat)glfwGetTime ());
+      glUniform1f (glGetUniformLocation (
+                       object->material->shaderObject->shader, "time"),
+                   (GLfloat)glfwGetTime ());
     }
 
   glBindVertexArray (object->meshObject->mesh->vao);
