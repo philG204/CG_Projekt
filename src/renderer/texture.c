@@ -50,7 +50,7 @@ texture_get_or_load (const char *texturePath, GLuint shader,
     {
       printf ("texture_get_or_load: konnte Texture nicht laden: %s\n",
               texturePath);
-      return NULL;
+      return nullptr;
     }
 
   if (textureCacheCount >= MAX_CACHED_TEXTURES)
@@ -98,7 +98,7 @@ texture_init (char *filename, const GLuint shaderProgram,
       printf ("texture_init: Fehler beim Laden der Textur %s: %s\n", filename,
               stbi_failure_reason ());
       free (texture);
-      return NULL;
+      return nullptr;
     }
 
   stbi_set_flip_vertically_on_load (1);
@@ -198,7 +198,7 @@ texture_init_base_from_config (const char *configPath, GLuint shader)
       printf ("texture_init_base_from_config: Textur konnte nicht geladen "
               "werden: %s\n",
               completeTexturePath);
-      return NULL;
+      return nullptr;
     }
 
   printf ("BaseTexture geladen: %s\n", completeTexturePath);

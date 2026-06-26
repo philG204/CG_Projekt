@@ -179,7 +179,7 @@ scene_add_object (Scene *scene, const char *configPath)
   printf ("scene_add_object: mesh without extension = %s\n",
           meshNameWithoutExtension);
 
-  object->meshObject->mesh = NULL;
+  object->meshObject->mesh = nullptr;
 
   for (int i = 0; i < scene->mesh_count; i++)
     {
