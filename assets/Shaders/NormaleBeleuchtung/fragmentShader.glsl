@@ -6,6 +6,7 @@
 struct Light
 {
     vec3 position;
+    vec4 ambient;
     vec4 diffuse;
     vec4 specular;
 };
@@ -24,8 +25,6 @@ uniform vec4 materialAmbient;
 uniform vec4 materialDiffuse;
 uniform vec4 materialSpecular;
 uniform float materialShininess;
-
-uniform vec4 lightAmbient;
 
 uniform sampler2D baseTexture;
 uniform sampler2D overlayTextures[MAX_OVERLAY_TEXTURES];
@@ -62,7 +61,7 @@ void main()
     }
 
     vec4 emissive = materialEmission;
-    vec4 ambient = materialAmbient * lightAmbient;
+    vec4 ambient = vec4(0.0, 0.0, 0.0, 0.0);
 
     vec3 N = normalize(Normal);
     vec3 V = normalize(viewPos - Position);
@@ -74,6 +73,8 @@ void main()
 
     for (int i = 0; i < count; i++)
     {
+        ambient = materialAmbient * lights[i].ambient;
+
         vec3 L = normalize(lights[i].position - Position);
         vec3 H = normalize(L + V);
 

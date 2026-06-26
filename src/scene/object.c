@@ -336,6 +336,12 @@ object_draw (const Object *object, const GLfloat *viewProj,
                        object->material->shaderObject->shader, uniformName),
                    lightSources[i]->x, lightSources[i]->y, lightSources[i]->z);
 
+      snprintf (uniformName, sizeof (uniformName), "lights[%d].ambient", i);
+      glUniform4f (glGetUniformLocation (
+                       object->material->shaderObject->shader, uniformName),
+                   lightSources[i]->ambient[0], lightSources[i]->ambient[1],
+                   lightSources[i]->ambient[2], lightSources[i]->ambient[3]);
+
       snprintf (uniformName, sizeof (uniformName), "lights[%d].diffuse", i);
       glUniform4f (glGetUniformLocation (
                        object->material->shaderObject->shader, uniformName),
