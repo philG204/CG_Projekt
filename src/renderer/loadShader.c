@@ -12,7 +12,7 @@ loadShader (const char *filename)
   if (!f)
     {
       perror ("fopen");
-      return NULL;
+      return nullptr;
     }
 
   // Dateigröße bestimmen
@@ -20,7 +20,7 @@ loadShader (const char *filename)
     {
       perror ("fseek");
       fclose (f);
-      return NULL;
+      return nullptr;
     }
 
   long length = ftell (f);
@@ -28,7 +28,7 @@ loadShader (const char *filename)
     {
       perror ("ftell");
       fclose (f);
-      return NULL;
+      return nullptr;
     }
 
   rewind (f);
@@ -39,7 +39,7 @@ loadShader (const char *filename)
     {
       perror ("malloc");
       fclose (f);
-      return NULL;
+      return nullptr;
     }
 
   // Datei einlesen
@@ -49,7 +49,7 @@ loadShader (const char *filename)
       perror ("fread");
       free (buffer);
       fclose (f);
-      return NULL;
+      return nullptr;
     }
 
   // Null-Terminierung (WICHTIG für OpenGL!)

@@ -24,12 +24,6 @@ typedef struct ShaderPaths
 static int
 get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 {
-  if (shaderDir == NULL || outPaths == NULL)
-    {
-      printf ("get_shader_paths_from_dir: shaderDir oder outPaths ist NULL\n");
-      return 0;
-    }
-
   outPaths->vertexPath[0] = '\0';
   outPaths->fragmentPath[0] = '\0';
 
@@ -109,20 +103,17 @@ get_shader_paths_from_dir (const char *shaderDir, ShaderPaths *outPaths)
 }
 
 GLuint
-shader_init (char *shaderDir)
+shader_init (const char *shaderDir)
 {
   assert (shaderDir != NULL);
-  GLuint shaderProgramId;
   GLint status;
-  GLuint vertexShader;
-  GLuint fragmentShader;
   ShaderPaths shaderPath;
 
   get_shader_paths_from_dir (shaderDir, &shaderPath);
 
   const char *vertexShaderText = loadShader (shaderPath.vertexPath);
-  vertexShader = glCreateShader (GL_VERTEX_SHADER);
-  glShaderSource (vertexShader, 1, &vertexShaderText, NULL);
+  GLuint vertexShader = glCreateShader (GL_VERTEX_SHADER);
+  glShaderSource (vertexShader, 1, &vertexShaderText, nullptr);
   glCompileShader (vertexShader);
 
   glGetShaderiv (vertexShader, GL_COMPILE_STATUS, &status);
@@ -131,15 +122,15 @@ shader_init (char *shaderDir)
     {
       printf ("Error compiling vertex shader: ");
       GLchar infoLog[1024];
-      glGetShaderInfoLog (vertexShader, 1024, NULL, infoLog);
+      glGetShaderInfoLog (vertexShader, 1024, nullptr, infoLog);
       printf ("%s\n", infoLog);
     }
   printf ("loaded vertex shader\n");
 
   const char *fragmentShaderText = loadShader (shaderPath.fragmentPath);
 
-  fragmentShader = glCreateShader (GL_FRAGMENT_SHADER);
-  glShaderSource (fragmentShader, 1, &fragmentShaderText, NULL);
+  const GLuint fragmentShader = glCreateShader (GL_FRAGMENT_SHADER);
+  glShaderSource (fragmentShader, 1, &fragmentShaderText, nullptr);
   glCompileShader (fragmentShader);
 
   glGetShaderiv (fragmentShader, GL_COMPILE_STATUS, &status);
@@ -148,11 +139,11 @@ shader_init (char *shaderDir)
     {
       printf ("Error compiling fragment shader: ");
       GLchar infoLog[1024];
-      glGetShaderInfoLog (fragmentShader, 1024, NULL, infoLog);
+      glGetShaderInfoLog (fragmentShader, 1024, nullptr, infoLog);
       printf ("%s\n", infoLog);
     }
 
-  shaderProgramId = glCreateProgram ();
+  const GLuint shaderProgramId = glCreateProgram ();
   glAttachShader (shaderProgramId, vertexShader);
   glAttachShader (shaderProgramId, fragmentShader);
   glLinkProgram (shaderProgramId);
@@ -163,7 +154,7 @@ shader_init (char *shaderDir)
     {
       printf ("Error linking program: ");
       GLchar infoLog[1024];
-      glGetProgramInfoLog (shaderProgramId, 1024, NULL, infoLog);
+      glGetProgramInfoLog (shaderProgramId, 1024, nullptr, infoLog);
       printf ("%s\n", infoLog);
     }
   glValidateProgram (shaderProgramId);
@@ -173,7 +164,7 @@ shader_init (char *shaderDir)
     {
       printf ("Error validating program: ");
       GLchar infoLog[1024];
-      glGetProgramInfoLog (shaderProgramId, 1024, NULL, infoLog);
+      glGetProgramInfoLog (shaderProgramId, 1024, nullptr, infoLog);
       printf ("%s\n", infoLog);
     }
   glValidateProgram (shaderProgramId);
@@ -183,7 +174,7 @@ shader_init (char *shaderDir)
 }
 
 void
-use_shader (GLuint shaderProgram)
+use_shader (const GLuint shaderProgram)
 {
   glUseProgram (shaderProgram);
 }

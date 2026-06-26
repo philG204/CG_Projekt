@@ -28,7 +28,7 @@ typedef struct Transformation
   GLfloat translation[3];
   GLfloat scaling[3];
   GLfloat rotation[3];
-  GLfloat rotaionCircle[3];
+  GLfloat rotationCircle[3];
 } Transformation;
 
 typedef struct Material
@@ -42,7 +42,7 @@ typedef struct Material
   MaterialLight *light;
 } Material;
 
-typedef struct Mesh Mesh;
+typedef Mesh Mesh;
 
 typedef struct Object
 {
@@ -58,10 +58,10 @@ typedef struct Object
 /**
  *  @brief
  *
- *  @param objDir
+ *  @param configPath
  *  @return
  */
-Object *object_init (char *objDir);
+Object *object_init (const char *configPath);
 
 /**
  *  @brief Translatiert, rotiert und skaliert ein Objekt.
@@ -71,8 +71,8 @@ Object *object_init (char *objDir);
  *  @param scaling
  *  @param rotation
  */
-void object_transformation (Object *object, GLfloat *translation,
-                            GLfloat *scaling, GLfloat *rotation);
+void object_transformation (const Object *object, const GLfloat *translation,
+                            const GLfloat *scaling, const GLfloat *rotation);
 
 /**
  *  @brief
@@ -87,9 +87,9 @@ void object_transformation (Object *object, GLfloat *translation,
  *  @param cameraY
  *  @param cameraZ
  */
-void object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
-                  GLfloat *projMatrix, LightSource **lightSources,
-                  int lightCounts, GLfloat cameraX, GLfloat cameraY,
-                  GLfloat cameraZ);
+void object_draw (const Object *object, const GLfloat *viewProj,
+                  const GLfloat *viewMatrix, const GLfloat *projMatrix,
+                  LightSource **lightSources, int lightCounts, GLfloat cameraX,
+                  GLfloat cameraY, GLfloat cameraZ);
 
 #endif // OBJECT_H

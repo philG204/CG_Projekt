@@ -9,15 +9,15 @@ int keyboardpressed_right = 0;
 int keyboardpressed_space = 0;
 
 void
-processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
+processKeyInput (GLFWwindow *window, const int cameraCount, int *activeCamera,
                  int *processingEnabled)
 {
   assert (window != NULL);
   assert (activeCamera != NULL);
 
-  int left = (glfwGetKey (window, GLFW_KEY_LEFT) == GLFW_PRESS);
-  int right = (glfwGetKey (window, GLFW_KEY_RIGHT) == GLFW_PRESS);
-  int space = (glfwGetKey (window, GLFW_KEY_SPACE) == GLFW_PRESS);
+  const int left = (glfwGetKey (window, GLFW_KEY_LEFT) == GLFW_PRESS);
+  const int right = (glfwGetKey (window, GLFW_KEY_RIGHT) == GLFW_PRESS);
+  const int space = (glfwGetKey (window, GLFW_KEY_SPACE) == GLFW_PRESS);
 
   if (left && !keyboardpressed_left)
     *activeCamera = (*activeCamera - 1 + cameraCount) % cameraCount;
@@ -36,8 +36,8 @@ processKeyInput (GLFWwindow *window, int cameraCount, int *activeCamera,
 /**
  * @brief Checks if mouse is over the Button
  *
- * @param *window        - GLFW window handle
- * @param button         - button
+ * @param window GLFW window handle
+ * @param button button
  */
 int
 isMouseOverButton (GLFWwindow *window, const Button button)
@@ -54,15 +54,15 @@ isMouseOverButton (GLFWwindow *window, const Button button)
 int leftMouseWasPressed = 0;
 
 void
-handleButtons (GLFWwindow *window, Button button, int back, int cameraCount,
-               int *activeCamera)
+handleButtons (GLFWwindow *window, const Button button, const int back,
+               const int cameraCount, int *activeCamera)
 {
   assert (window != NULL);
   assert (activeCamera != NULL);
 
-  int hovering = isMouseOverButton (window, button);
+  const int hovering = isMouseOverButton (window, button);
 
-  int state = glfwGetMouseButton (window, GLFW_MOUSE_BUTTON_LEFT);
+  const int state = glfwGetMouseButton (window, GLFW_MOUSE_BUTTON_LEFT);
 
   if (hovering && state == GLFW_PRESS && !leftMouseWasPressed)
     {

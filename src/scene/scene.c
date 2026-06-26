@@ -8,9 +8,10 @@
 
 #include "../../headers/math/matrixTransformation.h"
 #include "../../headers/renderer/shader.h"
-#include "../../headers/scene/loadObjectList.h"
 #include "../../headers/scene/scene.h"
 #include "../../headers/utilities/fileOperations.h"
+
+#include <GLFW/glfw3.h>
 
 /**
  *  @brief
@@ -18,26 +19,16 @@
  *  @param
  */
 static void
-loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
+loadShaderDirectoryStructure (Scene *scene, const char *shaderDir)
 {
-  if (scene == NULL || shaderDir == NULL)
-    {
-      printf ("loadShaderDirectoryStructure: scene oder shaderDir ist NULL\n");
-      return;
-    }
+  printf ("Shader-Hauptordner: %s\n", shaderDir);
 
-  char shaderPath[512];
-
-  snprintf (shaderPath, sizeof (shaderPath), "assets/%s", shaderDir);
-
-  printf ("Shader-Hauptordner: %s\n", shaderPath);
-
-  DIR *dirShader = opendir (shaderPath);
+  DIR *dirShader = opendir (shaderDir);
 
   if (dirShader == NULL)
     {
       printf ("Shader-Hauptordner konnte nicht geöffnet werden: %s\n",
-              shaderPath);
+              shaderDir);
       return;
     }
 
@@ -55,8 +46,8 @@ loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
 
       char shaderSubFolderPath[512];
 
-      snprintf (shaderSubFolderPath, sizeof (shaderSubFolderPath),
-                "assets/%s/%s", shaderDir, entryShader->d_name);
+      snprintf (shaderSubFolderPath, sizeof (shaderSubFolderPath), "%s/%s",
+                shaderDir, entryShader->d_name);
 
       struct stat subFolderStat;
 
@@ -127,118 +118,14 @@ loadShaderDirectoryStructure (Scene *scene, char *shaderDir)
   closedir (dirShader);
 }
 
-Scene *
-scene_init (char *meshDir, char *shaderDir, char *scene_name,
-            CameraSettings *cameraSettings,
-            ProjectionSettings *projectionSettings)
-{
-  assert (shaderDir != NULL);
-  assert (meshDir != NULL);
-  assert (scene_name != NULL);
-  assert (cameraSettings != NULL);
-  assert (projectionSettings != NULL);
-
-  printf ("entering scene_init\n");
-  Scene *scene = malloc (sizeof (Scene));
-  Camera *camera;
-  LightSource **lights = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
-  Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
-  ShaderObject **shaderObjects
-      = malloc (sizeof (ShaderObject *) * MAX_SHADER_COUNT);
-  Object **objects = malloc (sizeof (Object *) * MAX_OBJECTS);
-
-  scene->shaderObjects = shaderObjects;
-  scene->mesh_count = 0;
-  scene->shader_count = 0;
-  scene->object_count = 0;
-  scene->objects = objects;
-  scene->camera = malloc (sizeof (Camera));
-  scene->lights = lights;
-  scene->lightCount = 0;
-
-  camera = camera_init (cameraSettings, projectionSettings);
-  scene->camera = camera;
-
-  printf ("LOADING SHADERS!!!!\n");
-  loadShaderDirectoryStructure (scene, shaderDir);
-  printf ("DONE WITH LOADING SHADERS!!!!\n");
-  printf ("SHADER COUNT %d\n", scene->shader_count);
-
-  char meshPath[512];
-  snprintf (meshPath, sizeof (meshPath), "assets/%s", meshDir);
-  printf ("%s\n", meshPath);
-  DIR *dirMesh = opendir (meshPath);
-
-  if (dirMesh == NULL)
-    {
-      printf ("Ordner konnte nicht geöffnet werden.\n");
-      return NULL;
-    }
-
-  struct dirent *entryMesh;
-
-  while ((entryMesh = readdir (dirMesh)) != NULL)
-    {
-      if (strcmp (entryMesh->d_name, ".") == 0
-          || strcmp (entryMesh->d_name, "..") == 0)
-        {
-          continue;
-        }
-      char completeMeshPath[512];
-      snprintf (completeMeshPath, sizeof (completeMeshPath), "assets/%s/%s",
-                meshDir, entryMesh->d_name);
-      printf ("%s\n", completeMeshPath);
-
-      printf ("before mesh_init\n");
-      meshes[scene->mesh_count] = mesh_init (completeMeshPath);
-      printf ("after mesh_init\n");
-      scene->mesh_count++;
-    }
-
-  scene->meshes = meshes;
-  closedir (dirMesh);
-
-  glGenFramebuffers (1, &scene->framebuffer);
-  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
-
-  glGenTextures (1, &scene->texturebuffer);
-  glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
-  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
-                GL_UNSIGNED_BYTE, NULL);
-
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-  glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                          scene->texturebuffer, 0);
-
-  GLuint depthbuffer;
-  glGenRenderbuffers (1, &depthbuffer);
-  glBindRenderbuffer (GL_RENDERBUFFER, depthbuffer);
-
-  glRenderbufferStorage (GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 1920, 1080);
-  glFramebufferRenderbuffer (GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-                             GL_RENDERBUFFER, depthbuffer);
-
-  GLenum buf = GL_COLOR_ATTACHMENT0;
-  glDrawBuffers (1, &buf);
-
-  if (glCheckFramebufferStatus (GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-    printf ("framebuffer incomplete!\n");
-
-  glBindFramebuffer (GL_FRAMEBUFFER, 0);
-
-  return scene;
-}
-
-void
-scene_add_object (Scene *scene, char *objDir)
+static void
+scene_add_object (Scene *scene, const char *configPath)
 {
   assert (scene != NULL);
-  assert (objDir != NULL);
+  assert (configPath != NULL);
 
   printf ("entering scene_add_object\n");
-  Object *object = object_init (objDir);
+  Object *object = object_init (configPath);
 
   if (object == NULL)
     {
@@ -292,14 +179,12 @@ scene_add_object (Scene *scene, char *objDir)
   printf ("scene_add_object: mesh without extension = %s\n",
           meshNameWithoutExtension);
 
-  object->meshObject->mesh = NULL;
+  object->meshObject->mesh = nullptr;
 
   for (int i = 0; i < scene->mesh_count; i++)
     {
       if (scene->meshes[i] == NULL)
-        {
-          continue;
-        }
+        continue;
 
       printf ("scene_add_object: compare '%s' with '%s'\n",
               scene->meshes[i]->name, meshNameWithoutExtension);
@@ -328,9 +213,7 @@ scene_add_object (Scene *scene, char *objDir)
   for (int i = 0; i < scene->shader_count; i++)
     {
       if (scene->shaderObjects[i] == NULL)
-        {
-          continue;
-        }
+        continue;
 
       if (strcmp (scene->shaderObjects[i]->shaderName,
                   object->material->shaderObject->shaderName)
@@ -355,10 +238,10 @@ scene_add_object (Scene *scene, char *objDir)
     }
 
   object->material->baseTexture = texture_init_base_from_config (
-      objDir, object->material->shaderObject->shader);
+      configPath, object->material->shaderObject->shader);
 
   object->material->overlayTextureCount = texture_init_overlays_from_config (
-      objDir, object->material->shaderObject->shader,
+      configPath, object->material->shaderObject->shader,
       object->material->overlayTextures, MAX_OVERLAY_TEXTURES);
 
   scene->objects[scene->object_count] = object;
@@ -366,12 +249,162 @@ scene_add_object (Scene *scene, char *objDir)
   printf ("shader program id: %d\n", object->material->shaderObject->shader);
 }
 
+static void
+load_object_list (const char *objectDir, Scene *scene)
+{
+  assert (objectDir != NULL);
+  assert (scene != NULL);
+
+  DIR *dir = opendir (objectDir);
+
+  if (dir == NULL)
+    {
+      printf ("Objekt-Ordner konnte nicht geöffnet werden: %s\n", objectDir);
+    }
+
+  struct dirent *entry;
+
+  while ((entry = readdir (dir)) != NULL)
+    {
+      if (strcmp (entry->d_name, ".") == 0
+          || strcmp (entry->d_name, "..") == 0)
+        continue;
+
+      char completePath[512];
+
+      snprintf (completePath, sizeof (completePath), "%s/%s", objectDir,
+                entry->d_name);
+
+      struct stat fileStat;
+
+      if (stat (completePath, &fileStat) != 0)
+        {
+          printf ("Shader-Datei konnte nicht geprüft werden: %s\n",
+                  completePath);
+          continue;
+        }
+
+      if (!S_ISREG (fileStat.st_mode))
+        {
+          continue;
+        }
+
+      scene_add_object (scene, completePath);
+    }
+
+  closedir (dir);
+}
+
+Scene *
+scene_init (const char *meshDir, const char *shaderDir, const char *objectDir,
+            const char *scene_name, const CameraSettings *cameraSettings,
+            const ProjectionSettings *projectionSettings)
+{
+  assert (shaderDir != NULL);
+  assert (meshDir != NULL);
+  assert (objectDir != NULL);
+  assert (scene_name != NULL);
+  assert (cameraSettings != NULL);
+  assert (projectionSettings != NULL);
+
+  printf ("entering scene_init\n");
+  Scene *scene = malloc (sizeof (Scene));
+  LightSource **lights = malloc (sizeof (LightSource *) * MAX_LIGHT_OBJECTS);
+  Mesh **meshes = malloc (sizeof (Mesh *) * MAX_MESHES);
+  ShaderObject **shaderObjects
+      = malloc (sizeof (ShaderObject *) * MAX_SHADER_COUNT);
+  Object **objects = malloc (sizeof (Object *) * MAX_OBJECTS);
+
+  scene->shaderObjects = shaderObjects;
+  scene->mesh_count = 0;
+  scene->shader_count = 0;
+  scene->object_count = 0;
+  scene->objects = objects;
+  scene->camera = malloc (sizeof (Camera));
+  scene->lights = lights;
+  scene->lightCount = 0;
+
+  Camera *camera = camera_init (cameraSettings, projectionSettings);
+  scene->camera = camera;
+
+  printf ("LOADING SHADERS!!!!\n");
+  loadShaderDirectoryStructure (scene, shaderDir);
+  printf ("DONE WITH LOADING SHADERS!!!!\n");
+  printf ("SHADER COUNT %d\n", scene->shader_count);
+
+  printf ("%s\n", meshDir);
+  DIR *dirMesh = opendir (meshDir);
+
+  if (dirMesh == NULL)
+    {
+      printf ("Ordner konnte nicht geöffnet werden.\n");
+      return nullptr;
+    }
+
+  struct dirent *entryMesh;
+
+  while ((entryMesh = readdir (dirMesh)) != NULL)
+    {
+      if (strcmp (entryMesh->d_name, ".") == 0
+          || strcmp (entryMesh->d_name, "..") == 0)
+        {
+          continue;
+        }
+      char completeMeshPath[512];
+      snprintf (completeMeshPath, sizeof (completeMeshPath), "%s/%s", meshDir,
+                entryMesh->d_name);
+      printf ("%s\n", completeMeshPath);
+
+      printf ("before mesh_init\n");
+      meshes[scene->mesh_count] = mesh_init (completeMeshPath);
+      printf ("after mesh_init\n");
+      scene->mesh_count++;
+    }
+
+  scene->meshes = meshes;
+  closedir (dirMesh);
+
+  glGenFramebuffers (1, &scene->framebuffer);
+  glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
+
+  glGenTextures (1, &scene->texturebuffer);
+  glBindTexture (GL_TEXTURE_2D, scene->texturebuffer);
+  glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, 1920, 1080, 0, GL_RGB,
+                GL_UNSIGNED_BYTE, nullptr);
+
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glFramebufferTexture2D (GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                          scene->texturebuffer, 0);
+
+  GLuint depthbuffer;
+  glGenRenderbuffers (1, &depthbuffer);
+  glBindRenderbuffer (GL_RENDERBUFFER, depthbuffer);
+
+  glRenderbufferStorage (GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 1920, 1080);
+  glFramebufferRenderbuffer (GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
+                             GL_RENDERBUFFER, depthbuffer);
+
+  GLenum buf = GL_COLOR_ATTACHMENT0;
+  glDrawBuffers (1, &buf);
+
+  if (glCheckFramebufferStatus (GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    printf ("framebuffer incomplete!\n");
+
+  glBindFramebuffer (GL_FRAMEBUFFER, 0);
+
+  load_object_list (objectDir, scene);
+
+  return scene;
+}
+
 void
-scene_update (Scene *scene)
+scene_update (const Scene *scene)
 {
   assert (scene != NULL);
 
-  float time = glfwGetTime ();
+  const double time = glfwGetTime ();
 
   glBindFramebuffer (GL_FRAMEBUFFER, scene->framebuffer);
   glEnable (GL_DEPTH_TEST);
@@ -380,11 +413,9 @@ scene_update (Scene *scene)
 
   glViewport (0, 0, 1920, 1080);
 
-  Object *object = NULL;
-
   for (int j = 0; j < scene->object_count; j++)
     {
-      object = scene->objects[j];
+      const Object *object = scene->objects[j];
       if (object == NULL)
         {
           continue;
@@ -400,15 +431,15 @@ scene_update (Scene *scene)
 
       if (strcmp (object->name, "Rockingchair_01_1k") == 0)
         {
-          float angle
-              = sin (time * 2.0f) * 0.25f; // to make the rocking faster the
-                                           // 0.25f to a higher number
+          const float angle
+              = sin (time * 2.0f) * 0.25; // to make the rocking faster the
+                                          // 0.25f to a higher number
 
           object->transformation->rotation[0] = angle;
 
-          object->transformation->rotaionCircle[0] = 0.0f;
-          object->transformation->rotaionCircle[1] = -0.6f;
-          object->transformation->rotaionCircle[2] = 0.0f;
+          object->transformation->rotationCircle[0] = 0.0f;
+          object->transformation->rotationCircle[1] = -0.6f;
+          object->transformation->rotationCircle[2] = 0.0f;
         }
 
       object_transformation (object, object->transformation->translation,

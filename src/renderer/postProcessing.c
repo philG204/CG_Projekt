@@ -5,9 +5,9 @@
 #include "../../headers/scene/scene.h"
 
 void
-render_scene (Scene *scene, Window *window)
+render_scene (const Scene *scene, const Window *window)
 {
-  GLfloat time = glfwGetTime ();
+  const GLfloat time = glfwGetTime ();
 
   glClear (GL_COLOR_BUFFER_BIT);
 

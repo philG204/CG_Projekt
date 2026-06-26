@@ -3,7 +3,6 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <GL/glew.h>
 
@@ -16,11 +15,11 @@
 #include "../../headers/utilities/config.h"
 
 static void
-activate_material_textures (Material *material)
+activate_material_textures (const Material *material)
 {
   assert (material != NULL);
 
-  GLuint shader = material->shaderObject->shader;
+  const GLuint shader = material->shaderObject->shader;
 
   if (material->baseTexture != NULL)
     {
@@ -114,38 +113,32 @@ object_load_config (Object *object, const char *configPath)
         }
     }
 
-  if (object->transformation != NULL)
+  if (config_find_line_by_key (configPath, "translation", line, sizeof (line)))
     {
-      if (config_find_line_by_key (configPath, "translation", line,
-                                   sizeof (line)))
-        {
-          config_parse_vec3_value (line, object->transformation->translation);
-        }
+      config_parse_vec3_value (line, object->transformation->translation);
+    }
 
-      if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
-        {
-          config_parse_vec3_value (line, object->transformation->scaling);
-        }
+  if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
+    {
+      config_parse_vec3_value (line, object->transformation->scaling);
+    }
 
-      if (config_find_line_by_key (configPath, "rotation", line,
-                                   sizeof (line)))
-        {
-          config_parse_vec3_value (line, object->transformation->rotation);
-        }
+  if (config_find_line_by_key (configPath, "rotation", line, sizeof (line)))
+    {
+      config_parse_vec3_value (line, object->transformation->rotation);
+    }
 
-      if (config_find_line_by_key (configPath, "rotationCircle", line,
-                                   sizeof (line)))
-        {
-          config_parse_vec3_value (line,
-                                   object->transformation->rotaionCircle);
-        }
+  if (config_find_line_by_key (configPath, "rotationCircle", line,
+                               sizeof (line)))
+    {
+      config_parse_vec3_value (line, object->transformation->rotationCircle);
     }
 }
 
 Object *
-object_init (char *objDir)
+object_init (const char *configPath)
 {
-  assert (objDir != NULL);
+  assert (configPath != NULL);
 
   Object *object = malloc (sizeof (Object));
   Material *material = malloc (sizeof (Material));
@@ -161,7 +154,7 @@ object_init (char *objDir)
       || meshObject == NULL || shaderObject == NULL)
     {
       printf ("object_init: malloc fehlgeschlagen\n");
-      return NULL;
+      return nullptr;
     }
 
   transformation->translation[0] = 0.0f;
@@ -176,9 +169,9 @@ object_init (char *objDir)
   transformation->rotation[1] = 0.0f;
   transformation->rotation[2] = 0.0f;
 
-  transformation->rotaionCircle[0] = 0.0f;
-  transformation->rotaionCircle[1] = 0.0f;
-  transformation->rotaionCircle[2] = 0.0f;
+  transformation->rotationCircle[0] = 0.0f;
+  transformation->rotationCircle[1] = 0.0f;
+  transformation->rotationCircle[2] = 0.0f;
 
   materialLight->emissive[0] = 0.0f;
   materialLight->emissive[1] = 0.0f;
@@ -203,7 +196,7 @@ object_init (char *objDir)
   materialLight->shininess = 32.0f;
 
   material->shaderObject = shaderObject;
-  material->baseTexture = NULL;
+  material->baseTexture = nullptr;
   material->overlayTextures = overlayTextures;
   material->overlayTextureCount = 0;
   material->light = materialLight;
@@ -213,17 +206,13 @@ object_init (char *objDir)
   object->meshObject = meshObject;
   object->modelMatrix = malloc (16 * sizeof (GLfloat));
 
-  char configPath[512];
-
-  snprintf (configPath, sizeof (configPath), "assets/%s/object.cfg", objDir);
-
   object_load_config (object, configPath);
 
-  material->baseTexture
-      = texture_init_base_from_config (objDir, material->shaderObject->shader);
+  material->baseTexture = texture_init_base_from_config (
+      configPath, material->shaderObject->shader);
 
   material->overlayTextureCount = texture_init_overlays_from_config (
-      objDir, material->shaderObject->shader, material->overlayTextures,
+      configPath, material->shaderObject->shader, material->overlayTextures,
       material->overlayTextureCount);
 
   identity (object->modelMatrix);
@@ -263,15 +252,15 @@ object_init (char *objDir)
 }
 
 void
-object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
-                       GLfloat *rotation)
+object_transformation (const Object *object, const GLfloat *translation,
+                       const GLfloat *scaling, const GLfloat *rotation)
 {
   assert (object != NULL);
   assert (translation != NULL);
   assert (scaling != NULL);
   assert (rotation != NULL);
 
-  const GLfloat radian = (GLfloat)M_PI / 180.0f;
+  constexpr GLfloat radian = (GLfloat)M_PI / 180.0f;
 
   translate (object->modelMatrix, object->modelMatrix, translation);
   scale (object->modelMatrix, object->modelMatrix, scaling);
@@ -286,9 +275,11 @@ object_transformation (Object *object, GLfloat *translation, GLfloat *scaling,
 }
 
 void
-object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
-             GLfloat *projMatrix, LightSource **lightSources, int lightCounts,
-             GLfloat cameraX, GLfloat cameraY, GLfloat cameraZ)
+object_draw (const Object *object, const GLfloat *viewProj,
+             const GLfloat *viewMatrix, const GLfloat *projMatrix,
+             LightSource **lightSources, const int lightCounts,
+             const GLfloat cameraX, const GLfloat cameraY,
+             const GLfloat cameraZ)
 {
   assert (object != NULL);
   assert (viewProj != NULL);
@@ -371,6 +362,5 @@ object_draw (Object *object, GLfloat *viewProj, GLfloat *viewMatrix,
 
   activate_material_textures (object->material);
 
-  glDrawArrays (GL_TRIANGLES, 0,
-                (GLsizei)object->meshObject->mesh->vertexCount);
+  glDrawArrays (GL_TRIANGLES, 0, object->meshObject->mesh->vertexCount);
 }
