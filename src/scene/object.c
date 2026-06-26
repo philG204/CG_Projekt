@@ -71,7 +71,8 @@ object_load_config (Object *object, const char *configPath)
                                  sizeof (object->meshObject->meshName));
     }
 
-  if (config_find_line_by_key (configPath, "isTransparent", line, sizeof (line)))
+  if (config_find_line_by_key (configPath, "isTransparent", line,
+                               sizeof (line)))
     {
       config_parse_int_value (line, &object->isTransparent);
     }
