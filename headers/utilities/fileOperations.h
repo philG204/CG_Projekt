@@ -1,6 +1,8 @@
 #ifndef FILE_OPERATIONS_H
 #define FILE_OPERATIONS_H
 
+#include <stddef.h>
+
 /**
  *  @brief
  *
