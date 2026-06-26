@@ -118,6 +118,16 @@ object_load_config (Object *object, const char *configPath)
       config_parse_vec3_value (line, object->transformation->scaling);
     }
 
+  if (config_find_line_by_key (configPath, "translation", line, sizeof (line)))
+    {
+      config_parse_vec3_value (line, object->transformation->translation);
+    }
+
+  if (config_find_line_by_key (configPath, "scaling", line, sizeof (line)))
+    {
+      config_parse_vec3_value (line, object->transformation->scaling);
+    }
+
   if (config_find_line_by_key (configPath, "rotation", line, sizeof (line)))
     {
       config_parse_vec3_value (line, object->transformation->rotation);
